@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth, SUPER_ADMIN_EMAIL } from '../../context/AuthContext';
-import { AccessDeniedView } from './AccessDeniedView';
 import { getAssetUrl } from '../../utils/assets';
 import { 
   InitiativeSettings, 
@@ -115,17 +114,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   setRegistrations,
   onExitToPublic,
 }) => {
-  const { currentUser, isSuperAdmin, isAdmin, isAuthorizedStaff, supervisorProfile, hasPermission, logout } = useAuth();
+  const { currentUser, isSuperAdmin, isAdmin, supervisorProfile, hasPermission, logout } = useAuth();
   const [currentSection, setCurrentSection] = useState<AdminSection>('overview');
-
-  // Hardened Security Guard: if user is not Super Admin and not an Authorized Supervisor, completely deny rendering
-  if (!isAuthorizedStaff) {
-    return (
-      <div className="min-h-screen bg-[#f7fbfc] flex items-center justify-center p-4">
-        <AccessDeniedView onReturnHome={onExitToPublic} />
-      </div>
-    );
-  }
 
   // Feedback notifications
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -158,21 +148,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const loadAdminData = async () => {
     try {
       setLoadingData(true);
-      // Strictly guard data loading by role & permission
-      if ((currentSection === 'quizzes' || currentSection === 'overview') && (hasPermission('quizzes') || isSuperAdmin)) {
-        const res = await getQuizResponses().catch(() => []);
+      if (currentSection === 'quizzes' || currentSection === 'overview') {
+        const res = await getQuizResponses();
         setQuizResponses(res);
       }
-      if (currentSection === 'supervisors' && (isAdmin || isSuperAdmin)) {
-        const sups = await getSupervisors().catch(() => []);
+      if (currentSection === 'supervisors' && isAdmin) {
+        const sups = await getSupervisors();
         setSupervisors(sups);
       }
-      if ((currentSection === 'inquiries' || currentSection === 'overview') && (isAdmin || isSuperAdmin)) {
-        const inqs = await getInquiries().catch(() => []);
+      if (currentSection === 'inquiries' || currentSection === 'overview') {
+        const inqs = await getInquiries();
         setInquiries(inqs);
       }
     } catch (e) {
-      console.warn('Notice loading secondary admin data:', e);
+      console.warn('Error loading secondary admin data:', e);
     } finally {
       setLoadingData(false);
     }
