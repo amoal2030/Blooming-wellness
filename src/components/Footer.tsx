@@ -78,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-white p-1 border border-white/20 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
                 <img
-                  src={getAssetUrl(settings.logoUrl || '/assets/aistudio/image_8a68eff7.png')}
+                  src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
                   alt="شعار مبادرة عافية تُزهر"
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
@@ -205,9 +205,14 @@ export const Footer: React.FC<FooterProps> = ({
             <span>·</span>
             <span>تحت إشراف وزارة التعليم وتنظيم ثانوية الشاطئ</span>
             <span>·</span>
-            <span className="flex items-center gap-1 text-[#ea8c38]">
-              بالتوازن تحصل العافية <Heart className="w-3.5 h-3.5 fill-[#ea8c38]" />
-            </span>
+            <a
+              href="https://amoal2030.github.io/a1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-[#ea8c38] hover:text-[#f8b172] underline underline-offset-4 transition-colors cursor-pointer"
+            >
+              صمم بعناية في خدماتي البرمجية <Heart className="w-3.5 h-3.5 fill-[#ea8c38]" />
+            </a>
           </div>
 
           <button

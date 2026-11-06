@@ -314,7 +314,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           <div className="space-y-4">
             <div className="w-24 h-24 mx-auto rounded-full bg-white p-2 border-2 border-[#dbe8ed] shadow-md flex items-center justify-center overflow-hidden">
               <img
-                src={getAssetUrl('/assets/aistudio/image_8a68eff7.png')}
+                src={getAssetUrl('/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
                 alt="شعار عافية تُزهر"
                 className="w-full h-full object-contain"
                 referrerPolicy="no-referrer"

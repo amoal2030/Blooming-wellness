@@ -38,7 +38,7 @@ export const DEFAULT_SETTINGS: InitiativeSettings = {
     'تعزيز الصحة النفسية والتوازن الوجداني وجودة الحياة في البيئة المدرسية والمجتمعية.',
     'تفعيل الشراكة الإيجابية والتكامل البناء بين وزارة التعليم ومدرسة ثانوية الشاطئ والمجتمع.'
   ],
-  logoUrl: '/assets/aistudio/image_8a68eff7.png',
+  logoUrl: '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png',
   partnerLogos: [
     { 
       id: 'moe', 
@@ -76,7 +76,7 @@ export async function getInitiativeSettings(): Promise<InitiativeSettings> {
           ...data,
           initiativeName: 'مبادرة عافية تُزهر',
           tagline: 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر',
-          logoUrl: '/assets/aistudio/image_8a68eff7.png',
+          logoUrl: '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png',
           partnerLogos: DEFAULT_SETTINGS.partnerLogos,
         };
         // Persist the synced official identity back to firestore

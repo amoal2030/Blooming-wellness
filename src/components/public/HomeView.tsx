@@ -164,7 +164,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="absolute -inset-2 bg-gradient-to-r from-[#2e9e66] via-[#389eb3] to-[#ea8c38] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-white p-3.5 shadow-2xl border-4 border-white/40 flex items-center justify-center overflow-hidden">
                   <img
-                    src={getAssetUrl(settings.logoUrl || '/assets/aistudio/image_8a68eff7.png')}
+                    src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
                     alt="شعار مبادرة عافية تُزهر الرسمي"
                     className="w-full h-full object-contain transform group-hover:scale-103 transition-transform duration-500"
                     referrerPolicy="no-referrer"
@@ -363,7 +363,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="lg:col-span-4 flex justify-center">
               <div className="w-52 h-52 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/30 bg-white p-2">
                 <img
-                  src={getAssetUrl(settings.logoUrl || '/assets/aistudio/image_8a68eff7.png')}
+                  src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
                   alt="شعار عافية تُزهر"
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"

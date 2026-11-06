@@ -1178,7 +1178,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                       <div className="sm:col-span-3 flex flex-col items-center justify-center p-3 bg-white rounded-xl border border-stone-200">
                         <img 
-                          src={getAssetUrl(settingsForm.logoUrl || '/assets/aistudio/image_8a68eff7.png')} 
+                          src={getAssetUrl(settingsForm.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')} 
                           alt="شعار المبادرة" 
                           className="w-20 h-20 object-contain rounded-lg"
                         />
@@ -1190,12 +1190,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           type="text"
                           value={settingsForm.logoUrl}
                           onChange={(e) => setSettingsForm({ ...settingsForm, logoUrl: e.target.value })}
-                          placeholder="/assets/aistudio/image_8a68eff7.png"
+                          placeholder="/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png"
                           className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none dir-ltr text-right"
                         />
                         <button
                           type="button"
-                          onClick={() => setSettingsForm({ ...settingsForm, logoUrl: '/assets/aistudio/image_8a68eff7.png' })}
+                          onClick={() => setSettingsForm({ ...settingsForm, logoUrl: '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png' })}
                           className="text-[11px] text-[#134e5e] font-bold hover:underline cursor-pointer"
                         >
                           استعادة الشعار الرسمي المعتمد
