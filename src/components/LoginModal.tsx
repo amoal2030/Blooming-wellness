@@ -14,7 +14,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const { login, currentUser, isSuperAdmin, supervisorProfile } = useAuth();
+  const { login, logout, currentUser, isSuperAdmin, isAuthorizedStaff, supervisorProfile } = useAuth();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -67,6 +67,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }
   };
 
+  const handleLogoutAndRetry = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0e3c48]/75 backdrop-blur-xs animate-fade-in">
       <div 
@@ -103,34 +111,61 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         )}
 
         {currentUser ? (
-          <div className="p-4 bg-[#e8f7ee] border border-[#c4e9d2] rounded-2xl mb-6 text-right">
-            <div className="flex items-center gap-2 text-[#185644] font-bold text-sm mb-1">
-              <CheckCircle2 className="w-4 h-4 text-[#2e9e66]" />
-              <span>أنت مسجل الدخول حالياً:</span>
+          isAuthorizedStaff ? (
+            /* Authorized Super Admin or Supervisor */
+            <div className="p-4 bg-[#e8f7ee] border border-[#c4e9d2] rounded-2xl mb-6 text-right">
+              <div className="flex items-center gap-2 text-[#185644] font-bold text-sm mb-1">
+                <CheckCircle2 className="w-4 h-4 text-[#2e9e66]" />
+                <span>أنت مسجل الدخول بحساب معتمد:</span>
+              </div>
+              <p className="text-xs text-[#0c2b33] font-mono truncate">{currentUser.email}</p>
+              <div className="mt-2 text-xs flex items-center gap-2">
+                <span className="text-[#526f78]">الرتبة:</span>
+                <span className="font-extrabold text-[#134e5e]">
+                  {isSuperAdmin
+                    ? 'المدير الرئيسي (صلاحيات كاملة)'
+                    : supervisorProfile?.role === 'admin'
+                    ? 'مدير إداري'
+                    : 'مشرف محتوى'}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  onClose();
+                  onSuccess();
+                }}
+                className="mt-4 w-full py-2.5 bg-[#134e5e] hover:bg-[#0e3c48] text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
+              >
+                متابعة إلى لوحة التحكم
+              </button>
             </div>
-            <p className="text-xs text-[#0c2b33] font-mono truncate">{currentUser.email}</p>
-            <div className="mt-2 text-xs flex items-center gap-2">
-              <span className="text-[#526f78]">الرتبة:</span>
-              <span className="font-extrabold text-[#134e5e]">
-                {isSuperAdmin
-                  ? 'المدير الرئيسي (صلاحيات كاملة)'
-                  : supervisorProfile?.role === 'admin'
-                  ? 'مدير إداري'
-                  : supervisorProfile?.role === 'editor'
-                  ? 'مشرف محتوى'
-                  : 'زائر مسجل (بانتظار تفويض الإدارة)'}
-              </span>
+          ) : (
+            /* Regular visitor with unauthorized Google account */
+            <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl mb-6 text-right space-y-2.5">
+              <div className="flex items-center gap-2 text-rose-800 font-bold text-sm">
+                <ShieldAlert className="w-4 h-4 text-rose-600" />
+                <span>حساب غير مصرح له بالإدارة:</span>
+              </div>
+              <p className="text-xs text-stone-700 font-mono truncate">{currentUser.email}</p>
+              <p className="text-[11px] text-rose-700 leading-relaxed">
+                هذا الحساب مسجل كمستخدم عادي وليس لديه صلاحية الدخول للوحة التحكم الإدارية.
+              </p>
+              <div className="pt-2 flex items-center gap-2">
+                <button
+                  onClick={handleLogoutAndRetry}
+                  className="flex-1 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                >
+                  تسجيل الخروج / تبديل الحساب
+                </button>
+                <button
+                  onClick={onClose}
+                  className="py-2 px-4 bg-white border border-stone-300 hover:bg-stone-50 text-stone-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                >
+                  إغلاق
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => {
-                onClose();
-                onSuccess();
-              }}
-              className="mt-4 w-full py-2.5 bg-[#134e5e] hover:bg-[#0e3c48] text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
-            >
-              متابعة إلى لوحة التحكم
-            </button>
-          </div>
+          )
         ) : (
           <div className="space-y-4">
             <button
