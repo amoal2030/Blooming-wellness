@@ -22,7 +22,6 @@ export const db = initializeFirestore(app, {
 }, firebaseConfig.firestoreDatabaseId);
 
 export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
 
 export enum OperationType {
   CREATE = 'create',
@@ -92,13 +91,32 @@ export async function testConnection(): Promise<boolean> {
   }
 }
 
+export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+try {
+  auth.useDeviceLanguage();
+} catch {
+  // Ignored in non-browser runtimes
+}
+
 // Auth helpers
 export async function loginWithGoogle() {
   try {
+    console.info('[Firebase Auth] Initiating signInWithPopup for domain:', typeof window !== 'undefined' ? window.location.hostname : 'unknown');
     const result = await signInWithPopup(auth, googleProvider);
+    console.info('[Firebase Auth] Success! Signed in user:', result.user.email);
     return result.user;
-  } catch (error) {
-    console.error('Google login error:', error);
+  } catch (error: any) {
+    const errorCode = error?.code || 'unknown';
+    const errorMessage = error?.message || String(error);
+    console.error(`[Firebase Auth Error] Code: ${errorCode} | Message: ${errorMessage}`, {
+      code: errorCode,
+      message: errorMessage,
+      domain: typeof window !== 'undefined' ? window.location.hostname : 'unknown',
+      origin: typeof window !== 'undefined' ? window.location.origin : 'unknown',
+      authDomain: firebaseConfig.authDomain,
+      error
+    });
     throw error;
   }
 }

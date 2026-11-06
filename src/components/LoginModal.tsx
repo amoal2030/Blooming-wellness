@@ -27,8 +27,41 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       await login();
       onSuccess();
     } catch (err: any) {
-      console.error(err);
-      setErrorMsg('تعذر تسجيل الدخول عبر حساب Google، يرجى المحاولة مرة أخرى أو التحقق من اتصال الإنترنت.');
+      console.error('[LoginModal] Google login failed:', err);
+      const code = err?.code || '';
+      const domain = typeof window !== 'undefined' ? window.location.hostname : 'amoal2030.github.io';
+      
+      if (code === 'auth/unauthorized-domain') {
+        setErrorMsg(
+          `النطاق الحالي (${domain}) غير مصرّح به في مشروع Firebase.\n` +
+          `الحل: توجه إلى Firebase Console > Authentication > Settings > Authorized domains وأضف النطاق: ${domain} (رمز الخطأ: ${code})`
+        );
+      } else if (code === 'auth/popup-blocked') {
+        setErrorMsg(
+          `تم حظر نافذة تسجيل الدخول المنبثقة من قبل المتصفح.\n` +
+          `يرجى النقر على أيقونة النوافذ المنبثقة في شريط العنوان بالأعلى والسماح بها. (رمز الخطأ: ${code})`
+        );
+      } else if (code === 'auth/operation-not-allowed') {
+        setErrorMsg(
+          `تسجيل الدخول باستخدام Google غير مفعّل في مشروع Firebase.\n` +
+          `يرجى تفعيله من Firebase Console > Authentication > Sign-in method > Google. (رمز الخطأ: ${code})`
+        );
+      } else if (code === 'auth/popup-closed-by-user') {
+        setErrorMsg(
+          `تم إغلاق نافذة تسجيل الدخول قبل إتمام العملية. يرجى إعادة المحاولة. (رمز الخطأ: ${code})`
+        );
+      } else if (code === 'auth/cancelled-popup-request') {
+        setErrorMsg(
+          `تم إلغاء المحاولة لوجود نافذة تسجيل دخول أخرى قيد التشغيل. (رمز الخطأ: ${code})`
+        );
+      } else if (code === 'auth/network-request-failed') {
+        setErrorMsg(
+          `فشل الاتصال بالشبكة أثناء محاولة المصادقة. يرجى التحقق من اتصال الإنترنت. (رمز الخطأ: ${code})`
+        );
+      } else {
+        const detail = err?.message || 'تعذر استكمال المصادقة';
+        setErrorMsg(`فشل تسجيل الدخول: ${detail}${code ? ` (${code})` : ''}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -63,9 +96,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         </div>
 
         {errorMsg && (
-          <div className="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs flex items-center gap-2">
-            <ShieldAlert className="w-4 h-4 shrink-0 text-rose-600" />
-            <span>{errorMsg}</span>
+          <div className="mb-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 text-xs flex items-start gap-2.5 whitespace-pre-line leading-relaxed text-right">
+            <ShieldAlert className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />
+            <span className="flex-1 font-medium">{errorMsg}</span>
           </div>
         )}
 
