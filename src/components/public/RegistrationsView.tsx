@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { RegistrationItem } from '../../types';
+import { getAssetUrl } from '../../utils/assets';
 import { ClipboardList, ExternalLink, Calendar, Check, Copy } from 'lucide-react';
 
 interface RegistrationsViewProps {
@@ -54,7 +55,7 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
                 {/* Thumbnail */}
                 <div className="h-48 relative bg-[#f1f7f9] overflow-hidden">
                   <img
-                    src={item.imageUrl || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80'}
+                    src={getAssetUrl(item.imageUrl || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80')}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"

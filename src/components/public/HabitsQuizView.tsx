@@ -140,7 +140,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
             >
               <div className="h-44 relative bg-[#f1f7f9] overflow-hidden">
                 <img
-                  src={getAssetUrl(quiz.imageUrl || '/src/assets/images/healthy_habits_quiz_1793901821855.jpg')}
+                  src={getAssetUrl(quiz.imageUrl || '/assets/images/healthy_habits_quiz_1793901821855.jpg')}
                   alt={quiz.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"

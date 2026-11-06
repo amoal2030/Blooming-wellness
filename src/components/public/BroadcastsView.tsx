@@ -100,7 +100,7 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
               {/* Card Image */}
               <div className="h-48 relative bg-[#f1f7f9] overflow-hidden">
                 <img
-                  src={getAssetUrl(item.imageUrl || '/src/assets/images/morning_broadcast_mic_1793901821444.jpg')}
+                  src={getAssetUrl(item.imageUrl || '/assets/images/morning_broadcast_mic_1793901821444.jpg')}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"

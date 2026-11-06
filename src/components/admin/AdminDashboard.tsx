@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth, SUPER_ADMIN_EMAIL } from '../../context/AuthContext';
+import { getAssetUrl } from '../../utils/assets';
 import { 
   InitiativeSettings, 
   Broadcast, 
@@ -1177,7 +1178,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                       <div className="sm:col-span-3 flex flex-col items-center justify-center p-3 bg-white rounded-xl border border-stone-200">
                         <img 
-                          src={settingsForm.logoUrl || '/assets/aistudio/image_8a68eff7.png'} 
+                          src={getAssetUrl(settingsForm.logoUrl || '/assets/aistudio/image_8a68eff7.png')} 
                           alt="شعار المبادرة" 
                           className="w-20 h-20 object-contain rounded-lg"
                         />
@@ -1241,7 +1242,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <div className="flex items-center gap-3 pb-2 border-b border-stone-100">
                           <div className="w-12 h-12 bg-white rounded-lg border border-stone-100 p-1 flex items-center justify-center shrink-0">
                             <img
-                              src={settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg'}
+                              src={getAssetUrl(settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg')}
                               alt="وزارة التعليم"
                               className="w-full h-full object-contain"
                             />
@@ -1292,7 +1293,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <div className="flex items-center gap-3 pb-2 border-b border-stone-100">
                           <div className="w-12 h-12 bg-white rounded-lg border border-stone-100 p-1 flex items-center justify-center shrink-0">
                             <img
-                              src={settingsForm.partnerLogos?.[1]?.imageUrl || '/assets/logos/alshatee_high_school.svg'}
+                              src={getAssetUrl(settingsForm.partnerLogos?.[1]?.imageUrl || '/assets/logos/alshatee_high_school.svg')}
                               alt="مدرسة ثانوية الشاطئ"
                               className="w-full h-full object-contain"
                             />

@@ -122,7 +122,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
 
             <div className="lg:col-span-5 h-64 lg:h-auto relative bg-[#f1f7f9] overflow-hidden">
               <img
-                src={getAssetUrl(featuredEvent.imageUrl || '/src/assets/images/hero_awareness_banner_1793901820998.jpg')}
+                src={getAssetUrl(featuredEvent.imageUrl || '/assets/images/hero_awareness_banner_1793901820998.jpg')}
                 alt={featuredEvent.title}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
@@ -184,7 +184,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
             >
               <div className="h-48 relative bg-[#f1f7f9] overflow-hidden">
                 <img
-                  src={getAssetUrl(event.imageUrl || '/src/assets/images/hero_awareness_banner_1793901820998.jpg')}
+                  src={getAssetUrl(event.imageUrl || '/assets/images/hero_awareness_banner_1793901820998.jpg')}
                   alt={event.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"

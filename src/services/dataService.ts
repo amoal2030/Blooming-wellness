@@ -54,7 +54,7 @@ export const DEFAULT_SETTINGS: InitiativeSettings = {
   contactEmail: 'contact@alshatee-aafia.edu.sa',
   contactPhone: '+966 12 600 0000',
   address: 'المملكة العربية السعودية - مدرسة ثانوية الشاطئ',
-  heroImageUrl: '/src/assets/images/hero_awareness_banner_1793901820998.jpg'
+  heroImageUrl: '/assets/images/hero_awareness_banner_1793901820998.jpg'
 };
 
 // ======================= Settings =======================
@@ -472,7 +472,7 @@ export async function seedInitialContentIfEmpty(): Promise<boolean> {
         description: 'حلقة إذاعية ملهمة تتناول الخطوات الذهبية لبدء يوم مفعم بالحيوية، بدءاً من شرب الماء، والتعرض لضوء الشمس الطبيعي، وممارسة تمارين التمدد الصباحية.',
         date: '2026-11-01',
         topic: 'العادات الصباحية',
-        imageUrl: '/src/assets/images/morning_broadcast_mic_1793901821444.jpg',
+        imageUrl: '/assets/images/morning_broadcast_mic_1793901821444.jpg',
         audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
         videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
       },
@@ -507,7 +507,7 @@ export async function seedInitialContentIfEmpty(): Promise<boolean> {
         date: '2026-10-25',
         duration: '45 دقيقة',
         topic: 'الطب الوقائي',
-        imageUrl: '/src/assets/images/awareness_lecture_hall_1793901820498.jpg',
+        imageUrl: '/assets/images/awareness_lecture_hall_1793901820498.jpg',
         videoUrl: 'https://www.youtube.com/watch?v=ScMzIvxBSi4'
       },
       {
@@ -570,7 +570,7 @@ export async function seedInitialContentIfEmpty(): Promise<boolean> {
         title: 'اختبار مؤشر نمط الحياة اليومي والعادات الصحية',
         description: 'استبانة تفاعلية سريعة مكونة من 6 أسئلة دقيقة لقياس مدى توافق يومك مع الإرشادات الصحية المعتمدة لمنظمة الصحة العالمية ووزارة الصحة.',
         category: 'نمط الحياة العام',
-        imageUrl: '/src/assets/images/healthy_habits_quiz_1793901821855.jpg',
+        imageUrl: '/assets/images/healthy_habits_quiz_1793901821855.jpg',
         questions: [
           {
             id: 'q1',
@@ -669,7 +669,7 @@ export async function seedInitialContentIfEmpty(): Promise<boolean> {
         time: '04:00 مساءً - 08:00 مساءً',
         location: 'الرياض - ممشى حديقة الملك عبد الله',
         status: 'upcoming',
-        imageUrl: '/src/assets/images/hero_awareness_banner_1793901820998.jpg',
+        imageUrl: '/assets/images/hero_awareness_banner_1793901820998.jpg',
         isFeatured: true
       },
       {

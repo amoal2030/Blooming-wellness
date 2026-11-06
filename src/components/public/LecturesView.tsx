@@ -101,7 +101,7 @@ export const LecturesView: React.FC<LecturesViewProps> = ({
                 className="h-52 relative bg-[#f1f7f9] overflow-hidden cursor-pointer"
               >
                 <img
-                  src={getAssetUrl(item.imageUrl || '/src/assets/images/awareness_lecture_hall_1793901820498.jpg')}
+                  src={getAssetUrl(item.imageUrl || '/assets/images/awareness_lecture_hall_1793901820498.jpg')}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"

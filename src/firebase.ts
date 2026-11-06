@@ -2,6 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { 
   getFirestore, 
+  initializeFirestore,
+  setLogLevel,
   doc, 
   getDocFromServer 
 } from 'firebase/firestore';
@@ -10,8 +12,15 @@ import firebaseConfig from '../firebase-applet-config.json';
 // Initialize Firebase App
 export const app = initializeApp(firebaseConfig);
 
-// CRITICAL: Must pass firebaseConfig.firestoreDatabaseId as required by Firebase integration skill
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+// Set log level to avoid noisy offline/stream retry warnings
+setLogLevel('error');
+
+// CRITICAL: Initialize Firestore with long polling for iframe and restricted proxy environments
+// This avoids the 10-second WebChannel stream connection timeout
+export const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+}, firebaseConfig.firestoreDatabaseId);
+
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
@@ -66,7 +75,7 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
 export async function testConnection(): Promise<boolean> {
   try {
     const timeoutPromise = new Promise<never>((_, reject) => 
-      setTimeout(() => reject(new Error('connection probe timeout')), 2500)
+      setTimeout(() => reject(new Error('the client is offline')), 2500)
     );
     await Promise.race([
       getDocFromServer(doc(db, 'test', 'connection')),

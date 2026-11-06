@@ -407,7 +407,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               >
                 <div className="h-44 relative bg-[#f1f7f9] overflow-hidden">
                   <img
-                    src={getAssetUrl(item.imageUrl || '/src/assets/images/morning_broadcast_mic_1793901821444.jpg')}
+                    src={getAssetUrl(item.imageUrl || '/assets/images/morning_broadcast_mic_1793901821444.jpg')}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
@@ -473,7 +473,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               >
                 <div className="sm:w-2/5 h-48 sm:h-auto relative bg-[#f1f7f9] overflow-hidden shrink-0">
                   <img
-                    src={getAssetUrl(item.imageUrl || '/src/assets/images/awareness_lecture_hall_1793901820498.jpg')}
+                    src={getAssetUrl(item.imageUrl || '/assets/images/awareness_lecture_hall_1793901820498.jpg')}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
@@ -574,7 +574,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
               <div className="lg:col-span-5 h-64 lg:h-full relative overflow-hidden bg-[#134e5e]">
                 <img
-                  src={getAssetUrl(featuredEvent.imageUrl || '/src/assets/images/hero_awareness_banner_1793901820998.jpg')}
+                  src={getAssetUrl(featuredEvent.imageUrl || '/assets/images/hero_awareness_banner_1793901820998.jpg')}
                   alt={featuredEvent.title}
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"

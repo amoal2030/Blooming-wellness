@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Interview } from '../../types';
+import { getAssetUrl } from '../../utils/assets';
 import { Mic, Search, Play, UserCheck, Calendar } from 'lucide-react';
 
 interface InterviewsViewProps {
@@ -126,7 +127,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
                 className="h-60 relative bg-[#f1f7f9] overflow-hidden cursor-pointer"
               >
                 <img
-                  src={item.imageUrl || 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80'}
+                  src={getAssetUrl(item.imageUrl || 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80')}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"
