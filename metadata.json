@@ -1,0 +1,8 @@
+{
+  "name": "منصة المبادرة التوعوية",
+  "description": "منصة رقمية متكاملة لمبادرة توعوية مجتمعية تقدم الإذاعات والمحاضرات والمقابلات التفاعلية واختبارات العادات الصحية وحجز الفعاليات مع لوحة تحكم إدارية شاملة.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

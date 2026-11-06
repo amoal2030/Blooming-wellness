@@ -1,0 +1,117 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common security primitives
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+    
+    function incoming() {
+      return request.resource.data;
+    }
+    
+    function existing() {
+      return resource.data;
+    }
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && request.auth.token.email == "onlak2030@gmail.com";
+    }
+
+    function isAdmin() {
+      return isSuperAdmin() || (
+        isSignedIn() && 
+        exists(/databases/$(database)/documents/supervisors/$(request.auth.uid)) && 
+        get(/databases/$(database)/documents/supervisors/$(request.auth.uid)).data.role == "admin"
+      );
+    }
+
+    function hasPermission(perm) {
+      return isAdmin() || (
+        isSignedIn() && 
+        exists(/databases/$(database)/documents/supervisors/$(request.auth.uid)) && 
+        get(/databases/$(database)/documents/supervisors/$(request.auth.uid)).data.permissions[perm] == true
+      );
+    }
+
+    // 1. Settings Collection
+    match /settings/{settingId} {
+      allow read: if isValidId(settingId);
+      allow create, update: if isValidId(settingId) && hasPermission("settings");
+      allow delete: if isValidId(settingId) && isAdmin();
+    }
+
+    // 2. Broadcasts (الإذاعات الصباحية)
+    match /broadcasts/{broadcastId} {
+      allow read: if isValidId(broadcastId);
+      allow create, update, delete: if isValidId(broadcastId) && hasPermission("broadcasts");
+    }
+
+    // 3. Lectures (المحاضرات التوعوية)
+    match /lectures/{lectureId} {
+      allow read: if isValidId(lectureId);
+      allow create, update, delete: if isValidId(lectureId) && hasPermission("lectures");
+    }
+
+    // 4. Interviews (المقابلات)
+    match /interviews/{interviewId} {
+      allow read: if isValidId(interviewId);
+      allow create, update, delete: if isValidId(interviewId) && hasPermission("interviews");
+    }
+
+    // 5. Quizzes (اختبر مدى صحة عاداتك)
+    match /quizzes/{quizId} {
+      allow read: if isValidId(quizId);
+      allow create, update, delete: if isValidId(quizId) && hasPermission("quizzes");
+    }
+
+    // 6. Quiz Responses (نتائج الاستبانات للزوار)
+    match /quiz_responses/{responseId} {
+      // Anyone can submit valid answers
+      allow create: if isValidId(responseId) && 
+        incoming().score is number && 
+        incoming().totalQuestions is number;
+      // Only supervisors/admins can read aggregated response statistics
+      allow read, delete: if isValidId(responseId) && hasPermission("quizzes");
+      allow update: if false; // Immutable once submitted
+    }
+
+    // 7. Events (الأنشطة والفعاليات)
+    match /events/{eventId} {
+      allow read: if isValidId(eventId);
+      allow create, update, delete: if isValidId(eventId) && hasPermission("events");
+    }
+
+    // 8. Registrations (التسجيل في الأنشطة)
+    match /registrations/{registrationId} {
+      allow read: if isValidId(registrationId);
+      allow create, update, delete: if isValidId(registrationId) && hasPermission("registrations");
+    }
+
+    // 9. Supervisors and Permissions (إدارة المشرفين والصلاحيات)
+    match /supervisors/{supervisorId} {
+      allow read: if isSignedIn() && isValidId(supervisorId);
+      allow create, update, delete: if isValidId(supervisorId) && isAdmin();
+    }
+
+    // 10. Inquiries (رسائل واستفسارات الزوار)
+    match /inquiries/{inquiryId} {
+      allow create: if isValidId(inquiryId) && 
+        incoming().name is string && 
+        incoming().name.size() > 0 &&
+        incoming().email is string &&
+        incoming().message is string;
+      allow read, update, delete: if isValidId(inquiryId) && isAdmin();
+    }
+  }
+}

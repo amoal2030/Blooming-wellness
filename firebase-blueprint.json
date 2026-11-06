@@ -1,0 +1,210 @@
+{
+  "entities": {
+    "GeneralSettings": {
+      "title": "GeneralSettings",
+      "description": "General settings and content of the awareness initiative portal",
+      "type": "object",
+      "properties": {
+        "initiativeName": { "type": "string", "maxLength": 200 },
+        "tagline": { "type": "string", "maxLength": 300 },
+        "aboutText": { "type": "string", "maxLength": 4000 },
+        "visionText": { "type": "string", "maxLength": 2000 },
+        "missionText": { "type": "string", "maxLength": 2000 },
+        "goals": { "type": "array", "description": "List of initiative goals" },
+        "logoUrl": { "type": "string", "maxLength": 1000 },
+        "partnerLogos": { "type": "array", "description": "Partner and sponsor logos with name and url" },
+        "contactEmail": { "type": "string", "maxLength": 200 },
+        "contactPhone": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 300 },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "Broadcast": {
+      "title": "Broadcast",
+      "description": "Morning radio broadcast item",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 250 },
+        "description": { "type": "string", "maxLength": 5000 },
+        "date": { "type": "string", "maxLength": 50 },
+        "topic": { "type": "string", "maxLength": 100 },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "audioUrl": { "type": "string", "maxLength": 1000 },
+        "videoUrl": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "description", "topic"]
+    },
+    "Lecture": {
+      "title": "Lecture",
+      "description": "Awareness lecture item",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 250 },
+        "description": { "type": "string", "maxLength": 5000 },
+        "speaker": { "type": "string", "maxLength": 200 },
+        "videoUrl": { "type": "string", "maxLength": 1000 },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "date": { "type": "string", "maxLength": 50 },
+        "duration": { "type": "string", "maxLength": 50 },
+        "topic": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "description", "speaker"]
+    },
+    "Interview": {
+      "title": "Interview",
+      "description": "Dialogue interview item",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 250 },
+        "guestName": { "type": "string", "maxLength": 200 },
+        "guestTitle": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 5000 },
+        "videoUrl": { "type": "string", "maxLength": 1000 },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "date": { "type": "string", "maxLength": 50 },
+        "topic": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "guestName", "description"]
+    },
+    "Quiz": {
+      "title": "Quiz",
+      "description": "Habit evaluation questionnaire",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 250 },
+        "description": { "type": "string", "maxLength": 3000 },
+        "category": { "type": "string", "maxLength": 100 },
+        "questions": { "type": "array", "description": "Array of question objects" },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "description", "questions"]
+    },
+    "QuizResponse": {
+      "title": "QuizResponse",
+      "description": "Visitor response to habit quiz",
+      "type": "object",
+      "properties": {
+        "quizId": { "type": "string", "maxLength": 128 },
+        "quizTitle": { "type": "string", "maxLength": 250 },
+        "respondentName": { "type": "string", "maxLength": 150 },
+        "score": { "type": "number" },
+        "totalQuestions": { "type": "number" },
+        "percentage": { "type": "number" },
+        "answers": { "type": "array", "description": "Visitor selected answer indices" },
+        "submittedAt": { "type": "string" }
+      },
+      "required": ["quizId", "score", "totalQuestions", "percentage"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "Initiative activity and event",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 250 },
+        "description": { "type": "string", "maxLength": 5000 },
+        "date": { "type": "string", "maxLength": 50 },
+        "time": { "type": "string", "maxLength": 50 },
+        "location": { "type": "string", "maxLength": 300 },
+        "status": { "type": "string", "enum": ["upcoming", "ongoing", "completed"] },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "isFeatured": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "description", "date", "status"]
+    },
+    "RegistrationItem": {
+      "title": "RegistrationItem",
+      "description": "Activity open for external registration",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 250 },
+        "description": { "type": "string", "maxLength": 5000 },
+        "externalUrl": { "type": "string", "maxLength": 1000 },
+        "deadline": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "enum": ["open", "closed"] },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "externalUrl", "status"]
+    },
+    "Supervisor": {
+      "title": "Supervisor",
+      "description": "Supervisor/Editor account metadata and permissions",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 200 },
+        "name": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "enum": ["admin", "editor"] },
+        "permissions": { "type": "object" },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["email", "role"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Visitor contact message",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 150 },
+        "email": { "type": "string", "maxLength": 200 },
+        "phone": { "type": "string", "maxLength": 100 },
+        "message": { "type": "string", "maxLength": 3000 },
+        "submittedAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["new", "replied"] }
+      },
+      "required": ["name", "email", "message"]
+    }
+  },
+  "firestore": {
+    "/settings/{settingId}": {
+      "schema": "GeneralSettings",
+      "description": "Global settings for the initiative"
+    },
+    "/broadcasts/{broadcastId}": {
+      "schema": "Broadcast",
+      "description": "Morning broadcast episodes and audio/video links"
+    },
+    "/lectures/{lectureId}": {
+      "schema": "Lecture",
+      "description": "Awareness lectures and video sessions"
+    },
+    "/interviews/{interviewId}": {
+      "schema": "Interview",
+      "description": "Interviews and guest dialogues"
+    },
+    "/quizzes/{quizId}": {
+      "schema": "Quiz",
+      "description": "Habit evaluation quizzes and questionnaires"
+    },
+    "/quiz_responses/{responseId}": {
+      "schema": "QuizResponse",
+      "description": "Visitor completed quiz results and answers"
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Awareness events, workshops, and activities"
+    },
+    "/registrations/{registrationId}": {
+      "schema": "RegistrationItem",
+      "description": "Registration links for activities"
+    },
+    "/supervisors/{supervisorId}": {
+      "schema": "Supervisor",
+      "description": "Editor and supervisor roles and granular permissions"
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Contact form inquiries from public visitors"
+    }
+  }
+}
