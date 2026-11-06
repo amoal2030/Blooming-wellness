@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: process.env.VITE_BASE_PATH || '/Blooming-wellness/',
+    base: '/Blooming-wellness/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

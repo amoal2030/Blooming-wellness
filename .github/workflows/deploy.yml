@@ -41,6 +41,14 @@ jobs:
         env:
           VITE_BASE_PATH: '/Blooming-wellness/'
 
+      - name: Verify build artifacts
+        run: |
+          test -f dist/index.html || { echo "CRITICAL ERROR: dist/index.html is missing!"; exit 1; }
+          test -f dist/404.html || { echo "CRITICAL ERROR: dist/404.html is missing!"; exit 1; }
+          ls -la dist/assets/*.js || { echo "CRITICAL ERROR: No compiled JS bundles found in dist/assets!"; exit 1; }
+          ls -la dist/assets/*.css || { echo "CRITICAL ERROR: No compiled CSS bundles found in dist/assets!"; exit 1; }
+          echo "Verification SUCCESS: All production HTML, JS, and CSS artifacts are present."
+
       - name: Setup Pages configuration
         uses: actions/configure-pages@v4
 
