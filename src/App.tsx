@@ -39,10 +39,11 @@ import { HabitsQuizView } from './components/public/HabitsQuizView';
 import { EventsView } from './components/public/EventsView';
 import { RegistrationsView } from './components/public/RegistrationsView';
 import { AdminDashboard } from './components/admin/AdminDashboard';
+import { AccessDeniedView } from './components/admin/AccessDeniedView';
 import { Sparkles, Loader2, ShieldAlert } from 'lucide-react';
 
 function MainApp() {
-  const { currentUser, isSuperAdmin, isAdmin } = useAuth();
+  const { currentUser, isSuperAdmin, isAdmin, isAuthorizedStaff } = useAuth();
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [loading, setLoading] = useState(true);
 
@@ -154,9 +155,9 @@ function MainApp() {
 
   // Admin Dashboard Mode
   if (activeTab === 'admin') {
-    if (!currentUser) {
+    if (!currentUser || !isAuthorizedStaff) {
       return (
-        <div className="min-h-screen bg-stone-100 flex flex-col justify-between">
+        <div className="min-h-screen bg-[#f7fbfc] flex flex-col justify-between">
           <Navbar
             activeTab={activeTab}
             setActiveTab={setActiveTab}
@@ -164,23 +165,10 @@ function MainApp() {
             onOpenLoginModal={() => setIsLoginModalOpen(true)}
           />
 
-          <div className="max-w-md mx-auto p-8 my-16 bg-white rounded-3xl border border-stone-200 shadow-xl text-center space-y-4">
-            <div className="w-16 h-16 mx-auto rounded-3xl bg-rose-50 text-rose-600 flex items-center justify-center">
-              <ShieldAlert className="w-8 h-8" />
-            </div>
-            <h2 className="text-xl font-bold text-stone-900">منطقة مخصصة لإدارة المبادرة</h2>
-            <p className="text-xs text-stone-500 leading-relaxed">
-              يرجى تسجيل الدخول باستخدام حساب Google المعتمد للمدير الرئيسي أو المشرفين للوصول إلى لوحة التحكم الإدارية.
-            </p>
-            <div className="pt-2">
-              <button
-                onClick={() => setIsLoginModalOpen(true)}
-                className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-xs transition-colors"
-              >
-                تسجيل الدخول للمسؤولين
-              </button>
-            </div>
-          </div>
+          <AccessDeniedView
+            onReturnHome={() => setActiveTab('home')}
+            onOpenLoginModal={() => setIsLoginModalOpen(true)}
+          />
 
           <Footer
             settings={settings}

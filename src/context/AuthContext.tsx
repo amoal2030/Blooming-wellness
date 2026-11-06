@@ -5,12 +5,14 @@ import { auth, db, loginWithGoogle, logoutUser, handleFirestoreError, OperationT
 import { Supervisor, SupervisorPermissions } from '../types';
 
 export const SUPER_ADMIN_EMAIL = "onlak2030@gmail.com";
+export const SUPER_ADMIN_UID = "AzxlMQTMEQRZsJf3LCUbTjuwFus2";
 
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
   isSuperAdmin: boolean;
   isAdmin: boolean;
+  isAuthorizedStaff: boolean;
   supervisorProfile: Supervisor | null;
   hasPermission: (permission: keyof SupervisorPermissions) => boolean;
   login: () => Promise<void>;
@@ -33,6 +35,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   isSuperAdmin: false,
   isAdmin: false,
+  isAuthorizedStaff: false,
   supervisorProfile: null,
   hasPermission: () => false,
   login: async () => {},
@@ -49,17 +52,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setCurrentUser(user);
       if (user) {
         try {
-          // Check if supervisor record exists in Firestore
-          const supRef = doc(db, 'supervisors', user.uid);
-          const supSnap = await getDoc(supRef);
-          
-          if (supSnap.exists()) {
-            setSupervisorProfile({ id: supSnap.id, ...supSnap.data() } as Supervisor);
-          } else if (user.email === SUPER_ADMIN_EMAIL) {
+          const isUserSuperAdmin = 
+            user.email?.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase() ||
+            user.uid === SUPER_ADMIN_UID;
+
+          if (isUserSuperAdmin) {
             // Super Admin gets universal privileges
             setSupervisorProfile({
               id: user.uid,
-              email: user.email,
+              email: user.email || SUPER_ADMIN_EMAIL,
               name: user.displayName || 'المدير العام',
               role: 'admin',
               permissions: {
@@ -75,7 +76,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               createdAt: new Date().toISOString()
             });
           } else {
-            setSupervisorProfile(null);
+            // Check if user is registered in the supervisors collection
+            const supRef = doc(db, 'supervisors', user.uid);
+            const supSnap = await getDoc(supRef);
+            
+            if (supSnap.exists()) {
+              const data = supSnap.data() as Supervisor;
+              // Only grant supervisor profile if role is authorized
+              if (data.role === 'admin' || data.role === 'editor') {
+                const { id: _, ...rest } = data;
+                setSupervisorProfile({ id: supSnap.id, ...rest });
+              } else {
+                setSupervisorProfile(null);
+              }
+            } else {
+              // Regular user: strictly null supervisor profile
+              setSupervisorProfile(null);
+            }
           }
         } catch (error) {
           console.warn('Could not load supervisor profile:', error);
@@ -90,10 +107,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => unsubscribe();
   }, []);
 
-  const isSuperAdmin = currentUser?.email === SUPER_ADMIN_EMAIL;
-  const isAdmin = isSuperAdmin || supervisorProfile?.role === 'admin';
+  const isSuperAdmin = Boolean(
+    currentUser && (
+      currentUser.email?.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase() ||
+      currentUser.uid === SUPER_ADMIN_UID
+    )
+  );
+
+  const isAuthorizedSupervisor = Boolean(
+    !isSuperAdmin &&
+    supervisorProfile != null &&
+    (supervisorProfile.role === 'admin' || supervisorProfile.role === 'editor')
+  );
+
+  // User is allowed into Admin Dashboard ONLY if they are Super Admin or an Authorized Supervisor
+  const isAuthorizedStaff = Boolean(isSuperAdmin || isAuthorizedSupervisor);
+
+  const isAdmin = isSuperAdmin || (supervisorProfile?.role === 'admin');
 
   const hasPermission = (permission: keyof SupervisorPermissions): boolean => {
+    if (!isAuthorizedStaff) return false;
     if (isSuperAdmin || isAdmin) return true;
     if (!supervisorProfile) return false;
     return Boolean(supervisorProfile.permissions?.[permission]);
@@ -111,6 +144,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     try {
       await logoutUser();
+      setSupervisorProfile(null);
     } catch (err) {
       console.error('Logout failed:', err);
       throw err;
@@ -124,6 +158,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loading,
         isSuperAdmin,
         isAdmin,
+        isAuthorizedStaff,
         supervisorProfile,
         hasPermission,
         login,
