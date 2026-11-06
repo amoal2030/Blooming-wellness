@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth, SUPER_ADMIN_EMAIL } from '../context/AuthContext';
-import { X, ShieldAlert, LogIn, CheckCircle2, UserCheck } from 'lucide-react';
+import { X, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -13,7 +13,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const { login, currentUser, isAdmin, isSuperAdmin, supervisorProfile } = useAuth();
+  const { login, currentUser, isSuperAdmin, supervisorProfile } = useAuth();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -34,25 +34,30 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-xs animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0e3c48]/75 backdrop-blur-xs animate-fade-in">
       <div 
-        className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 border border-stone-200"
+        className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8 border border-[#dbe8ed]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 left-4 p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors"
+          className="absolute top-4 left-4 p-2 text-[#526f78] hover:text-[#0e3c48] hover:bg-[#f1f7f9] rounded-xl transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="text-center mb-6">
-          <div className="w-14 h-14 mx-auto mb-3 bg-emerald-100 text-emerald-800 rounded-2xl flex items-center justify-center shadow-inner">
-            <UserCheck className="w-7 h-7" />
+          <div className="w-18 h-18 mx-auto mb-3 rounded-full bg-white p-1.5 border-2 border-[#dbe8ed] shadow-md flex items-center justify-center overflow-hidden">
+            <img
+              src="/assets/aistudio/image_8a68eff7.png"
+              alt="شعار مبادرة عافية تُزهر"
+              className="w-full h-full object-contain"
+              referrerPolicy="no-referrer"
+            />
           </div>
-          <h3 className="text-xl font-bold text-stone-900">تسجيل الدخول للمسؤولين</h3>
-          <p className="text-xs text-stone-500 mt-1">
-            بوابة الإدارة للمدير الرئيسي ومشرفي المحتوى المعتمدين
+          <h3 className="text-xl font-black text-[#0e3c48]">تسجيل الدخول للمسؤولين</h3>
+          <p className="text-xs text-[#526f78] mt-1">
+            بوابة الإدارة للمدير الرئيسي ومشرفي مبادرة "عافية تُزهر"
           </p>
         </div>
 
@@ -64,15 +69,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         )}
 
         {currentUser ? (
-          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl mb-6 text-right">
-            <div className="flex items-center gap-2 text-emerald-800 font-bold text-sm mb-1">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          <div className="p-4 bg-[#e8f7ee] border border-[#c4e9d2] rounded-2xl mb-6 text-right">
+            <div className="flex items-center gap-2 text-[#185644] font-bold text-sm mb-1">
+              <CheckCircle2 className="w-4 h-4 text-[#2e9e66]" />
               <span>أنت مسجل الدخول حالياً:</span>
             </div>
-            <p className="text-xs text-stone-700 font-mono truncate">{currentUser.email}</p>
+            <p className="text-xs text-[#0c2b33] font-mono truncate">{currentUser.email}</p>
             <div className="mt-2 text-xs flex items-center gap-2">
-              <span className="text-stone-500">الرتبة:</span>
-              <span className="font-bold text-emerald-700">
+              <span className="text-[#526f78]">الرتبة:</span>
+              <span className="font-extrabold text-[#134e5e]">
                 {isSuperAdmin
                   ? 'المدير الرئيسي (صلاحيات كاملة)'
                   : supervisorProfile?.role === 'admin'
@@ -87,7 +92,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 onClose();
                 onSuccess();
               }}
-              className="mt-4 w-full py-2.5 bg-emerald-700 text-white font-bold text-xs rounded-xl hover:bg-emerald-800 transition-colors"
+              className="mt-4 w-full py-2.5 bg-[#134e5e] hover:bg-[#0e3c48] text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
             >
               متابعة إلى لوحة التحكم
             </button>
@@ -97,7 +102,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-stone-50 border border-stone-300 rounded-xl text-stone-800 font-bold text-sm shadow-xs transition-colors hover:border-stone-400 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-[#f7fbfc] border border-[#d0e0e6] rounded-2xl text-[#0c2b33] font-bold text-sm shadow-xs transition-colors hover:border-[#2e9e66] disabled:opacity-50 cursor-pointer"
             >
               <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
                 <path
@@ -120,9 +125,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               <span>{loading ? 'جارٍ تسجيل الدخول...' : 'تسجيل الدخول باستخدام Google'}</span>
             </button>
 
-            <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 text-[11px] text-stone-600 space-y-1.5">
-              <p className="font-semibold text-stone-800">تنويه الأمان والصلاحيات:</p>
-              <p>• حساب المدير الرئيسي التلقائي: <code className="text-emerald-700 font-mono font-bold">{SUPER_ADMIN_EMAIL}</code></p>
+            <div className="p-3.5 bg-[#f7fbfc] rounded-2xl border border-[#dbe8ed] text-[11px] text-[#526f78] space-y-1.5">
+              <p className="font-bold text-[#0e3c48]">تنويه الأمان والصلاحيات:</p>
+              <p>• حساب المدير الرئيسي التلقائي: <code className="text-[#134e5e] font-mono font-bold">{SUPER_ADMIN_EMAIL}</code></p>
               <p>• المشرفون يتم اعتماد حساباتهم وتعيين صلاحياتهم حصرياً من قِبل المدير الرئيسي عبر لوحة التحكم.</p>
               <p>• الزائر العادي لا يمتلك صلاحية الدخول أو تعديل المحتوى.</p>
             </div>

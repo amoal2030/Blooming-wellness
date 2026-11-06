@@ -26,28 +26,34 @@ import {
 } from '../types';
 
 export const DEFAULT_SETTINGS: InitiativeSettings = {
-  initiativeName: 'مبادرة صحتنا أمانة المجتمعية',
-  tagline: 'نحو مجتمع صحي واعٍ يتبنى العادات الإيجابية ويمتلك ثقافة الوقاية وجودة الحياة',
-  aboutText: 'مبادرة توعوية مجتمعية وطنية تهدف إلى تعزيز الوعي الصحي والوقائي، وتطوير السلوكيات المعيشية اليومية للأفراد والأسر، من خلال حزمة متكاملة من الإذاعات الصباحية الموجهة، والمحاضرات العلمية المبسطة، والمقابلات التخصصية مع نخبة من الخبراء، والاستبانات التفاعلية لقياس أنماط الحياة.',
-  visionText: 'أن نكون المنصة التوعوية الرائدة والمصدر الموثوق في ترسيخ أسلوب حياة صحي ومستدام لجميع أطياف المجتمع.',
-  missionText: 'تمكين الأفراد والمؤسسات من المعرفة الصحية والوقائية الحديثة عبر أدوات تفاعلية وشراكات مجتمعية فاعلة تعزز العافية الجسدية والنفسية.',
+  initiativeName: 'مبادرة عافية تُزهر',
+  tagline: 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر',
+  aboutText: 'مبادرة مدرسية ومجتمعية توعوية رائدة تحت إشراف وزارة التعليم وتنظيم مدرسة ثانوية الشاطئ، تهدف إلى ترسيخ الركائز الأربع لنمط الحياة المتوازن: التغذية الصحية الطبيعية، والنشاط البدني المستمر، وجودة النوم والراحة، والعافية النفسية، لتمكين الطلاب والمجتمع من بناء حياة صحية ملهمة ومزدهرة.',
+  visionText: 'أن نكون النموذج التوعوي المدرسي والمجتمعي الرائد في صناعة أجيال واعية تحقق التوازن الصحي وتزهر بالعافية وجودة الحياة.',
+  missionText: 'نشر الوعي الصحي المتكامل من خلال برامج إذاعية تفاعلية، ومحاضرات متخصصة، ومقابلات ملهمة، واستبانات ذكية تدعم التوازن بين العقل والجسد والروح.',
   goals: [
-    'نشر الثقافة الصحية والوقائية السليمة لمكافحة الأمراض المزمنة ونمط الحياة الخامل.',
-    'تقديم برامج إذاعية ومحاضرات توعوية دورية تلائم جميع أفراد الأسرة.',
-    'استضافة كبار الأطباء والمختصين في مقابلات حوارية ثرية تجيب على استفسارات الجمهور.',
-    'توفير استبانات رقمية ذكية تمكن الزوار من تقييم عاداتهم الصحية والغذائية والحركية.',
-    'إشراك المجتمع في ورش عمل ومسارات مشي وأنشطة توعوية ميدانية هادفة.'
+    'ترسيخ ثقافة الغذاء الصحي المتوازن والابتعاد عن الأنماط الغذائية الضارة.',
+    'تحفيز النشاط البدني والحركي اليومي لدى الطلاب وأفراد المجتمع.',
+    'التوعية بأهمية النوم الصحي المنتظم وأثره المباشر على التركيز والتحصيل الدراسي.',
+    'تعزيز الصحة النفسية والتوازن الوجداني وجودة الحياة في البيئة المدرسية والمجتمعية.',
+    'تفعيل الشراكة الإيجابية والتكامل البناء بين وزارة التعليم ومدرسة ثانوية الشاطئ والمجتمع.'
   ],
-  logoUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=200&q=80',
+  logoUrl: '/assets/aistudio/image_8a68eff7.png',
   partnerLogos: [
-    { id: '1', name: 'وزارة الصحة والوقاية', imageUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=200&q=80' },
-    { id: '2', name: 'المركز الوطني للتثقيف الصحي', imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=200&q=80' },
-    { id: '3', name: 'جمعية أصدقاء الصحة', imageUrl: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=200&q=80' },
-    { id: '4', name: 'المجلس الصحي المجتمعي', imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=200&q=80' }
+    { 
+      id: 'moe', 
+      name: 'وزارة التعليم', 
+      imageUrl: '/assets/logos/ministry_of_education.svg' 
+    },
+    { 
+      id: 'shatee_high_school', 
+      name: 'مدرسة ثانوية الشاطئ', 
+      imageUrl: '/assets/logos/alshatee_high_school.svg' 
+    }
   ],
-  contactEmail: 'contact@sehatuna-initiative.org',
-  contactPhone: '+966 11 234 5678',
-  address: 'المملكة العربية السعودية - الرياض، حي النخيل',
+  contactEmail: 'contact@alshatee-aafia.edu.sa',
+  contactPhone: '+966 12 600 0000',
+  address: 'المملكة العربية السعودية - مدرسة ثانوية الشاطئ',
   heroImageUrl: '/src/assets/images/hero_awareness_banner_1793901820998.jpg'
 };
 
@@ -58,7 +64,26 @@ export async function getInitiativeSettings(): Promise<InitiativeSettings> {
     const docRef = doc(db, 'settings', 'general');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return { id: docSnap.id, ...docSnap.data() } as InitiativeSettings;
+      const data = docSnap.data() as InitiativeSettings;
+      // Guarantee transition to the official identity and the two designated partners
+      if (
+        data.initiativeName === 'مبادرة صحتنا أمانة المجتمعية' ||
+        !data.partnerLogos ||
+        data.partnerLogos.length !== 2 ||
+        data.partnerLogos.some(p => p.name.includes('الصحة'))
+      ) {
+        const synced = {
+          ...data,
+          initiativeName: 'مبادرة عافية تُزهر',
+          tagline: 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر',
+          logoUrl: '/assets/aistudio/image_8a68eff7.png',
+          partnerLogos: DEFAULT_SETTINGS.partnerLogos,
+        };
+        // Persist the synced official identity back to firestore
+        setDoc(docRef, synced, { merge: true }).catch(() => {});
+        return { id: docSnap.id, ...synced };
+      }
+      return { id: docSnap.id, ...data };
     }
     // Return default settings if none stored yet
     return DEFAULT_SETTINGS;
@@ -707,7 +732,7 @@ export async function seedInitialContentIfEmpty(): Promise<boolean> {
 
     return true;
   } catch (error) {
-    console.error('Error seeding initial data:', error);
+    console.warn('Initial data seeding deferred or skipped (requires administrator write privileges):', error);
     return false;
   }
 }

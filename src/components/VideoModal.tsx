@@ -101,7 +101,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                 href={videoUrl} 
                 target="_blank" 
                 rel="noreferrer"
-                className="text-emerald-400 hover:text-emerald-300 underline flex items-center gap-1"
+                className="text-[#84d2ea] hover:text-[#389eb3] underline flex items-center gap-1 font-medium transition-colors"
               >
                 <span>فتح الرابط الخارجي مباشرة</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -114,7 +114,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         <div className="flex justify-end px-6 py-3 bg-stone-50 border-t border-stone-100">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs font-medium text-stone-700 bg-white border border-stone-200 rounded-lg hover:bg-stone-100 transition-colors"
+            className="px-4 py-2 text-xs font-bold text-stone-700 bg-white border border-stone-200 rounded-xl hover:bg-stone-100 transition-colors cursor-pointer"
           >
             إغلاق النافذة
           </button>

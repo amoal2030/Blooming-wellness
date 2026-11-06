@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { ActiveTab, InitiativeSettings } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { 
-  ShieldCheck, 
   LogIn, 
   Menu, 
   X, 
-  Sparkles,
   LayoutDashboard
 } from 'lucide-react';
 
@@ -24,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenLoginModal,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { currentUser, isSuperAdmin, isAdmin } = useAuth();
+  const { currentUser, isSuperAdmin } = useAuth();
 
   const navLinks: { id: ActiveTab; label: string }[] = [
     { id: 'home', label: 'الرئيسية' },
@@ -44,25 +42,33 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-xs">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#dbe8ed] shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 gap-4">
           
-          {/* Zone 1: Initiative Brand */}
+          {/* Zone 1: Initiative Brand with Official Logo */}
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => handleNavClick('home')}
-              className="flex items-center gap-3 text-right focus:outline-none group"
+              className="flex items-center gap-3.5 text-right focus:outline-none group cursor-pointer"
             >
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-800 flex items-center justify-center text-white shadow-sm ring-2 ring-emerald-500/20 group-hover:scale-105 transition-transform shrink-0">
-                <Sparkles className="w-6 h-6" />
+              <div className="w-13 h-13 rounded-2xl bg-white p-1 border border-[#cbe0e7] shadow-xs ring-2 ring-[#389eb3]/20 group-hover:scale-105 group-hover:ring-[#389eb3]/40 transition-all shrink-0 flex items-center justify-center overflow-hidden">
+                <img
+                  src={settings.logoUrl || '/assets/aistudio/image_8a68eff7.png'}
+                  alt="شعار مبادرة عافية تُزهر"
+                  className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div className="flex flex-col">
-                <span className="text-lg font-extrabold text-stone-900 tracking-tight leading-tight group-hover:text-emerald-700 transition-colors whitespace-nowrap">
-                  {settings.initiativeName || 'منصة المبادرة التوعوية'}
-                </span>
-                <span className="text-xs text-stone-500 font-medium truncate max-w-[200px] sm:max-w-xs">
-                  {settings.tagline ? settings.tagline.slice(0, 45) + '...' : 'صحتنا أمانة وعافيتنا مسؤولية'}
+                <div className="flex items-center gap-1.5">
+                  <span className="text-lg font-black text-[#134e5e] tracking-tight leading-tight group-hover:text-[#0e3c48] transition-colors whitespace-nowrap">
+                    {settings.initiativeName || 'مبادرة عافية تُزهر'}
+                  </span>
+                  <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-[#ea8c38]" title="بالتوازن تحصل العافية" />
+                </div>
+                <span className="text-xs text-[#526f78] font-medium truncate max-w-[220px] sm:max-w-xs">
+                  {settings.tagline || 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر'}
                 </span>
               </div>
             </button>
@@ -76,10 +82,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`px-3 py-2 rounded-lg transition-colors whitespace-nowrap shrink-0 text-xs 2xl:text-sm ${
+                  className={`px-3 py-2 rounded-xl transition-all whitespace-nowrap shrink-0 text-xs 2xl:text-sm cursor-pointer ${
                     isActive
-                      ? 'text-emerald-800 bg-emerald-50 font-bold'
-                      : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100/70'
+                      ? 'text-[#134e5e] bg-[#eaf6fa] font-black border border-[#cde6ee]'
+                      : 'text-[#526f78] hover:text-[#134e5e] hover:bg-[#f1f7f9]'
                   }`}
                 >
                   {link.label}
@@ -89,20 +95,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Zone 3: Primary Action & Auth */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0">
             {currentUser ? (
               <button
                 onClick={() => handleNavClick('admin')}
-                className={`flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all whitespace-nowrap shrink-0 shadow-xs ${
+                className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl transition-all whitespace-nowrap shrink-0 shadow-xs cursor-pointer ${
                   activeTab === 'admin'
-                    ? 'bg-emerald-700 text-white'
-                    : 'bg-emerald-600 hover:bg-emerald-700 text-white hover:shadow-md'
+                    ? 'bg-[#134e5e] text-white shadow-md'
+                    : 'bg-[#2e9e66] hover:bg-[#248354] text-white hover:shadow-md'
                 }`}
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>لوحة التحكم</span>
                 {isSuperAdmin && (
-                  <span className="text-[10px] bg-emerald-800 text-emerald-100 px-1.5 py-0.5 rounded-full">
+                  <span className="text-[10px] bg-[#ea8c38] text-white font-extrabold px-1.5 py-0.5 rounded-md">
                     المدير
                   </span>
                 )}
@@ -110,9 +116,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             ) : (
               <button
                 onClick={onOpenLoginModal}
-                className="flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 border border-stone-200/80 rounded-xl transition-colors whitespace-nowrap shrink-0"
+                className="flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-bold text-[#134e5e] bg-[#eaf6fa] hover:bg-[#ddf0f6] border border-[#cbe3eb] rounded-xl transition-all whitespace-nowrap shrink-0 cursor-pointer"
               >
-                <LogIn className="w-4 h-4 text-emerald-700" />
+                <LogIn className="w-4 h-4 text-[#2e9e66]" />
                 <span>دخول الإدارة</span>
               </button>
             )}
@@ -120,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition-colors"
+              className="xl:hidden p-2 text-[#134e5e] hover:bg-[#eaf6fa] rounded-xl transition-colors"
               aria-label="القائمة الرئيسية"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -131,30 +137,30 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="xl:hidden border-t border-stone-200 bg-white px-4 pt-3 pb-6 space-y-1 shadow-lg">
+        <div className="xl:hidden border-t border-[#dbe8ed] bg-white px-4 pt-3 pb-6 space-y-1.5 shadow-xl animate-fade-in">
           {navLinks.map((link) => {
             const isActive = activeTab === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
                   isActive
-                    ? 'bg-emerald-50 text-emerald-800 font-bold'
-                    : 'text-stone-700 hover:bg-stone-50'
+                    ? 'bg-[#eaf6fa] text-[#134e5e] border border-[#cde6ee]'
+                    : 'text-[#526f78] hover:bg-[#f7fbfc] hover:text-[#134e5e]'
                 }`}
               >
                 <span>{link.label}</span>
-                {isActive && <div className="w-2 h-2 rounded-full bg-emerald-600" />}
+                {isActive && <div className="w-2 h-2 rounded-full bg-[#2e9e66]" />}
               </button>
             );
           })}
           
-          <div className="pt-3 border-t border-stone-100 mt-2">
+          <div className="pt-3 border-t border-[#edf3f5] mt-2">
             {currentUser ? (
               <button
                 onClick={() => handleNavClick('admin')}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-white bg-emerald-700 rounded-xl"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-white bg-[#134e5e] rounded-xl shadow-xs"
               >
                 <LayoutDashboard className="w-4 h-4" />
                 <span>الانتقال إلى لوحة التحكم الإدارية</span>
@@ -165,9 +171,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenLoginModal();
                 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-stone-800 bg-stone-100 rounded-xl"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-[#134e5e] bg-[#eaf6fa] border border-[#cbe3eb] rounded-xl"
               >
-                <LogIn className="w-4 h-4 text-emerald-700" />
+                <LogIn className="w-4 h-4 text-[#2e9e66]" />
                 <span>تسجيل دخول المشرفين والمدير</span>
               </button>
             )}

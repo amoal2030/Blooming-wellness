@@ -9,7 +9,7 @@ service cloud.firestore {
 
     // Common security primitives
     function isValidId(id) {
-      return id is string && id.size() > 0 && id.size() <= 128;
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
     }
     
     function incoming() {
@@ -25,7 +25,10 @@ service cloud.firestore {
     }
 
     function isSuperAdmin() {
-      return isSignedIn() && request.auth.token.email == "onlak2030@gmail.com";
+      return isSignedIn() && (
+        request.auth.token.email.lower() == "onlak2030@gmail.com" ||
+        request.auth.uid == "AzxlMQTMEQRZsJf3LCUbTjuwFus2"
+      );
     }
 
     function isAdmin() {
@@ -44,74 +47,93 @@ service cloud.firestore {
       );
     }
 
+    // Probe connection collection
+    match /test/{docId} {
+      allow get: if isValidId(docId);
+      allow list: if true;
+    }
+
     // 1. Settings Collection
     match /settings/{settingId} {
-      allow read: if isValidId(settingId);
-      allow create, update: if isValidId(settingId) && hasPermission("settings");
+      allow get: if isValidId(settingId);
+      allow list: if true;
+      allow create, update: if isValidId(settingId) && (hasPermission("settings") || isSuperAdmin());
       allow delete: if isValidId(settingId) && isAdmin();
     }
 
     // 2. Broadcasts (الإذاعات الصباحية)
     match /broadcasts/{broadcastId} {
-      allow read: if isValidId(broadcastId);
-      allow create, update, delete: if isValidId(broadcastId) && hasPermission("broadcasts");
+      allow get: if isValidId(broadcastId);
+      allow list: if true;
+      allow create, update, delete: if isValidId(broadcastId) && (hasPermission("broadcasts") || isSuperAdmin());
     }
 
     // 3. Lectures (المحاضرات التوعوية)
     match /lectures/{lectureId} {
-      allow read: if isValidId(lectureId);
-      allow create, update, delete: if isValidId(lectureId) && hasPermission("lectures");
+      allow get: if isValidId(lectureId);
+      allow list: if true;
+      allow create, update, delete: if isValidId(lectureId) && (hasPermission("lectures") || isSuperAdmin());
     }
 
     // 4. Interviews (المقابلات)
     match /interviews/{interviewId} {
-      allow read: if isValidId(interviewId);
-      allow create, update, delete: if isValidId(interviewId) && hasPermission("interviews");
+      allow get: if isValidId(interviewId);
+      allow list: if true;
+      allow create, update, delete: if isValidId(interviewId) && (hasPermission("interviews") || isSuperAdmin());
     }
 
     // 5. Quizzes (اختبر مدى صحة عاداتك)
     match /quizzes/{quizId} {
-      allow read: if isValidId(quizId);
-      allow create, update, delete: if isValidId(quizId) && hasPermission("quizzes");
+      allow get: if isValidId(quizId);
+      allow list: if true;
+      allow create, update, delete: if isValidId(quizId) && (hasPermission("quizzes") || isSuperAdmin());
     }
 
     // 6. Quiz Responses (نتائج الاستبانات للزوار)
     match /quiz_responses/{responseId} {
-      // Anyone can submit valid answers
+      // Public visitors can submit quiz answers
       allow create: if isValidId(responseId) && 
         incoming().score is number && 
         incoming().totalQuestions is number;
-      // Only supervisors/admins can read aggregated response statistics
-      allow read, delete: if isValidId(responseId) && hasPermission("quizzes");
+      // Only authorized staff can view aggregated quiz metrics
+      allow get: if isValidId(responseId) && (hasPermission("quizzes") || isSuperAdmin());
+      allow list: if (hasPermission("quizzes") || isSuperAdmin());
       allow update: if false; // Immutable once submitted
+      allow delete: if isValidId(responseId) && (hasPermission("quizzes") || isSuperAdmin());
     }
 
     // 7. Events (الأنشطة والفعاليات)
     match /events/{eventId} {
-      allow read: if isValidId(eventId);
-      allow create, update, delete: if isValidId(eventId) && hasPermission("events");
+      allow get: if isValidId(eventId);
+      allow list: if true;
+      allow create, update, delete: if isValidId(eventId) && (hasPermission("events") || isSuperAdmin());
     }
 
     // 8. Registrations (التسجيل في الأنشطة)
     match /registrations/{registrationId} {
-      allow read: if isValidId(registrationId);
-      allow create, update, delete: if isValidId(registrationId) && hasPermission("registrations");
+      allow get: if isValidId(registrationId);
+      allow list: if true;
+      allow create, update, delete: if isValidId(registrationId) && (hasPermission("registrations") || isSuperAdmin());
     }
 
     // 9. Supervisors and Permissions (إدارة المشرفين والصلاحيات)
     match /supervisors/{supervisorId} {
-      allow read: if isSignedIn() && isValidId(supervisorId);
+      allow get: if isSignedIn() && isValidId(supervisorId);
+      allow list: if isAdmin();
       allow create, update, delete: if isValidId(supervisorId) && isAdmin();
     }
 
     // 10. Inquiries (رسائل واستفسارات الزوار)
     match /inquiries/{inquiryId} {
+      // Public visitors can submit contact inquiries
       allow create: if isValidId(inquiryId) && 
         incoming().name is string && 
         incoming().name.size() > 0 &&
         incoming().email is string &&
         incoming().message is string;
-      allow read, update, delete: if isValidId(inquiryId) && isAdmin();
+      allow get: if isValidId(inquiryId) && isAdmin();
+      allow list: if isAdmin();
+      allow update, delete: if isValidId(inquiryId) && isAdmin();
     }
   }
 }

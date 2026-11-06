@@ -3,24 +3,54 @@
 @layer base {
   :root {
     font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* هوية مبادرة عافية تُزهر - مستخرجة من الشعار الرسمي */
+    --brand-teal-dark: #0e3c48;       /* أخضر داكن/تيل عميق للعناوين والهيدر */
+    --brand-teal: #134e5e;            /* اللون الأساسي للمبادرة */
+    --brand-teal-hover: #1b6375;
+    
+    --brand-green: #2e9e66;           /* الأخضر الطبيعي للأزرار والتفاعل والعافية */
+    --brand-green-hover: #248354;
+    --brand-green-light: #e8f7ee;
+
+    --brand-turquoise: #389eb3;       /* التركواز والفيروزي للعناصر البصرية والبطاقات */
+    --brand-turquoise-light: #84d2ea;
+    --brand-turquoise-surface: #eaf6fa;
+
+    --brand-orange: #ea8c38;          /* البرتقالي المساعد المشرق لإبراز التميز */
+    --brand-orange-hover: #d77926;
+    --brand-orange-light: #fef4ea;
+
+    --brand-bg: #f7fbfc;              /* الأوف وايت الهادئ النقي للخلفيات */
+    --brand-surface: #ffffff;
+    --brand-border: #dbe8ed;
+    --brand-text-dark: #0c2b33;
+    --brand-text-muted: #526f78;
   }
 }
 
-/* Custom smooth scrollbar */
+/* Custom smooth scrollbar with brand teal */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f4;
+  background: #f1f7f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
+  background: #b8d5de;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
+  background: #84b7c6;
+}
+
+/* Glassmorphism with brand tint */
+.brand-glass {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }

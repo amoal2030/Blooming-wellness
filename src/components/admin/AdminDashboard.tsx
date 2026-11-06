@@ -838,16 +838,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     <div className="min-h-screen bg-stone-100/70 text-stone-900 pb-20">
       
       {/* Top Admin Navigation Header */}
-      <header className="sticky top-0 z-30 bg-stone-900 text-white border-b border-stone-800 shadow-md">
+      <header className="sticky top-0 z-30 bg-[#0e3c48] text-white border-b border-[#134e5e] shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#2e9e66] flex items-center justify-center text-white shadow-xs">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-sm font-extrabold tracking-tight">لوحة التحكم المركزية</h1>
-              <span className="text-[11px] text-stone-400 font-medium">
+              <h1 className="text-sm font-extrabold tracking-tight">لوحة التحكم المركزية - عافية تُزهر</h1>
+              <span className="text-[11px] text-[#84d2ea] font-medium">
                 {isSuperAdmin ? 'المدير الرئيسي (كامل الصلاحيات)' : supervisorProfile?.role === 'admin' ? 'مدير إداري' : 'مشرف محتوى'}
               </span>
             </div>
@@ -856,15 +856,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <div className="flex items-center gap-3">
             <button
               onClick={onExitToPublic}
-              className="px-3.5 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
             >
-              <Eye className="w-3.5 h-3.5" />
+              <Eye className="w-3.5 h-3.5 text-[#84d2ea]" />
               <span>معاينة موقع الزوار</span>
             </button>
 
             <button
               onClick={logout}
-              className="px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900 text-rose-200 text-xs font-bold rounded-xl border border-rose-800/50 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900 text-rose-200 text-xs font-bold rounded-xl border border-rose-800/50 transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>تسجيل الخروج</span>
@@ -876,8 +876,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* Alert Notifications */}
       {successMsg && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 text-xs font-bold flex items-center gap-2 shadow-sm animate-fade-in">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+          <div className="p-4 bg-[#eaf6fa] border border-[#84d2ea] rounded-2xl text-[#0e3c48] text-xs font-bold flex items-center gap-2 shadow-xs animate-fade-in">
+            <CheckCircle2 className="w-4 h-4 text-[#2e9e66] shrink-0" />
             <span>{successMsg}</span>
           </div>
         </div>
@@ -897,7 +897,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Sidebar Menu (3 cols) */}
-          <aside className="lg:col-span-3 bg-white rounded-3xl border border-stone-200 p-4 shadow-sm space-y-1">
+          <aside className="lg:col-span-3 bg-white rounded-3xl border border-stone-200 p-4 shadow-xs space-y-1">
             <div className="px-3 py-2 text-[11px] font-bold text-stone-400 uppercase tracking-wider">
               أقسام الإدارة
             </div>
@@ -924,13 +924,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <button
                   key={tab.id}
                   onClick={() => setCurrentSection(tab.id as AdminSection)}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-colors text-right cursor-pointer ${
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-right cursor-pointer ${
                     isActive
-                      ? 'bg-emerald-700 text-white shadow-xs'
-                      : 'text-stone-700 hover:bg-stone-50'
+                      ? 'bg-[#134e5e] text-white shadow-xs border-r-4 border-[#2e9e66]'
+                      : 'text-stone-700 hover:bg-[#eaf6fa]/60 hover:text-[#0e3c48]'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-stone-400'}`} />
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#84d2ea]' : 'text-stone-400'}`} />
                   <span className="truncate">{tab.label}</span>
                 </button>
               );
@@ -988,8 +988,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </div>
 
                   <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs">
-                    <span className="text-emerald-700 text-xs font-bold block">إجابات الزوار المحفوظة</span>
-                    <span className="text-2xl font-black text-emerald-800 mt-1 block">{quizResponses.length}</span>
+                    <span className="text-[#2e9e66] text-xs font-bold block">إجابات الزوار المحفوظة</span>
+                    <span className="text-2xl font-black text-[#134e5e] mt-1 block">{quizResponses.length}</span>
                   </div>
 
                   <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs">
@@ -1013,7 +1013,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           setBroadcastVideoUrl('');
                           setIsBroadcastModalOpen(true);
                         }}
-                        className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
+                        className="px-4 py-2.5 bg-[#2e9e66] hover:bg-[#238253] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
                       >
                         <Plus className="w-4 h-4" />
                         <span>إضافة إذاعة صباحية</span>
@@ -1031,7 +1031,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           setLectureVideoUrl('');
                           setIsLectureModalOpen(true);
                         }}
-                        className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
+                        className="px-4 py-2.5 bg-[#2e9e66] hover:bg-[#238253] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
                       >
                         <Plus className="w-4 h-4" />
                         <span>إضافة محاضرة توعوية</span>
@@ -1048,7 +1048,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           setEventImageUrl('');
                           setIsEventModalOpen(true);
                         }}
-                        className="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
+                        className="px-4 py-2.5 bg-[#2e9e66] hover:bg-[#238253] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
                       >
                         <Plus className="w-4 h-4" />
                         <span>إضافة نشاط أو فعالية</span>
@@ -1115,7 +1115,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         type="text"
                         value={settingsForm.initiativeName}
                         onChange={(e) => setSettingsForm({ ...settingsForm, initiativeName: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                       />
                     </div>
                     <div>
@@ -1124,7 +1124,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         type="text"
                         value={settingsForm.tagline}
                         onChange={(e) => setSettingsForm({ ...settingsForm, tagline: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -1135,7 +1135,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       rows={4}
                       value={settingsForm.aboutText}
                       onChange={(e) => setSettingsForm({ ...settingsForm, aboutText: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                     />
                   </div>
 
@@ -1146,7 +1146,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         rows={3}
                         value={settingsForm.visionText}
                         onChange={(e) => setSettingsForm({ ...settingsForm, visionText: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                       />
                     </div>
                     <div>
@@ -1155,7 +1155,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         rows={3}
                         value={settingsForm.missionText}
                         onChange={(e) => setSettingsForm({ ...settingsForm, missionText: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -1167,8 +1167,177 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       rows={5}
                       value={settingsForm.goals.join('\n')}
                       onChange={(e) => setSettingsForm({ ...settingsForm, goals: e.target.value.split('\n').filter(g => g.trim()) })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                     />
+                  </div>
+
+                  {/* Initiative Official Logo */}
+                  <div className="p-4 bg-[#eaf6fa]/60 border border-[#84d2ea]/40 rounded-2xl space-y-3">
+                    <h3 className="text-xs font-bold text-[#0e3c48]">شعار المبادرة الرسمي</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                      <div className="sm:col-span-3 flex flex-col items-center justify-center p-3 bg-white rounded-xl border border-stone-200">
+                        <img 
+                          src={settingsForm.logoUrl || '/assets/aistudio/image_8a68eff7.png'} 
+                          alt="شعار المبادرة" 
+                          className="w-20 h-20 object-contain rounded-lg"
+                        />
+                        <span className="text-[10px] text-stone-400 mt-1">معاينة الشعار</span>
+                      </div>
+                      <div className="sm:col-span-9 space-y-2">
+                        <label className="block font-bold text-stone-700">رابط الشعار الرسمي</label>
+                        <input
+                          type="text"
+                          value={settingsForm.logoUrl}
+                          onChange={(e) => setSettingsForm({ ...settingsForm, logoUrl: e.target.value })}
+                          placeholder="/assets/aistudio/image_8a68eff7.png"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none dir-ltr text-right"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setSettingsForm({ ...settingsForm, logoUrl: '/assets/aistudio/image_8a68eff7.png' })}
+                          className="text-[11px] text-[#134e5e] font-bold hover:underline cursor-pointer"
+                        >
+                          استعادة الشعار الرسمي المعتمد
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Official Partners (Only 2 authorized partners: Ministry of Education & Al-Shatee High School) */}
+                  <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-xs font-bold text-[#0e3c48]">الجهات المشاركة والداعمة للمبادرة (معتمدتان حصراً)</h3>
+                        <p className="text-[11px] text-stone-500">وفق التوجيه الرسمي، يقتصر هذا القسم على وزارة التعليم ومدرسة ثانوية الشاطئ فقط.</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSettingsForm({
+                            ...settingsForm,
+                            partnerLogos: [
+                              {
+                                id: 'partner-moe',
+                                name: 'وزارة التعليم',
+                                imageUrl: '/assets/logos/ministry_of_education.svg',
+                              },
+                              {
+                                id: 'partner-school',
+                                name: 'مدرسة ثانوية الشاطئ',
+                                imageUrl: '/assets/logos/alshatee_high_school.svg',
+                              },
+                            ]
+                          });
+                        }}
+                        className="text-[11px] font-bold text-[#2e9e66] hover:underline cursor-pointer"
+                      >
+                        استعادة الشعارين الرسميين
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                      {/* Partner 1: Ministry of Education */}
+                      <div className="p-3.5 bg-white rounded-xl border border-stone-200 space-y-2">
+                        <div className="flex items-center gap-3 pb-2 border-b border-stone-100">
+                          <div className="w-12 h-12 bg-white rounded-lg border border-stone-100 p-1 flex items-center justify-center shrink-0">
+                            <img
+                              src={settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg'}
+                              alt="وزارة التعليم"
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-bold text-[#2e9e66] block">الجهة الأولى</span>
+                            <span className="text-xs font-bold text-stone-800">{settingsForm.partnerLogos?.[0]?.name || 'وزارة التعليم'}</span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold text-stone-600 mb-1">اسم الجهة</label>
+                          <input
+                            type="text"
+                            value={settingsForm.partnerLogos?.[0]?.name || 'وزارة التعليم'}
+                            onChange={(e) => {
+                              const newPartners = [...(settingsForm.partnerLogos || [])];
+                              if (!newPartners[0]) {
+                                newPartners[0] = { id: 'partner-moe', name: '', imageUrl: '/assets/logos/ministry_of_education.svg' };
+                              }
+                              newPartners[0] = { ...newPartners[0], name: e.target.value };
+                              setSettingsForm({ ...settingsForm, partnerLogos: newPartners });
+                            }}
+                            className="w-full px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold text-stone-600 mb-1">مسار أو رابط الشعار</label>
+                          <input
+                            type="text"
+                            value={settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg'}
+                            onChange={(e) => {
+                              const newPartners = [...(settingsForm.partnerLogos || [])];
+                              if (!newPartners[0]) {
+                                newPartners[0] = { id: 'partner-moe', name: 'وزارة التعليم', imageUrl: '' };
+                              }
+                              newPartners[0] = { ...newPartners[0], imageUrl: e.target.value };
+                              setSettingsForm({ ...settingsForm, partnerLogos: newPartners });
+                            }}
+                            className="w-full px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none dir-ltr text-right"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Partner 2: Al-Shatee High School */}
+                      <div className="p-3.5 bg-white rounded-xl border border-stone-200 space-y-2">
+                        <div className="flex items-center gap-3 pb-2 border-b border-stone-100">
+                          <div className="w-12 h-12 bg-white rounded-lg border border-stone-100 p-1 flex items-center justify-center shrink-0">
+                            <img
+                              src={settingsForm.partnerLogos?.[1]?.imageUrl || '/assets/logos/alshatee_high_school.svg'}
+                              alt="مدرسة ثانوية الشاطئ"
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-bold text-[#2e9e66] block">الجهة الثانية</span>
+                            <span className="text-xs font-bold text-stone-800">{settingsForm.partnerLogos?.[1]?.name || 'مدرسة ثانوية الشاطئ'}</span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold text-stone-600 mb-1">اسم الجهة</label>
+                          <input
+                            type="text"
+                            value={settingsForm.partnerLogos?.[1]?.name || 'مدرسة ثانوية الشاطئ'}
+                            onChange={(e) => {
+                              const newPartners = [...(settingsForm.partnerLogos || [])];
+                              if (!newPartners[1]) {
+                                newPartners[1] = { id: 'partner-school', name: '', imageUrl: '/assets/logos/alshatee_high_school.svg' };
+                              }
+                              newPartners[1] = { ...newPartners[1], name: e.target.value };
+                              setSettingsForm({ ...settingsForm, partnerLogos: newPartners });
+                            }}
+                            className="w-full px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-bold text-stone-600 mb-1">مسار أو رابط الشعار</label>
+                          <input
+                            type="text"
+                            value={settingsForm.partnerLogos?.[1]?.imageUrl || '/assets/logos/alshatee_high_school.svg'}
+                            onChange={(e) => {
+                              const newPartners = [...(settingsForm.partnerLogos || [])];
+                              if (!newPartners[1]) {
+                                newPartners[1] = { id: 'partner-school', name: 'مدرسة ثانوية الشاطئ', imageUrl: '' };
+                              }
+                              newPartners[1] = { ...newPartners[1], imageUrl: e.target.value };
+                              setSettingsForm({ ...settingsForm, partnerLogos: newPartners });
+                            }}
+                            className="w-full px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none dir-ltr text-right"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Contact Info */}
@@ -1179,7 +1348,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         type="email"
                         value={settingsForm.contactEmail}
                         onChange={(e) => setSettingsForm({ ...settingsForm, contactEmail: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs dir-ltr text-right"
+                        className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs dir-ltr text-right focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                       />
                     </div>
                     <div>
@@ -1188,7 +1357,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         type="tel"
                         value={settingsForm.contactPhone}
                         onChange={(e) => setSettingsForm({ ...settingsForm, contactPhone: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs dir-ltr text-right"
+                        className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs dir-ltr text-right focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                       />
                     </div>
                     <div>
@@ -1197,7 +1366,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         type="text"
                         value={settingsForm.address}
                         onChange={(e) => setSettingsForm({ ...settingsForm, address: e.target.value })}
-                        className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs"
+                        className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -1205,7 +1374,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <div className="pt-4 border-t border-stone-100">
                     <button
                       type="submit"
-                      className="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-xs transition-colors flex items-center gap-2 cursor-pointer"
+                      className="px-6 py-3 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl shadow-xs transition-colors flex items-center gap-2 cursor-pointer"
                     >
                       <Save className="w-4 h-4" />
                       <span>حفظ التعديلات في قاعدة البيانات</span>
@@ -1234,7 +1403,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       setBroadcastVideoUrl('');
                       setIsBroadcastModalOpen(true);
                     }}
-                    className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-emerald-800 transition-colors"
+                    className="px-4 py-2 bg-[#2e9e66] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-[#238253] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>إذاعة جديدة</span>
@@ -1246,7 +1415,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <div key={item.id} className="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 text-[11px] text-stone-400">
-                          <span className="font-bold text-emerald-700">{item.topic}</span>
+                          <span className="font-bold text-[#2e9e66]">{item.topic}</span>
                           <span>·</span>
                           <span>{item.date}</span>
                         </div>
@@ -1267,7 +1436,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             setBroadcastVideoUrl(item.videoUrl || '');
                             setIsBroadcastModalOpen(true);
                           }}
-                          className="p-2 text-stone-600 hover:text-emerald-700 hover:bg-stone-100 rounded-lg transition-colors"
+                          className="p-2 text-stone-600 hover:text-[#2e9e66] hover:bg-stone-100 rounded-lg transition-colors"
                           title="تعديل"
                         >
                           <Edit3 className="w-4 h-4" />
@@ -1306,7 +1475,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       setLectureVideoUrl('');
                       setIsLectureModalOpen(true);
                     }}
-                    className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-emerald-800 transition-colors"
+                    className="px-4 py-2 bg-[#2e9e66] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-[#238253] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>محاضرة جديدة</span>
@@ -1342,7 +1511,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             setLectureVideoUrl(item.videoUrl || '');
                             setIsLectureModalOpen(true);
                           }}
-                          className="p-2 text-stone-600 hover:text-emerald-700 hover:bg-stone-100 rounded-lg transition-colors"
+                          className="p-2 text-stone-600 hover:text-[#2e9e66] hover:bg-stone-100 rounded-lg transition-colors"
                           title="تعديل"
                         >
                           <Edit3 className="w-4 h-4" />
@@ -1382,7 +1551,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       setInterviewVideoUrl('');
                       setIsInterviewModalOpen(true);
                     }}
-                    className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-emerald-800 transition-colors"
+                    className="px-4 py-2 bg-[#2e9e66] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-[#238253] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>مقابلة جديدة</span>
@@ -1394,7 +1563,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <div key={item.id} className="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 text-[11px] text-stone-400">
-                          <span className="font-bold text-emerald-700">{item.topic}</span>
+                          <span className="font-bold text-[#2e9e66]">{item.topic}</span>
                           <span>·</span>
                           <span>الضيف: {item.guestName} ({item.guestTitle})</span>
                         </div>
@@ -1416,7 +1585,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             setInterviewVideoUrl(item.videoUrl || '');
                             setIsInterviewModalOpen(true);
                           }}
-                          className="p-2 text-stone-600 hover:text-emerald-700 hover:bg-stone-100 rounded-lg transition-colors"
+                          className="p-2 text-stone-600 hover:text-[#2e9e66] hover:bg-stone-100 rounded-lg transition-colors"
                           title="تعديل"
                         >
                           <Edit3 className="w-4 h-4" />
@@ -1448,7 +1617,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     </div>
                     <button
                       onClick={() => setIsQuizModalOpen(true)}
-                      className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-emerald-800 transition-colors"
+                      className="px-4 py-2 bg-[#2e9e66] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-[#238253] transition-colors"
                     >
                       <Plus className="w-4 h-4" />
                       <span>استبانة جديدة</span>
@@ -1459,7 +1628,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     {quizzes.map((quiz) => (
                       <div key={quiz.id} className="py-4 flex items-center justify-between">
                         <div>
-                          <span className="text-[11px] text-emerald-700 font-bold block">{quiz.category}</span>
+                          <span className="text-[11px] text-[#2e9e66] font-bold block">{quiz.category}</span>
                           <h4 className="text-sm font-bold text-stone-900">{quiz.title}</h4>
                           <span className="text-xs text-stone-400">{quiz.questions.length} أسئلة</span>
                         </div>
@@ -1480,7 +1649,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-base font-bold text-stone-900 flex items-center gap-2">
-                        <BarChart2 className="w-5 h-5 text-emerald-700" />
+                        <BarChart2 className="w-5 h-5 text-[#2e9e66]" />
                         <span>النتائج الإحصائية لإجابات الزوار المحفوظة (سري للمشرفين)</span>
                       </h3>
                       <p className="text-xs text-stone-500 mt-0.5">
@@ -1509,7 +1678,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                               <td className="py-2.5 px-3 font-semibold text-stone-800">{res.quizTitle}</td>
                               <td className="py-2.5 px-3 text-stone-600">{res.respondentName || 'مجهول'}</td>
                               <td className="py-2.5 px-3 font-mono font-bold text-stone-700">{res.score} / {res.totalQuestions}</td>
-                              <td className="py-2.5 px-3 font-bold text-emerald-700">{res.percentage}%</td>
+                              <td className="py-2.5 px-3 font-bold text-[#2e9e66]">{res.percentage}%</td>
                               <td className="py-2.5 px-3 text-stone-400 font-mono">{new Date(res.submittedAt).toLocaleDateString('ar-SA')}</td>
                             </tr>
                           ))}
@@ -1540,7 +1709,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       setEventIsFeatured(false);
                       setIsEventModalOpen(true);
                     }}
-                    className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-emerald-800 transition-colors"
+                    className="px-4 py-2 bg-[#2e9e66] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-[#238253] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>فعالية جديدة</span>
@@ -1553,13 +1722,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 text-[11px]">
                           <span className={`font-bold px-2 py-0.5 rounded-md ${
-                            ev.status === 'upcoming' ? 'bg-emerald-100 text-emerald-800' :
+                            ev.status === 'upcoming' ? 'bg-[#2e9e66]/15 text-[#134e5e]' :
                             ev.status === 'ongoing' ? 'bg-amber-100 text-amber-800' : 'bg-stone-200 text-stone-700'
                           }`}>
                             {ev.status === 'upcoming' ? 'قادمة' : ev.status === 'ongoing' ? 'جارية' : 'منتهية'}
                           </span>
                           {ev.isFeatured && (
-                            <span className="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-md font-bold">
+                            <span className="bg-[#eaf6fa] text-[#0e3c48] border border-[#84d2ea]/40 px-2 py-0.5 rounded-md font-bold">
                               بارزة
                             </span>
                           )}
@@ -1583,7 +1752,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             setEventIsFeatured(ev.isFeatured);
                             setIsEventModalOpen(true);
                           }}
-                          className="p-2 text-stone-600 hover:text-emerald-700 hover:bg-stone-100 rounded-lg transition-colors"
+                          className="p-2 text-stone-600 hover:text-[#2e9e66] hover:bg-stone-100 rounded-lg transition-colors"
                           title="تعديل"
                         >
                           <Edit3 className="w-4 h-4" />
@@ -1621,7 +1790,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       setRegImageUrl('');
                       setIsRegistrationModalOpen(true);
                     }}
-                    className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-emerald-800 transition-colors"
+                    className="px-4 py-2 bg-[#2e9e66] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-[#238253] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>رابط تسجيل جديد</span>
@@ -1634,7 +1803,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 text-[11px]">
                           <span className={`font-bold px-2 py-0.5 rounded-md ${
-                            item.status === 'open' ? 'bg-emerald-100 text-emerald-800' : 'bg-stone-200 text-stone-700'
+                            item.status === 'open' ? 'bg-[#2e9e66]/15 text-[#134e5e]' : 'bg-stone-200 text-stone-700'
                           }`}>
                             {item.status === 'open' ? 'مفتوح للتسجيل' : 'مغلق'}
                           </span>
@@ -1645,7 +1814,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           href={item.externalUrl} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="text-emerald-700 hover:underline text-[11px] flex items-center gap-1 dir-ltr text-right"
+                          className="text-[#2e9e66] hover:underline text-[11px] flex items-center gap-1 dir-ltr text-right"
                         >
                           <ExternalLink className="w-3 h-3" />
                           <span>{item.externalUrl}</span>
@@ -1664,7 +1833,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             setRegImageUrl(item.imageUrl || '');
                             setIsRegistrationModalOpen(true);
                           }}
-                          className="p-2 text-stone-600 hover:text-emerald-700 hover:bg-stone-100 rounded-lg transition-colors"
+                          className="p-2 text-stone-600 hover:text-[#2e9e66] hover:bg-stone-100 rounded-lg transition-colors"
                           title="تعديل"
                         >
                           <Edit3 className="w-4 h-4" />
@@ -1700,7 +1869,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       setNewSupName('');
                       setIsSupervisorModalOpen(true);
                     }}
-                    className="px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-emerald-800 transition-colors"
+                    className="px-4 py-2 bg-[#2e9e66] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 hover:bg-[#238253] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>إضافة مشرف جديد</span>
@@ -1708,9 +1877,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
 
                 {/* Notice for Admin */}
-                <div className="p-4 bg-emerald-50/70 border border-emerald-200 rounded-2xl text-xs text-emerald-900 space-y-1">
+                <div className="p-4 bg-[#eaf6fa] border border-[#84d2ea]/60 rounded-2xl text-xs text-[#0e3c48] space-y-1">
                   <p className="font-bold">حساب المدير الرئيسي المسجل بالنظام:</p>
-                  <p className="font-mono text-emerald-800">{SUPER_ADMIN_EMAIL}</p>
+                  <p className="font-mono text-[#134e5e] font-semibold">{SUPER_ADMIN_EMAIL}</p>
                   <p className="text-[11px] text-stone-600 mt-1">
                     المشرفون يمتلكون فقط الصلاحيات المحددة لهم أدناه ولا يمكنهم تعديل صلاحيات المدير الرئيسي.
                   </p>
@@ -1775,14 +1944,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <div
                         key={inq.id}
                         className={`p-5 rounded-2xl border transition-all space-y-3 ${
-                          inq.status === 'new' ? 'bg-emerald-50/30 border-emerald-200' : 'bg-stone-50 border-stone-200'
+                          inq.status === 'new' ? 'bg-[#eaf6fa]/40 border-[#84d2ea]/60' : 'bg-stone-50 border-stone-200'
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <span className="font-bold text-sm text-stone-900">{inq.name}</span>
                             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                              inq.status === 'new' ? 'bg-emerald-600 text-white' : 'bg-stone-200 text-stone-600'
+                              inq.status === 'new' ? 'bg-[#2e9e66] text-white' : 'bg-stone-200 text-stone-600'
                             }`}>
                               {inq.status === 'new' ? 'رسالة جديدة' : 'تم الرد'}
                             </span>
@@ -1844,7 +2013,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   value={broadcastTitle}
                   onChange={(e) => setBroadcastTitle(e.target.value)}
                   placeholder="مثال: إشراقة الصباح والنشاط اليومي"
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                 />
               </div>
 
@@ -1857,7 +2026,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     value={broadcastTopic}
                     onChange={(e) => setBroadcastTopic(e.target.value)}
                     placeholder="العادات الصباحية"
-                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -1867,7 +2036,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     required
                     value={broadcastDate}
                     onChange={(e) => setBroadcastDate(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                   />
                 </div>
               </div>
@@ -1880,7 +2049,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   value={broadcastDescription}
                   onChange={(e) => setBroadcastDescription(e.target.value)}
                   placeholder="وصف مختصر للحلقة الإذاعية ومحاورها..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
                 />
               </div>
 
@@ -1928,7 +2097,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ الإذاعة
                 </button>
@@ -2053,7 +2222,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ المحاضرة
                 </button>
@@ -2177,7 +2346,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ المقابلة
                 </button>
@@ -2307,7 +2476,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ الفعالية
                 </button>
@@ -2410,7 +2579,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ النشاط
                 </button>
@@ -2618,7 +2787,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ الاستبانة والأسئلة
                 </button>
@@ -2748,7 +2917,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ المشرف
                 </button>
