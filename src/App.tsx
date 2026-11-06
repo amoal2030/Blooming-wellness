@@ -80,7 +80,7 @@ function MainApp() {
         // 2. Seed initial data if empty
         await seedInitialContentIfEmpty();
 
-        // 3. Load all collections concurrently
+        // 3. Load all collections concurrently with individual resilience
         const [
           settingsData,
           broadcastsData,
@@ -90,13 +90,13 @@ function MainApp() {
           eventsData,
           registrationsData
         ] = await Promise.all([
-          getInitiativeSettings(),
-          getBroadcasts(),
-          getLectures(),
-          getInterviews(),
-          getQuizzes(),
-          getEvents(),
-          getRegistrations(),
+          getInitiativeSettings().catch((e) => { console.warn('Using default settings fallback:', e); return DEFAULT_SETTINGS; }),
+          getBroadcasts().catch((e) => { console.warn('Broadcasts load fallback:', e); return []; }),
+          getLectures().catch((e) => { console.warn('Lectures load fallback:', e); return []; }),
+          getInterviews().catch((e) => { console.warn('Interviews load fallback:', e); return []; }),
+          getQuizzes().catch((e) => { console.warn('Quizzes load fallback:', e); return []; }),
+          getEvents().catch((e) => { console.warn('Events load fallback:', e); return []; }),
+          getRegistrations().catch((e) => { console.warn('Registrations load fallback:', e); return []; }),
         ]);
 
         if (mounted) {

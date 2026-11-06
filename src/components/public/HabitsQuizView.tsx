@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Quiz, QuizQuestion } from '../../types';
 import { submitQuizResponse } from '../../services/dataService';
+import { getAssetUrl } from '../../utils/assets';
 import confetti from 'canvas-confetti';
 import { 
   CheckSquare, 
@@ -139,7 +140,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
             >
               <div className="h-44 relative bg-[#f1f7f9] overflow-hidden">
                 <img
-                  src={quiz.imageUrl || '/src/assets/images/healthy_habits_quiz_1793901821855.jpg'}
+                  src={getAssetUrl(quiz.imageUrl || '/src/assets/images/healthy_habits_quiz_1793901821855.jpg')}
                   alt={quiz.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"
@@ -313,7 +314,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           <div className="space-y-4">
             <div className="w-24 h-24 mx-auto rounded-full bg-white p-2 border-2 border-[#dbe8ed] shadow-md flex items-center justify-center overflow-hidden">
               <img
-                src="/assets/aistudio/image_8a68eff7.png"
+                src={getAssetUrl('/assets/aistudio/image_8a68eff7.png')}
                 alt="شعار عافية تُزهر"
                 className="w-full h-full object-contain"
                 referrerPolicy="no-referrer"

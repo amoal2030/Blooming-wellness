@@ -62,10 +62,16 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
   throw new Error(JSON.stringify(errInfo));
 }
 
-// Test connection on boot as mandated by the Firebase skill
+// Test connection on boot with timeout safeguard so it never blocks the app
 export async function testConnection(): Promise<boolean> {
   try {
-    await getDocFromServer(doc(db, 'test', 'connection'));
+    const timeoutPromise = new Promise<never>((_, reject) => 
+      setTimeout(() => reject(new Error('connection probe timeout')), 2500)
+    );
+    await Promise.race([
+      getDocFromServer(doc(db, 'test', 'connection')),
+      timeoutPromise
+    ]);
     return true;
   } catch (error) {
     if (error instanceof Error && error.message.includes('the client is offline')) {

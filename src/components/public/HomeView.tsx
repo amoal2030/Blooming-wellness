@@ -7,6 +7,7 @@ import {
   ActiveTab 
 } from '../../types';
 import { submitInquiry } from '../../services/dataService';
+import { getAssetUrl } from '../../utils/assets';
 import { 
   Radio, 
   Video, 
@@ -163,7 +164,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="absolute -inset-2 bg-gradient-to-r from-[#2e9e66] via-[#389eb3] to-[#ea8c38] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-white p-3.5 shadow-2xl border-4 border-white/40 flex items-center justify-center overflow-hidden">
                   <img
-                    src={settings.logoUrl || '/assets/aistudio/image_8a68eff7.png'}
+                    src={getAssetUrl(settings.logoUrl || '/assets/aistudio/image_8a68eff7.png')}
                     alt="شعار مبادرة عافية تُزهر الرسمي"
                     className="w-full h-full object-contain transform group-hover:scale-103 transition-transform duration-500"
                     referrerPolicy="no-referrer"
@@ -185,12 +186,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             {authorizedPartners.map((partner) => (
               <div 
-                key={partner.id}
+                key={partner.id} 
                 className="flex items-center justify-center gap-5 p-4 rounded-2xl bg-[#f7fbfc] hover:bg-[#eaf6fa] transition-colors border border-[#d8e7ec]"
               >
                 <div className="w-32 h-16 flex items-center justify-center overflow-hidden shrink-0">
                   <img
-                    src={partner.imageUrl}
+                    src={getAssetUrl(partner.imageUrl)}
                     alt={partner.name}
                     className="max-h-full max-w-full object-contain"
                     referrerPolicy="no-referrer"
@@ -362,7 +363,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="lg:col-span-4 flex justify-center">
               <div className="w-52 h-52 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/30 bg-white p-2">
                 <img
-                  src={settings.logoUrl || '/assets/aistudio/image_8a68eff7.png'}
+                  src={getAssetUrl(settings.logoUrl || '/assets/aistudio/image_8a68eff7.png')}
                   alt="شعار عافية تُزهر"
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
@@ -406,7 +407,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               >
                 <div className="h-44 relative bg-[#f1f7f9] overflow-hidden">
                   <img
-                    src={item.imageUrl || '/src/assets/images/morning_broadcast_mic_1793901821444.jpg'}
+                    src={getAssetUrl(item.imageUrl || '/src/assets/images/morning_broadcast_mic_1793901821444.jpg')}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
@@ -472,7 +473,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               >
                 <div className="sm:w-2/5 h-48 sm:h-auto relative bg-[#f1f7f9] overflow-hidden shrink-0">
                   <img
-                    src={item.imageUrl || '/src/assets/images/awareness_lecture_hall_1793901820498.jpg'}
+                    src={getAssetUrl(item.imageUrl || '/src/assets/images/awareness_lecture_hall_1793901820498.jpg')}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
@@ -573,7 +574,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
               <div className="lg:col-span-5 h-64 lg:h-full relative overflow-hidden bg-[#134e5e]">
                 <img
-                  src={featuredEvent.imageUrl || '/src/assets/images/hero_awareness_banner_1793901820998.jpg'}
+                  src={getAssetUrl(featuredEvent.imageUrl || '/src/assets/images/hero_awareness_banner_1793901820998.jpg')}
                   alt={featuredEvent.title}
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"

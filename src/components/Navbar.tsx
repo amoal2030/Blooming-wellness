@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ActiveTab, InitiativeSettings } from '../types';
 import { useAuth } from '../context/AuthContext';
+import { getAssetUrl } from '../utils/assets';
 import { 
   LogIn, 
   Menu, 
@@ -54,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <div className="w-13 h-13 rounded-2xl bg-white p-1 border border-[#cbe0e7] shadow-xs ring-2 ring-[#389eb3]/20 group-hover:scale-105 group-hover:ring-[#389eb3]/40 transition-all shrink-0 flex items-center justify-center overflow-hidden">
                 <img
-                  src={settings.logoUrl || '/assets/aistudio/image_8a68eff7.png'}
+                  src={getAssetUrl(settings.logoUrl || '/assets/aistudio/image_8a68eff7.png')}
                   alt="شعار مبادرة عافية تُزهر"
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"

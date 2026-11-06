@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth, SUPER_ADMIN_EMAIL } from '../context/AuthContext';
+import { getAssetUrl } from '../utils/assets';
 import { X, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
 interface LoginModalProps {
@@ -49,7 +50,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         <div className="text-center mb-6">
           <div className="w-18 h-18 mx-auto mb-3 rounded-full bg-white p-1.5 border-2 border-[#dbe8ed] shadow-md flex items-center justify-center overflow-hidden">
             <img
-              src="/assets/aistudio/image_8a68eff7.png"
+              src={getAssetUrl('/assets/aistudio/image_8a68eff7.png')}
               alt="شعار مبادرة عافية تُزهر"
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"

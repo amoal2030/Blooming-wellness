@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActiveTab, InitiativeSettings } from '../types';
+import { getAssetUrl } from '../utils/assets';
 import { Mail, Phone, MapPin, Heart, ArrowUp } from 'lucide-react';
 
 interface FooterProps {
@@ -49,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 <div className="w-24 h-12 flex items-center justify-center overflow-hidden">
                   <img
-                    src={partner.imageUrl}
+                    src={getAssetUrl(partner.imageUrl)}
                     alt={partner.name}
                     className="max-h-full max-w-full object-contain"
                     referrerPolicy="no-referrer"
@@ -77,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-white p-1 border border-white/20 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
                 <img
-                  src={settings.logoUrl || '/assets/aistudio/image_8a68eff7.png'}
+                  src={getAssetUrl(settings.logoUrl || '/assets/aistudio/image_8a68eff7.png')}
                   alt="شعار مبادرة عافية تُزهر"
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
