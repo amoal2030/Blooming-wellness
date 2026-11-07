@@ -52,15 +52,16 @@ export const LecturesView: React.FC<LecturesViewProps> = ({
       </div>
 
       {/* Search & Topic Filter */}
-      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center">
+      {/* Filter and Search Bar */}
+      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
         <div className="relative w-full md:w-96">
-          <Search className="w-4 h-4 text-[#526f78] absolute right-3.5 top-3.5" />
+          <Search className="w-4 h-4 text-[#526f78] dark:text-stone-400 absolute right-3.5 top-3.5" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="ابحث باسم المحاضر أو موضوع المحاضرة..."
-            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] border border-[#d0e0e6] rounded-xl text-xs text-[#0c2b33] focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
+            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
           />
         </div>
 
@@ -72,7 +73,7 @@ export const LecturesView: React.FC<LecturesViewProps> = ({
               className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
                 selectedTopic === t
                   ? 'bg-[#134e5e] text-white shadow-xs'
-                  : 'bg-[#eaf6fa] text-[#134e5e] hover:bg-[#dbeef5]'
+                  : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'
               }`}
             >
               {t === 'all' ? 'جميع الموضوعات' : t}
@@ -83,22 +84,22 @@ export const LecturesView: React.FC<LecturesViewProps> = ({
 
       {/* Lectures Grid */}
       {filteredLectures.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-3xl border border-[#dbe8ed] p-8">
-          <Video className="w-12 h-12 text-[#b0ced8] mx-auto mb-3" />
-          <h3 className="text-base font-bold text-[#0e3c48]">لا توجد محاضرات مطابقة</h3>
-          <p className="text-xs text-[#526f78] mt-1">جرب كلمات بحث مختلفة أو حدد موضوعاً آخر.</p>
+        <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
+          <Video className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">لا توجد محاضرات مطابقة</h3>
+          <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">جرب كلمات بحث مختلفة أو حدد موضوعاً آخر.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredLectures.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl border border-[#dbe8ed] overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col group"
+              className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col group"
             >
               {/* Thumbnail with Play Hover */}
               <div 
                 onClick={() => onOpenVideoModal(item.title, item.videoUrl)}
-                className="h-52 relative bg-[#f1f7f9] overflow-hidden cursor-pointer"
+                className="h-52 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden cursor-pointer"
               >
                 <img
                   src={getAssetUrl(item.imageUrl || '/assets/images/awareness_lecture_hall_1793901820498.jpg')}
@@ -127,26 +128,26 @@ export const LecturesView: React.FC<LecturesViewProps> = ({
               {/* Card Details */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-[11px] text-[#526f78]">
+                  <div className="flex items-center gap-2 text-[11px] text-[#526f78] dark:text-stone-400">
                     <Calendar className="w-3.5 h-3.5 text-[#2e9e66]" />
                     <span>{item.date}</span>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#0e3c48] group-hover:text-[#134e5e] transition-colors leading-snug">
+                  <h3 className="text-base font-bold text-[#0e3c48] dark:text-white group-hover:text-[#2e9e66] transition-colors leading-snug">
                     {item.title}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 text-xs text-[#134e5e] font-semibold bg-[#eaf6fa] p-2 rounded-xl">
+                  <div className="flex items-center gap-1.5 text-xs text-[#134e5e] dark:text-[#84d2ea] font-semibold bg-[#eaf6fa] dark:bg-[#0e2730] p-2 rounded-xl">
                     <User className="w-3.5 h-3.5 shrink-0 text-[#2e9e66]" />
                     <span className="truncate">{item.speaker}</span>
                   </div>
 
-                  <p className="text-xs text-[#526f78] leading-relaxed line-clamp-3">
+                  <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#edf3f5]">
+                <div className="pt-4 border-t border-[#edf3f5] dark:border-[#1e3842]">
                   <button
                     onClick={() => onOpenVideoModal(item.title, item.videoUrl)}
                     className="w-full py-2.5 bg-[#134e5e] hover:bg-[#0e3c48] text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"

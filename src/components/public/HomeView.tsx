@@ -179,17 +179,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 2. Partner & Supporting Logos - Exactly 2 Entities: وزارة التعليم وثانوية الشاطئ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
-        <div className="bg-white rounded-3xl shadow-xl border border-[#dbe8ed] p-6 sm:p-8">
-          <p className="text-xs font-extrabold text-[#134e5e] uppercase tracking-wider text-center mb-6">
+        <div className="bg-white dark:bg-[#122127] rounded-3xl shadow-xl border border-[#dbe8ed] dark:border-[#1e3842] p-6 sm:p-8 transition-colors">
+          <p className="text-xs font-extrabold text-[#134e5e] dark:text-[#84d2ea] uppercase tracking-wider text-center mb-6">
             الشعارات والجهات المشاركة والداعمة للمبادرة
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             {authorizedPartners.map((partner) => (
               <div 
                 key={partner.id} 
-                className="flex items-center justify-center gap-5 p-4 rounded-2xl bg-[#f7fbfc] hover:bg-[#eaf6fa] transition-colors border border-[#d8e7ec]"
+                className="flex items-center justify-center gap-5 p-4 rounded-2xl bg-[#f7fbfc] dark:bg-[#0b1519] hover:bg-[#eaf6fa] dark:hover:bg-[#162a32] transition-colors border border-[#d8e7ec] dark:border-[#1e3842]"
               >
-                <div className="w-32 h-16 flex items-center justify-center overflow-hidden shrink-0">
+                <div className="w-32 h-16 flex items-center justify-center overflow-hidden shrink-0 bg-white dark:bg-white/10 rounded-xl p-1">
                   <img
                     src={getAssetUrl(partner.imageUrl)}
                     alt={partner.name}
@@ -201,8 +201,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   />
                 </div>
                 <div className="flex flex-col text-right">
-                  <span className="text-sm font-extrabold text-[#0e3c48]">{partner.name}</span>
-                  <span className="text-xs text-[#526f78]">شريك وراعي معتمد للمبادرة</span>
+                  <span className="text-sm font-extrabold text-[#0e3c48] dark:text-white">{partner.name}</span>
+                  <span className="text-xs text-[#526f78] dark:text-stone-400">شريك وراعي معتمد للمبادرة</span>
                 </div>
               </div>
             ))}
@@ -216,10 +216,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <span className="text-xs font-extrabold text-[#2e9e66] uppercase tracking-wider">
             ركائز التوازن في الشعار
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#0e3c48]">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0e3c48] dark:text-white">
             أركان العافية الأربعة المتكاملة
           </h2>
-          <p className="text-xs sm:text-sm text-[#526f78]">
+          <p className="text-xs sm:text-sm text-[#526f78] dark:text-stone-300">
             ترتكز مبادرة "عافية تُزهر" على أربعة عناصر حيوية مستوحاة من تفاصيل شعارنا الرسمي لتحقيق التوازن التام.
           </p>
         </div>
@@ -227,45 +227,45 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           
           {/* Pillar 1 */}
-          <div className="bg-white p-6 rounded-3xl border border-[#dbe8ed] shadow-xs hover:shadow-md transition-shadow space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#e8f7ee] text-[#2e9e66] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#122127] p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs hover:shadow-md transition-shadow space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#e8f7ee] dark:bg-[#0e2c22] text-[#2e9e66] flex items-center justify-center">
               <Apple className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-[#0e3c48]">التغذية السليمة</h3>
-            <p className="text-xs text-[#526f78] leading-relaxed">
+            <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">التغذية السليمة</h3>
+            <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed">
               رمز الورقة والسنبلة: اعتماد الأغذية الطبيعية الغنية بالألياف وشرب الماء النقي والابتعاد عن السكريات المصنعة.
             </p>
           </div>
 
           {/* Pillar 2 */}
-          <div className="bg-white p-6 rounded-3xl border border-[#dbe8ed] shadow-xs hover:shadow-md transition-shadow space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#eaf6fa] text-[#134e5e] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#122127] p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs hover:shadow-md transition-shadow space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] flex items-center justify-center">
               <Activity className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-[#0e3c48]">النشاط والحركة</h3>
-            <p className="text-xs text-[#526f78] leading-relaxed">
+            <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">النشاط والحركة</h3>
+            <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed">
               رمز العدّاء النشط: تحفيز الحركة اليومية وممارسة المشي والتمارين الرياضية لمكافحة الخمول البدني.
             </p>
           </div>
 
           {/* Pillar 3 */}
-          <div className="bg-white p-6 rounded-3xl border border-[#dbe8ed] shadow-xs hover:shadow-md transition-shadow space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#eaf6fa] text-[#389eb3] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#122127] p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs hover:shadow-md transition-shadow space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#eaf6fa] dark:bg-[#0e2730] text-[#389eb3] flex items-center justify-center">
               <Moon className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-[#0e3c48]">النوم الصحي والراحة</h3>
-            <p className="text-xs text-[#526f78] leading-relaxed">
+            <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">النوم الصحي والراحة</h3>
+            <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed">
               رمز الهلال والنجوم: تنظيم ساعات النوم الكافية ليلاً لدعم تجديد الخلايا ورفع التحصيل الدراسي والتركيز الذهني.
             </p>
           </div>
 
           {/* Pillar 4 */}
-          <div className="bg-white p-6 rounded-3xl border border-[#dbe8ed] shadow-xs hover:shadow-md transition-shadow space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#fef4ea] text-[#ea8c38] flex items-center justify-center">
+          <div className="bg-white dark:bg-[#122127] p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs hover:shadow-md transition-shadow space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#fef4ea] dark:bg-[#2d1e11] text-[#ea8c38] flex items-center justify-center">
               <Flower2 className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-[#0e3c48]">الصحة النفسية والازدهار</h3>
-            <p className="text-xs text-[#526f78] leading-relaxed">
+            <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">الصحة النفسية والازدهار</h3>
+            <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed">
               رمز الزهرة المتفتحة: التوازن الوجداني والتعامل الإيجابي مع الضغوط المدرسية ليزهر الطالب والمجتمع بالعافية.
             </p>
           </div>
@@ -278,33 +278,33 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* About Box (7 cols) */}
-          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-[#dbe8ed] space-y-6">
-            <div className="inline-flex items-center gap-2 text-[#134e5e] text-xs font-bold uppercase tracking-wider">
+          <div className="lg:col-span-7 bg-white dark:bg-[#122127] p-8 sm:p-10 rounded-3xl shadow-sm border border-[#dbe8ed] dark:border-[#1e3842] space-y-6 transition-colors">
+            <div className="inline-flex items-center gap-2 text-[#134e5e] dark:text-[#84d2ea] text-xs font-bold uppercase tracking-wider">
               <Compass className="w-4 h-4 text-[#2e9e66]" />
               <span>نبذة تعريفية عن مبادرة عافية تُزهر</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0e3c48] leading-snug">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0e3c48] dark:text-white leading-snug">
               بيئة مدرسية ومجتمعية تتوازن صحياً وتزهر بالعافية
             </h2>
-            <p className="text-[#526f78] text-sm sm:text-base leading-relaxed whitespace-pre-line">
+            <p className="text-[#526f78] dark:text-stone-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">
               {settings.aboutText}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#edf3f5]">
-              <div className="p-4 bg-[#eaf6fa] rounded-2xl border border-[#cde6ee]">
-                <div className="flex items-center gap-2 text-[#134e5e] font-bold text-sm mb-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#edf3f5] dark:border-[#1e3842]">
+              <div className="p-4 bg-[#eaf6fa] dark:bg-[#0e2730] rounded-2xl border border-[#cde6ee] dark:border-[#1e3842]">
+                <div className="flex items-center gap-2 text-[#134e5e] dark:text-[#84d2ea] font-bold text-sm mb-2">
                   <Eye className="w-4 h-4 text-[#389eb3]" />
                   <span>الرؤية</span>
                 </div>
-                <p className="text-xs text-[#0c2b33] leading-relaxed">{settings.visionText}</p>
+                <p className="text-xs text-[#0c2b33] dark:text-stone-200 leading-relaxed">{settings.visionText}</p>
               </div>
 
-              <div className="p-4 bg-[#e8f7ee] rounded-2xl border border-[#c4e9d2]">
-                <div className="flex items-center gap-2 text-[#248354] font-bold text-sm mb-2">
+              <div className="p-4 bg-[#e8f7ee] dark:bg-[#0e2c22] rounded-2xl border border-[#c4e9d2] dark:border-[#154636]">
+                <div className="flex items-center gap-2 text-[#248354] dark:text-[#42df98] font-bold text-sm mb-2">
                   <Target className="w-4 h-4 text-[#2e9e66]" />
                   <span>الرسالة</span>
                 </div>
-                <p className="text-xs text-[#0c2b33] leading-relaxed">{settings.missionText}</p>
+                <p className="text-xs text-[#0c2b33] dark:text-stone-200 leading-relaxed">{settings.missionText}</p>
               </div>
             </div>
           </div>
@@ -587,36 +587,36 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 7. Contact and Inquiries Section */}
       <section id="contact-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-[#dbe8ed] p-8 sm:p-12 shadow-sm">
+        <div className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 sm:p-12 shadow-sm transition-colors">
           <div className="max-w-3xl mx-auto text-center space-y-3 mb-10">
-            <span className="text-xs font-extrabold text-[#134e5e] uppercase tracking-wider">
+            <span className="text-xs font-extrabold text-[#134e5e] dark:text-[#84d2ea] uppercase tracking-wider">
               تواصل واستفسارات
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-[#0e3c48]">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#0e3c48] dark:text-white">
               يسعدنا استقبال مقترحاتكم واستفساراتكم
             </h2>
-            <p className="text-[#526f78] text-xs sm:text-sm">
+            <p className="text-[#526f78] dark:text-stone-300 text-xs sm:text-sm">
               فريق عمل مبادرة عافية تُزهر بمدرسة ثانوية الشاطئ جاهز للرد على استفسارات الطلاب وأولياء الأمور والمجتمع.
             </p>
           </div>
 
           <form onSubmit={handleInquirySubmit} className="max-w-2xl mx-auto space-y-4">
             {inquirySuccess && (
-              <div className="p-4 bg-[#e8f7ee] border border-[#c4e9d2] rounded-2xl text-[#185644] text-xs flex items-center gap-2">
+              <div className="p-4 bg-[#e8f7ee] dark:bg-[#0e2c22] border border-[#c4e9d2] dark:border-[#154636] rounded-2xl text-[#185644] dark:text-[#42df98] text-xs flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-[#2e9e66] shrink-0" />
                 <span>تم إرسال استفسارك بنجاح! سيقوم فريق المبادرة بمراجعته والتواصل معك.</span>
               </div>
             )}
 
             {inquiryError && (
-              <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-800 text-xs">
+              <div className="p-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 rounded-2xl text-rose-800 dark:text-rose-300 text-xs">
                 {inquiryError}
               </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#0c2b33] mb-1.5">
+                <label className="block text-xs font-bold text-[#0c2b33] dark:text-stone-200 mb-1.5">
                   الاسم الكريم <span className="text-rose-500">*</span>
                 </label>
                 <input
@@ -625,12 +625,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   value={inquiryName}
                   onChange={(e) => setInquiryName(e.target.value)}
                   placeholder="محمد عبد الله"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] dark:border-[#1e3842] dark:bg-[#0b1519] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#0c2b33] mb-1.5">
+                <label className="block text-xs font-bold text-[#0c2b33] dark:text-stone-200 mb-1.5">
                   البريد الإلكتروني <span className="text-rose-500">*</span>
                 </label>
                 <input
@@ -639,13 +639,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   value={inquiryEmail}
                   onChange={(e) => setInquiryEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33] dir-ltr text-right"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] dark:border-[#1e3842] dark:bg-[#0b1519] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33] dir-ltr text-right"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0c2b33] mb-1.5">
+              <label className="block text-xs font-bold text-[#0c2b33] dark:text-stone-200 mb-1.5">
                 رقم الجوال (اختياري)
               </label>
               <input
@@ -653,12 +653,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 value={inquiryPhone}
                 onChange={(e) => setInquiryPhone(e.target.value)}
                 placeholder="+966 5X XXX XXXX"
-                className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33] dir-ltr text-right"
+                className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] dark:border-[#1e3842] dark:bg-[#0b1519] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33] dir-ltr text-right"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0c2b33] mb-1.5">
+              <label className="block text-xs font-bold text-[#0c2b33] dark:text-stone-200 mb-1.5">
                 نص الرسالة أو الاستفسار <span className="text-rose-500">*</span>
               </label>
               <textarea
@@ -667,7 +667,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 value={inquiryMessage}
                 onChange={(e) => setInquiryMessage(e.target.value)}
                 placeholder="اكتب استفسارك أو مقترحك هنا بكل وضوح..."
-                className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33] resize-none"
+                className="w-full px-4 py-2.5 rounded-xl border border-[#d0e0e6] dark:border-[#1e3842] dark:bg-[#0b1519] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66] text-xs text-[#0c2b33] resize-none"
               />
             </div>
 

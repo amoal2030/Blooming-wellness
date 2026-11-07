@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActiveTab, InitiativeSettings } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 import { getAssetUrl } from '../utils/assets';
 import { Mail, Phone, MapPin, Heart, ArrowUp } from 'lucide-react';
 
@@ -13,6 +14,8 @@ export const Footer: React.FC<FooterProps> = ({
   settings,
   setActiveTab,
 }) => {
+  const { t, isRtl } = useLanguage();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -23,32 +26,32 @@ export const Footer: React.FC<FooterProps> = ({
     : [
         {
           id: 'moe',
-          name: 'وزارة التعليم',
+          name: isRtl ? 'وزارة التعليم' : 'Ministry of Education',
           imageUrl: '/assets/logos/ministry_of_education.svg'
         },
         {
           id: 'shatee_high_school',
-          name: 'مدرسة ثانوية الشاطئ',
+          name: isRtl ? 'مدرسة ثانوية الشاطئ' : 'Al-Shatee High School',
           imageUrl: '/assets/logos/alshatee_high_school.svg'
         }
       ];
 
   return (
-    <footer className="bg-[#0e3c48] text-[#d1e6ec] border-t border-[#1a5565]">
+    <footer className="bg-[#0e3c48] dark:bg-[#06181e] text-[#d1e6ec] border-t border-[#1a5565] dark:border-[#132c35] transition-colors duration-200">
       
-      {/* Partner Logos Strip: Exactly Two Authorized Partners */}
-      <div className="border-b border-[#185363] bg-[#092931] py-8">
+      {/* Partner Logos Strip */}
+      <div className="border-b border-[#185363] dark:border-[#102931] bg-[#092931] dark:bg-[#041217] py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-bold uppercase tracking-wider text-[#84d2ea] mb-6">
-            الجهات المشاركة والداعمة للمبادرة
+          <p className="text-center text-xs font-bold uppercase tracking-wider text-[#84d2ea] mb-5">
+            {t('section_partners', 'الجهات المشاركة والداعمة للمبادرة')}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12">
             {authorizedPartners.map((partner) => (
               <div 
                 key={partner.id} 
-                className="flex items-center gap-4 bg-white/95 px-5 py-3 rounded-2xl shadow-sm border border-white/20 hover:scale-102 transition-transform"
+                className="flex items-center gap-3.5 bg-white/95 dark:bg-[#12242b]/95 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl shadow-sm border border-white/20 dark:border-white/10 hover:scale-102 transition-transform"
               >
-                <div className="w-24 h-12 flex items-center justify-center overflow-hidden">
+                <div className="w-20 sm:w-24 h-10 sm:h-12 flex items-center justify-center overflow-hidden">
                   <img
                     src={getAssetUrl(partner.imageUrl)}
                     alt={partner.name}
@@ -59,9 +62,11 @@ export const Footer: React.FC<FooterProps> = ({
                     }}
                   />
                 </div>
-                <div className="flex flex-col text-right">
-                  <span className="text-xs font-extrabold text-[#0e3c48] leading-tight">{partner.name}</span>
-                  <span className="text-[10px] text-[#526f78] font-medium">جهة راعية ومشاركة</span>
+                <div className={`flex flex-col ${isRtl ? 'text-right' : 'text-left'}`}>
+                  <span className="text-xs font-extrabold text-[#0e3c48] dark:text-[#84d2ea] leading-tight">{partner.name}</span>
+                  <span className="text-[10px] text-[#526f78] dark:text-[#8caab4] font-medium">
+                    {isRtl ? 'جهة راعية ومشاركة' : 'Supporting Partner'}
+                  </span>
                 </div>
               </div>
             ))}
@@ -70,13 +75,13 @@ export const Footer: React.FC<FooterProps> = ({
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
           
           {/* Col 1: Initiative Identity with Official Logo */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-white p-1 border border-white/20 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
+              <div className="w-12 h-12 rounded-2xl bg-white dark:bg-[#12242b] p-1 border border-white/20 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
                 <img
                   src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
                   alt="شعار مبادرة عافية تُزهر"
@@ -86,74 +91,76 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-black text-white tracking-tight">
-                  {settings.initiativeName || 'مبادرة عافية تُزهر'}
+                  {settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')}
                 </span>
                 <span className="text-[11px] text-[#84d2ea] font-medium">
-                  {settings.tagline || 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر'}
+                  {settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')}
                 </span>
               </div>
             </div>
             <p className="text-xs text-[#a2cbcf] leading-relaxed">
-              {settings.aboutText ? settings.aboutText.slice(0, 160) + '...' : 'مبادرة مدرسية ومجتمعية توعوية لتعزيز نمط الحياة الصحي المتوازن لطلاب ثانوية الشاطئ والمجتمع.'}
+              {settings.aboutText ? settings.aboutText.slice(0, 160) + '...' : t('footer_tagline')}
             </p>
-            <div className="pt-2 text-xs">
-              <span className="font-bold text-[#ea8c38] block mb-0.5">الرؤية:</span>
-              <p className="line-clamp-2 text-[#b8dce0]">{settings.visionText}</p>
-            </div>
+            {settings.visionText && (
+              <div className="pt-1 text-xs">
+                <span className="font-bold text-[#ea8c38] block mb-0.5">{t('section_vision', 'الرؤية')}:</span>
+                <p className="line-clamp-2 text-[#b8dce0]">{settings.visionText}</p>
+              </div>
+            )}
           </div>
 
           {/* Col 2: Fast Navigation */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-4 border-r-3 border-[#2e9e66] pr-2.5">
-              أقسام المنصة التوعوية
+            <h4 className={`text-sm font-bold text-white mb-4 ${isRtl ? 'border-r-3 pr-2.5' : 'border-l-3 pl-2.5'} border-[#2e9e66]`}>
+              {t('section_about_title', 'أقسام المنصة')}
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#b8dce0]">
+            <ul className="space-y-2 text-xs text-[#b8dce0]">
               <li>
                 <button 
                   onClick={() => { setActiveTab('broadcasts'); scrollToTop(); }}
-                  className="hover:text-white hover:pr-1 transition-all cursor-pointer"
+                  className="hover:text-white transition-all cursor-pointer"
                 >
-                  الإذاعات الصباحية
+                  {t('nav_broadcasts', 'الإذاعات الصباحية')}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveTab('lectures'); scrollToTop(); }}
-                  className="hover:text-white hover:pr-1 transition-all cursor-pointer"
+                  className="hover:text-white transition-all cursor-pointer"
                 >
-                  المحاضرات التوعوية
+                  {t('nav_lectures', 'المحاضرات التوعوية')}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveTab('interviews'); scrollToTop(); }}
-                  className="hover:text-white hover:pr-1 transition-all cursor-pointer"
+                  className="hover:text-white transition-all cursor-pointer"
                 >
-                  المقابلات الحوارية
+                  {t('nav_interviews', 'المقابلات الحوارية')}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveTab('quizzes'); scrollToTop(); }}
-                  className="hover:text-white hover:pr-1 transition-all cursor-pointer"
+                  className="hover:text-white transition-all cursor-pointer"
                 >
-                  اختبر مدى صحة عاداتك
+                  {t('nav_quizzes', 'اختبر مدى صحة عاداتك')}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveTab('events'); scrollToTop(); }}
-                  className="hover:text-white hover:pr-1 transition-all cursor-pointer"
+                  className="hover:text-white transition-all cursor-pointer"
                 >
-                  الأنشطة والفعاليات المدرسية والمجتمعية
+                  {t('nav_events', 'الأنشطة والفعاليات')}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={() => { setActiveTab('registrations'); scrollToTop(); }}
-                  className="hover:text-white hover:pr-1 transition-all cursor-pointer"
+                  className="hover:text-white transition-all cursor-pointer"
                 >
-                  التسجيل في الأنشطة المتاحة
+                  {t('nav_registrations', 'التسجيل في البرامج')}
                 </button>
               </li>
             </ul>
@@ -161,17 +168,17 @@ export const Footer: React.FC<FooterProps> = ({
 
           {/* Col 3: Contact Details */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-4 border-r-3 border-[#389eb3] pr-2.5">
-              معلومات التواصل
+            <h4 className={`text-sm font-bold text-white mb-4 ${isRtl ? 'border-r-3 pr-2.5' : 'border-l-3 pl-2.5'} border-[#389eb3]`}>
+              {t('nav_contact', 'معلومات التواصل')}
             </h4>
             <ul className="space-y-3.5 text-xs text-[#b8dce0]">
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-[#84d2ea] shrink-0 mt-0.5" />
-                <span className="truncate dir-ltr text-right">{settings.contactEmail || 'contact@alshatee-aafia.edu.sa'}</span>
+                <span className="truncate dir-ltr text-start">{settings.contactEmail || 'contact@alshatee-aafia.edu.sa'}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#84d2ea] shrink-0" />
-                <span className="dir-ltr text-right">{settings.contactPhone || '+966 12 600 0000'}</span>
+                <span className="dir-ltr text-start">{settings.contactPhone || '+966 12 600 0000'}</span>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#84d2ea] shrink-0 mt-0.5" />
@@ -181,29 +188,29 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           {/* Col 4: Administrative Portal Access */}
-          <div className="bg-[#134e5e]/50 p-5 rounded-2xl border border-[#23687a]">
-            <h4 className="text-sm font-bold text-white mb-1.5">بوابة المشرفين والإدارة</h4>
+          <div className="bg-[#134e5e]/50 dark:bg-[#0e2730] p-5 rounded-2xl border border-[#23687a] dark:border-[#17414f]">
+            <h4 className="text-sm font-bold text-white mb-1.5">{t('admin_portal_title', 'لوحة التحكم الإدارية')}</h4>
             <p className="text-xs text-[#b8dce0] mb-4 leading-relaxed">
-              منطقة إدارية مخصصة لفريق عمل مبادرة عافية تُزهر لإدارة الإذاعات، الفعاليات، الاستبانات وتحديث المحتوى.
+              {isRtl 
+                ? 'منطقة إدارية مخصصة لفريق عمل مبادرة عافية تُزهر لإدارة الإذاعات، الفعاليات، الاستبانات وتحديث المحتوى.'
+                : 'Dedicated administrative area for the Blooming Wellness team to manage broadcasts, events, quizzes and settings.'}
             </p>
             <button
               onClick={() => {
                 setActiveTab('admin');
                 scrollToTop();
               }}
-              className="w-full py-2.5 px-4 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-xl transition-colors shadow-sm text-center cursor-pointer"
+              className="w-full py-2.5 px-4 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-xl transition-colors shadow-xs text-center cursor-pointer"
             >
-              الدخول للوحة التحكم
+              {t('nav_admin', 'الدخول للوحة التحكم')}
             </button>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-[#185363] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8ab6bf]">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span>جميع الحقوق محفوظة لمبادرة <strong>عافية تُزهر</strong> &copy; {new Date().getFullYear()}</span>
-            <span>·</span>
-            <span>تحت إشراف وزارة التعليم وتنظيم ثانوية الشاطئ</span>
+        <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-[#185363] dark:border-[#102931] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8ab6bf]">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 text-center sm:text-start">
+            <span>{t('footer_rights')} {new Date().getFullYear()}</span>
             <span>·</span>
             <a
               href="https://amoal2030.github.io/a1/"
@@ -211,7 +218,7 @@ export const Footer: React.FC<FooterProps> = ({
               rel="noopener noreferrer"
               className="flex items-center gap-1 text-[#ea8c38] hover:text-[#f8b172] underline underline-offset-4 transition-colors cursor-pointer"
             >
-              صمم بعناية في خدماتي البرمجية <Heart className="w-3.5 h-3.5 fill-[#ea8c38]" />
+              {t('footer_designed_by')} <Heart className="w-3.5 h-3.5 fill-[#ea8c38]" />
             </a>
           </div>
 
@@ -219,7 +226,7 @@ export const Footer: React.FC<FooterProps> = ({
             onClick={scrollToTop}
             className="flex items-center gap-1.5 text-[#84d2ea] hover:text-white transition-colors cursor-pointer"
           >
-            <span>العودة للأعلى</span>
+            <span>{isRtl ? 'العودة للأعلى' : 'Back to Top'}</span>
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
         </div>

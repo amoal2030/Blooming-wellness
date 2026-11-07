@@ -64,15 +64,15 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
       </div>
 
       {/* Filter and Sort Toolbar */}
-      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-[#526f78] absolute right-3.5 top-3.5" />
+          <Search className="w-4 h-4 text-[#526f78] dark:text-stone-400 absolute right-3.5 top-3.5" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="ابحث باسم الضيف أو عنوان المقابلة..."
-            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] border border-[#d0e0e6] rounded-xl text-xs text-[#0c2b33] focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
+            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
           />
         </div>
 
@@ -86,7 +86,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
                   selectedTopic === t
                     ? 'bg-[#134e5e] text-white shadow-xs'
-                    : 'bg-[#eaf6fa] text-[#134e5e] hover:bg-[#dbeef5]'
+                    : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'
                 }`}
               >
                 {t === 'all' ? 'جميع الموضوعات' : t}
@@ -99,7 +99,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
             value={sortBy}
             onChange={(e: any) => setSortBy(e.target.value)}
             aria-label="ترتيب المقابلات حسب التاريخ"
-            className="py-2 px-3 bg-[#f7fbfc] border border-[#d0e0e6] rounded-xl text-xs font-bold text-[#134e5e] focus:outline-none"
+            className="py-2 px-3 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] focus:outline-none"
           >
             <option value="date_desc">الأحدث تاريخاً</option>
             <option value="date_asc">الأقدم تاريخاً</option>
@@ -109,22 +109,22 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
 
       {/* Interviews Cards */}
       {filteredInterviews.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-3xl border border-[#dbe8ed] p-8">
-          <Mic className="w-12 h-12 text-[#b0ced8] mx-auto mb-3" />
-          <h3 className="text-base font-bold text-[#0e3c48]">لا توجد مقابلات مطابقة للبحث</h3>
-          <p className="text-xs text-[#526f78] mt-1">يرجى تعديل مصطلحات البحث.</p>
+        <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
+          <Mic className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">لا توجد مقابلات مطابقة للبحث</h3>
+          <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">يرجى تعديل مصطلحات البحث.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredInterviews.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl border border-[#dbe8ed] overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col group"
+              className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col group"
             >
               {/* Media Preview */}
               <div 
                 onClick={() => onOpenVideoModal(item.title, item.videoUrl)}
-                className="h-60 relative bg-[#f1f7f9] overflow-hidden cursor-pointer"
+                className="h-60 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden cursor-pointer"
               >
                 <img
                   src={getAssetUrl(item.imageUrl || 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80')}
@@ -146,34 +146,34 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
               {/* Guest & Interview info */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between text-[11px] text-[#526f78]">
+                  <div className="flex items-center justify-between text-[11px] text-[#526f78] dark:text-stone-400">
                     <div className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5 text-[#2e9e66]" />
                       <span>تاريخ اللقاء: {item.date}</span>
                     </div>
                   </div>
 
-                  <h3 className="text-lg font-bold text-[#0e3c48] group-hover:text-[#134e5e] transition-colors leading-snug">
+                  <h3 className="text-lg font-bold text-[#0e3c48] dark:text-white group-hover:text-[#2e9e66] transition-colors leading-snug">
                     {item.title}
                   </h3>
 
                   {/* Guest badge */}
-                  <div className="p-3.5 bg-[#f7fbfc] rounded-2xl border border-[#dbe8ed] flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[#e8f7ee] text-[#2e9e66] flex items-center justify-center shrink-0">
+                  <div className="p-3.5 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-[#e8f7ee] dark:bg-[#0e2c22] text-[#2e9e66] flex items-center justify-center shrink-0">
                       <UserCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-[#0e3c48]">{item.guestName}</h4>
-                      <p className="text-[11px] text-[#526f78] mt-0.5">{item.guestTitle}</p>
+                      <h4 className="text-xs font-bold text-[#0e3c48] dark:text-white">{item.guestName}</h4>
+                      <p className="text-[11px] text-[#526f78] dark:text-stone-400 mt-0.5">{item.guestTitle}</p>
                     </div>
                   </div>
 
-                  <p className="text-xs text-[#526f78] leading-relaxed line-clamp-3">
+                  <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#edf3f5]">
+                <div className="pt-4 border-t border-[#edf3f5] dark:border-[#1e3842]">
                   <button
                     onClick={() => onOpenVideoModal(item.title, item.videoUrl)}
                     className="w-full py-2.5 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"

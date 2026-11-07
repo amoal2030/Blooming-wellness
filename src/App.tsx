@@ -5,6 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { testConnection } from './firebase';
 import { 
   InitiativeSettings, 
@@ -24,13 +26,13 @@ import {
   getQuizzes, 
   getEvents, 
   getRegistrations, 
-  seedInitialContentIfEmpty,
   DEFAULT_SETTINGS 
 } from './services/dataService';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { VideoModal } from './components/VideoModal';
 import { LoginModal } from './components/LoginModal';
+import { LoadingScreen } from './components/LoadingScreen';
 import { HomeView } from './components/public/HomeView';
 import { BroadcastsView } from './components/public/BroadcastsView';
 import { LecturesView } from './components/public/LecturesView';
@@ -40,7 +42,6 @@ import { EventsView } from './components/public/EventsView';
 import { RegistrationsView } from './components/public/RegistrationsView';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AccessDeniedView } from './components/admin/AccessDeniedView';
-import { Sparkles, Loader2, ShieldAlert } from 'lucide-react';
 
 function MainApp() {
   const { currentUser, isSuperAdmin, isAdmin, isAuthorizedStaff, loading: authLoading } = useAuth();
@@ -78,10 +79,7 @@ function MainApp() {
         // 1. Test connection as mandated by skill
         await testConnection();
 
-        // 2. Seed initial data if empty
-        await seedInitialContentIfEmpty();
-
-        // 3. Load all collections concurrently with individual resilience
+        // 2. Load all collections concurrently with individual resilience (Firestore as single source of truth)
         const [
           settingsData,
           broadcastsData,
@@ -140,17 +138,7 @@ function MainApp() {
 
   // If loading initially
   if (loading) {
-    return (
-      <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-4">
-        <div className="w-16 h-16 rounded-3xl bg-emerald-600 flex items-center justify-center text-white shadow-xl mb-4 animate-bounce">
-          <Sparkles className="w-8 h-8" />
-        </div>
-        <div className="flex items-center gap-2 text-stone-800 font-bold text-sm">
-          <Loader2 className="w-5 h-5 text-emerald-600 animate-spin" />
-          <span>جارٍ الاتصال بقاعدة البيانات وتهيئة منصة المبادرة التوعوية...</span>
-        </div>
-      </div>
-    );
+    return <LoadingScreen settings={settings} />;
   }
 
   // Admin Dashboard Mode
@@ -158,15 +146,11 @@ function MainApp() {
     // If auth state is still resolving, show smooth loading state instead of premature access denial
     if (authLoading) {
       return (
-        <div className="min-h-screen bg-[#f7fbfc] flex flex-col items-center justify-center p-4">
-          <div className="w-16 h-16 rounded-3xl bg-emerald-600 flex items-center justify-center text-white shadow-xl mb-4 animate-pulse">
-            <Sparkles className="w-8 h-8" />
-          </div>
-          <div className="flex items-center gap-2 text-stone-800 font-bold text-sm">
-            <Loader2 className="w-5 h-5 text-emerald-600 animate-spin" />
-            <span>جارٍ التحقق من الصلاحيات الإدارية...</span>
-          </div>
-        </div>
+        <LoadingScreen 
+          settings={settings} 
+          messageAr="جارٍ التحقق من الصلاحيات الإدارية..." 
+          messageEn="Verifying administrative permissions..." 
+        />
       );
     }
 
@@ -223,7 +207,7 @@ function MainApp() {
 
   // Public Portal Mode
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-stone-50 text-stone-900 selection:bg-emerald-600 selection:text-white">
+    <div className="min-h-screen flex flex-col justify-between bg-stone-50 dark:bg-[#0b1519] text-stone-900 dark:text-[#f0f7f9] transition-colors duration-200 selection:bg-emerald-600 selection:text-white">
       {/* Top Navbar */}
       <Navbar
         activeTab={activeTab}
@@ -320,8 +304,12 @@ function MainApp() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <MainApp />
-    </AuthProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <MainApp />
+        </AuthProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }

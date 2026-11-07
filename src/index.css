@@ -1,31 +1,66 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-    /* هوية مبادرة عافية تُزهر - مستخرجة من الشعار الرسمي */
-    --brand-teal-dark: #0e3c48;       /* أخضر داكن/تيل عميق للعناوين والهيدر */
-    --brand-teal: #134e5e;            /* اللون الأساسي للمبادرة */
+    /* هوية مبادرة عافية تُزهر - الوضع الفاتح */
+    --brand-teal-dark: #0e3c48;
+    --brand-teal: #134e5e;
     --brand-teal-hover: #1b6375;
     
-    --brand-green: #2e9e66;           /* الأخضر الطبيعي للأزرار والتفاعل والعافية */
+    --brand-green: #2e9e66;
     --brand-green-hover: #248354;
     --brand-green-light: #e8f7ee;
 
-    --brand-turquoise: #389eb3;       /* التركواز والفيروزي للعناصر البصرية والبطاقات */
+    --brand-turquoise: #389eb3;
     --brand-turquoise-light: #84d2ea;
     --brand-turquoise-surface: #eaf6fa;
 
-    --brand-orange: #ea8c38;          /* البرتقالي المساعد المشرق لإبراز التميز */
+    --brand-orange: #ea8c38;
     --brand-orange-hover: #d77926;
     --brand-orange-light: #fef4ea;
 
-    --brand-bg: #f7fbfc;              /* الأوف وايت الهادئ النقي للخلفيات */
+    --brand-bg: #f7fbfc;
     --brand-surface: #ffffff;
     --brand-border: #dbe8ed;
     --brand-text-dark: #0c2b33;
     --brand-text-muted: #526f78;
+  }
+
+  .dark {
+    /* هوية مبادرة عافية تُزهر - الوضع الداكن */
+    --brand-teal-dark: #08252d;
+    --brand-teal: #103c48;
+    --brand-teal-hover: #185262;
+
+    --brand-green: #34b374;
+    --brand-green-hover: #29965f;
+    --brand-green-light: #113324;
+
+    --brand-turquoise: #45b0c7;
+    --brand-turquoise-light: #2a7385;
+    --brand-turquoise-surface: #102830;
+
+    --brand-orange: #f29a4b;
+    --brand-orange-hover: #ea8c38;
+    --brand-orange-light: #342111;
+
+    --brand-bg: #0b1519;
+    --brand-surface: #122127;
+    --brand-border: #1e3842;
+    --brand-text-dark: #f0f7f9;
+    --brand-text-muted: #8caab4;
+  }
+
+  html.font-english {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  html.font-arabic {
+    font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }
 
@@ -39,18 +74,36 @@
   background: #f1f7f9;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #0f1c21;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #b8d5de;
   border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #254652;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #84b7c6;
 }
 
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #376374;
+}
+
 /* Glassmorphism with brand tint */
 .brand-glass {
   background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .brand-glass {
+  background: rgba(18, 33, 39, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }

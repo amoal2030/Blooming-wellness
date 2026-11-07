@@ -43,6 +43,10 @@ import {
   seedInitialContentIfEmpty 
 } from '../../services/dataService';
 import { 
+  Pencil, 
+  Globe, 
+  Sun, 
+  Moon, 
   LayoutDashboard, 
   Sliders, 
   Radio, 
@@ -67,6 +71,8 @@ import {
   Eye,
   X
 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
+import { useTheme } from '../../context/ThemeContext';
 
 interface AdminDashboardProps {
   settings: InitiativeSettings;
@@ -178,9 +184,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
+  const { t, isRtl, language, toggleLanguage } = useLanguage();
+  const { isDark, toggleTheme } = useTheme();
+
   // ================= Form States for Modals & Creation =================
   // Settings Form
   const [settingsForm, setSettingsForm] = useState<InitiativeSettings>(settings);
+
+  // Keep settingsForm synchronized whenever settings updates from Firestore
+  useEffect(() => {
+    if (settings) {
+      setSettingsForm(settings);
+    }
+  }, [settings]);
 
   // Broadcast Modal
   const [isBroadcastModalOpen, setIsBroadcastModalOpen] = useState(false);
@@ -271,6 +287,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     settings: false,
     supervisors: false
   });
+
+  // Edit Supervisor State (Admin only - Pencil action)
+  const [isEditSupervisorModalOpen, setIsEditSupervisorModalOpen] = useState(false);
+  const [editingSupervisor, setEditingSupervisor] = useState<Supervisor | null>(null);
 
   // In-app confirmation dialog state (avoiding window.confirm iframe blocks)
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -839,6 +859,40 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     });
   };
 
+  const handleOpenEditSupervisor = (sup: Supervisor) => {
+    if (!isAdmin) return;
+    setEditingSupervisor({
+      ...sup,
+      permissions: {
+        broadcasts: sup.permissions?.broadcasts ?? true,
+        lectures: sup.permissions?.lectures ?? true,
+        interviews: sup.permissions?.interviews ?? true,
+        quizzes: sup.permissions?.quizzes ?? true,
+        events: sup.permissions?.events ?? true,
+        registrations: sup.permissions?.registrations ?? true,
+        settings: sup.permissions?.settings ?? false,
+        supervisors: sup.permissions?.supervisors ?? false,
+      }
+    });
+    setIsEditSupervisorModalOpen(true);
+  };
+
+  const handleSaveEditedSupervisor = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAdmin || !editingSupervisor) return;
+    try {
+      await saveSupervisor(editingSupervisor);
+      setSupervisors(prev => prev.map(s => s.id === editingSupervisor.id ? editingSupervisor : s));
+      showNotification('تم تحديث صلاحيات المشرف بنجاح!');
+      setIsEditSupervisorModalOpen(false);
+      setEditingSupervisor(null);
+    } catch (err: unknown) {
+      console.error('Failed to update supervisor:', err);
+      const msg = err instanceof Error ? err.message : 'تعذر حفظ صلاحيات المشرف.';
+      showNotification(msg, true);
+    }
+  };
+
   // 9. Inquiry Status Toggle
   const handleToggleInquiryStatus = async (id: string, currentStatus: 'new' | 'replied') => {
     const newStatus = currentStatus === 'new' ? 'replied' : 'new';
@@ -852,7 +906,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-stone-100/70 text-stone-900 pb-20">
+    <div className="min-h-screen bg-stone-100/70 dark:bg-[#0b1519] text-stone-900 dark:text-[#f0f7f9] pb-20 transition-colors">
       
       {/* Top Admin Navigation Header */}
       <header className="sticky top-0 z-30 bg-[#0e3c48] text-white border-b border-[#134e5e] shadow-md">
@@ -870,21 +924,42 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 px-2.5 py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors cursor-pointer border border-[#20697d]"
+              title={language === 'ar' ? 'Switch to English' : 'التحويل إلى العربية'}
+            >
+              <Globe className="w-3.5 h-3.5 text-[#84d2ea]" />
+              <span className="font-sans text-[11px] font-black uppercase">
+                {language === 'ar' ? 'English' : 'العربية'}
+              </span>
+            </button>
+
+            {/* Theme Switcher */}
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white rounded-xl transition-colors cursor-pointer border border-[#20697d]"
+              title={isDark ? t('light_mode', 'الوضع الفاتح') : t('dark_mode', 'الوضع الداكن')}
+            >
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-200" />}
+            </button>
+
             <button
               onClick={onExitToPublic}
-              className="px-3.5 py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-3 sm:px-3.5 py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <Eye className="w-3.5 h-3.5 text-[#84d2ea]" />
-              <span>معاينة موقع الزوار</span>
+              <span className="hidden sm:inline">{t('admin_exit', 'معاينة موقع الزوار')}</span>
             </button>
 
             <button
               onClick={logout}
-              className="px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900 text-rose-200 text-xs font-bold rounded-xl border border-rose-800/50 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-3 sm:px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900 text-rose-200 text-xs font-bold rounded-xl border border-rose-800/50 transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>تسجيل الخروج</span>
+              <span className="hidden sm:inline">{t('nav_logout', 'تسجيل الخروج')}</span>
             </button>
           </div>
         </div>
@@ -914,8 +989,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Sidebar Menu (3 cols) */}
-          <aside className="lg:col-span-3 bg-white rounded-3xl border border-stone-200 p-4 shadow-xs space-y-1">
-            <div className="px-3 py-2 text-[11px] font-bold text-stone-400 uppercase tracking-wider">
+          <aside className="lg:col-span-3 bg-white dark:bg-[#122127] rounded-3xl border border-stone-200 dark:border-[#1e3842] p-4 shadow-xs space-y-1 transition-colors">
+            <div className="px-3 py-2 text-[11px] font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">
               أقسام الإدارة
             </div>
 
@@ -944,7 +1019,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-right cursor-pointer ${
                     isActive
                       ? 'bg-[#134e5e] text-white shadow-xs border-r-4 border-[#2e9e66]'
-                      : 'text-stone-700 hover:bg-[#eaf6fa]/60 hover:text-[#0e3c48]'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-[#eaf6fa]/60 dark:hover:bg-[#162a32] hover:text-[#0e3c48] dark:hover:text-white'
                   }`}
                 >
                   <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#84d2ea]' : 'text-stone-400'}`} />
@@ -953,10 +1028,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               );
             })}
 
-            <div className="pt-4 border-t border-stone-100 mt-4 px-2">
+            <div className="pt-4 border-t border-stone-100 dark:border-[#1e3842] mt-4 px-2">
               <button
                 onClick={handleSeedData}
-                className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-[11px] font-semibold transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-stone-100 dark:bg-[#0b1519] hover:bg-stone-200 dark:hover:bg-[#162a32] text-stone-700 dark:text-stone-300 rounded-xl text-[11px] font-semibold transition-colors cursor-pointer"
                 title="تهيئة بيانات تجريبية حقيقية للمبادرة إذا كانت فارغة"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
@@ -1902,45 +1977,78 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </p>
                 </div>
 
-                <div className="divide-y divide-stone-100">
-                  {supervisors.map((sup) => (
-                    <div key={sup.id} className="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h4 className="text-sm font-bold text-stone-900">{sup.name}</h4>
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                            sup.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-stone-100 text-stone-700'
-                          }`}>
-                            {sup.role === 'admin' ? 'مدير' : 'مشرف'}
-                          </span>
-                        </div>
-                        <span className="text-xs text-stone-500 font-mono block mt-0.5">{sup.email}</span>
-                        
-                        {/* Permissions pills */}
-                        <div className="flex flex-wrap gap-1.5 mt-2">
-                          {Object.entries(sup.permissions || {}).map(([key, val]) => (
-                            val && (
-                              <span key={key} className="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-md">
-                                {key}
+                <div className="divide-y divide-stone-100 dark:divide-[#1e3842]">
+                  {supervisors
+                    .filter((sup) => sup.email?.toLowerCase() !== SUPER_ADMIN_EMAIL.toLowerCase())
+                    .map((sup) => {
+                      const permissionLabels: Record<string, string> = {
+                        broadcasts: 'الإذاعات',
+                        lectures: 'المحاضرات',
+                        interviews: 'المقابلات',
+                        quizzes: 'الاستبانات',
+                        events: 'الفعاليات',
+                        registrations: 'التسجيل',
+                        settings: 'الإعدادات',
+                        supervisors: 'المشرفون',
+                      };
+                      return (
+                        <div key={sup.id} className="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h4 className="text-sm font-bold text-stone-900 dark:text-white">{sup.name}</h4>
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                sup.role === 'admin' 
+                                  ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300' 
+                                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300'
+                              }`}>
+                                {sup.role === 'admin' ? 'مدير' : 'مشرف'}
                               </span>
-                            )
-                          ))}
-                        </div>
-                      </div>
+                            </div>
+                            <span className="text-xs text-stone-500 dark:text-stone-400 font-mono block mt-0.5">{sup.email}</span>
+                            
+                            {/* Permissions pills */}
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                              {Object.entries(sup.permissions || {}).map(([key, val]) => (
+                                val && (
+                                  <span key={key} className="text-[10px] bg-stone-100 dark:bg-[#0b1519] text-stone-600 dark:text-stone-300 px-2 py-0.5 rounded-md border border-stone-200 dark:border-[#1e3842]">
+                                    {permissionLabels[key] || key}
+                                  </span>
+                                )
+                              ))}
+                            </div>
+                          </div>
 
-                      <div className="shrink-0">
-                        {sup.email !== SUPER_ADMIN_EMAIL && (
-                          <button
-                            onClick={() => handleDeleteSupervisor(sup.id)}
-                            className="p-2 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                            title="سحب الصلاحيات"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        )}
-                      </div>
+                          <div className="shrink-0 flex items-center gap-1.5">
+                            {sup.email !== SUPER_ADMIN_EMAIL && (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => handleOpenEditSupervisor(sup)}
+                                  className="p-2 text-stone-500 hover:text-emerald-600 dark:text-stone-400 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 rounded-lg transition-colors cursor-pointer"
+                                  title="تعديل بيانات وصلاحيات المشرف"
+                                >
+                                  <Pencil className="w-4 h-4" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteSupervisor(sup.id)}
+                                  className="p-2 text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
+                                  title="سحب الصلاحيات"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                  {supervisors.filter((sup) => sup.email?.toLowerCase() !== SUPER_ADMIN_EMAIL.toLowerCase()).length === 0 && (
+                    <div className="py-8 text-center text-xs text-stone-400 dark:text-stone-500">
+                      لا يوجد مشرفون معتمدون إضافيون مسجلون حالياً. يمكنك إضافة مشرف بالضغط على زر «إضافة مشرف جديد».
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             )}
@@ -2937,6 +3045,172 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl"
                 >
                   حفظ المشرف
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 8. Edit Supervisor Modal (Admin only) */}
+      {isEditSupervisorModalOpen && editingSupervisor && isAdmin && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-xs animate-fade-in">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#122127] rounded-3xl p-6 sm:p-8 shadow-2xl border border-stone-200 dark:border-[#1e3842] space-y-4">
+            <div className="flex items-center justify-between border-b border-stone-100 dark:border-[#1e3842] pb-3">
+              <div>
+                <h3 className="font-bold text-stone-900 dark:text-white text-sm">تعديل بيانات المشرف والصلاحيات</h3>
+                <p className="text-[11px] text-stone-500 dark:text-stone-400">تحديث الاسم والرتبة وصلاحيات الوصول للأقسام</p>
+              </div>
+              <button 
+                type="button"
+                onClick={() => {
+                  setIsEditSupervisorModalOpen(false);
+                  setEditingSupervisor(null);
+                }} 
+                className="text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEditedSupervisor} className="space-y-3.5 text-xs">
+              <div>
+                <label className="block font-bold text-stone-700 dark:text-stone-300 mb-1">البريد الإلكتروني المعتمد</label>
+                <input
+                  type="email"
+                  disabled
+                  value={editingSupervisor.email}
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-200 dark:border-[#1e3842] bg-stone-100 dark:bg-[#0b1519] text-stone-500 dark:text-stone-400 text-xs font-mono dir-ltr text-right cursor-not-allowed"
+                />
+                <span className="text-[10px] text-stone-400 dark:text-stone-500 mt-0.5 block">البريد الإلكتروني مرتبط بحساب Google المعتمد للمشرف.</span>
+              </div>
+
+              <div>
+                <label className="block font-bold text-stone-700 dark:text-stone-300 mb-1">اسم المشرف</label>
+                <input
+                  type="text"
+                  required
+                  value={editingSupervisor.name}
+                  onChange={(e) => setEditingSupervisor({ ...editingSupervisor, name: e.target.value })}
+                  placeholder="اسم المشرف"
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 dark:border-[#1e3842] dark:bg-[#0b1519] dark:text-white text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-stone-700 dark:text-stone-300 mb-1">الرتبة</label>
+                <select
+                  value={editingSupervisor.role}
+                  onChange={(e) => setEditingSupervisor({ ...editingSupervisor, role: e.target.value as 'admin' | 'editor' })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-300 dark:border-[#1e3842] dark:bg-[#0b1519] dark:text-white text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none"
+                >
+                  <option value="editor">مشرف محتوى (صلاحيات مخصصة للأقسام)</option>
+                  <option value="admin">مدير إداري (صلاحيات كاملة لكافة الأقسام)</option>
+                </select>
+              </div>
+
+              {/* Granular Permissions Checkboxes */}
+              {editingSupervisor.role === 'editor' && (
+                <div className="p-3.5 bg-stone-50 dark:bg-[#0b1519]/70 rounded-2xl border border-stone-200 dark:border-[#1e3842] space-y-2.5">
+                  <span className="font-bold text-stone-800 dark:text-stone-200 block text-[11px]">الأقسام المصرّح للمشرف إدارتها:</span>
+                  <div className="grid grid-cols-2 gap-2.5 text-stone-700 dark:text-stone-300">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editingSupervisor.permissions?.broadcasts ?? true}
+                        onChange={(e) => setEditingSupervisor({
+                          ...editingSupervisor,
+                          permissions: { ...editingSupervisor.permissions, broadcasts: e.target.checked }
+                        })}
+                        className="rounded text-[#2e9e66] focus:ring-[#2e9e66]"
+                      />
+                      <span>الإذاعات الصباحية</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editingSupervisor.permissions?.lectures ?? true}
+                        onChange={(e) => setEditingSupervisor({
+                          ...editingSupervisor,
+                          permissions: { ...editingSupervisor.permissions, lectures: e.target.checked }
+                        })}
+                        className="rounded text-[#2e9e66] focus:ring-[#2e9e66]"
+                      />
+                      <span>المحاضرات التوعوية</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editingSupervisor.permissions?.interviews ?? true}
+                        onChange={(e) => setEditingSupervisor({
+                          ...editingSupervisor,
+                          permissions: { ...editingSupervisor.permissions, interviews: e.target.checked }
+                        })}
+                        className="rounded text-[#2e9e66] focus:ring-[#2e9e66]"
+                      />
+                      <span>المقابلات الحوارية</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editingSupervisor.permissions?.quizzes ?? true}
+                        onChange={(e) => setEditingSupervisor({
+                          ...editingSupervisor,
+                          permissions: { ...editingSupervisor.permissions, quizzes: e.target.checked }
+                        })}
+                        className="rounded text-[#2e9e66] focus:ring-[#2e9e66]"
+                      />
+                      <span>الاستبانات والإحصائيات</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editingSupervisor.permissions?.events ?? true}
+                        onChange={(e) => setEditingSupervisor({
+                          ...editingSupervisor,
+                          permissions: { ...editingSupervisor.permissions, events: e.target.checked }
+                        })}
+                        className="rounded text-[#2e9e66] focus:ring-[#2e9e66]"
+                      />
+                      <span>الأنشطة والفعاليات</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={editingSupervisor.permissions?.registrations ?? true}
+                        onChange={(e) => setEditingSupervisor({
+                          ...editingSupervisor,
+                          permissions: { ...editingSupervisor.permissions, registrations: e.target.checked }
+                        })}
+                        className="rounded text-[#2e9e66] focus:ring-[#2e9e66]"
+                      />
+                      <span>روابط التسجيل</span>
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              <div className="pt-3 flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditSupervisorModalOpen(false);
+                    setEditingSupervisor(null);
+                  }}
+                  className="px-4 py-2 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 font-bold rounded-xl cursor-pointer"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-[#2e9e66] hover:bg-[#238253] text-white font-bold rounded-xl cursor-pointer shadow-xs"
+                >
+                  حفظ التعديلات
                 </button>
               </div>
             </form>

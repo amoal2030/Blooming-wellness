@@ -136,9 +136,9 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           {quizzes.map((quiz) => (
             <div
               key={quiz.id}
-              className="bg-white rounded-3xl border border-[#dbe8ed] overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
+              className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group"
             >
-              <div className="h-44 relative bg-[#f1f7f9] overflow-hidden">
+              <div className="h-44 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden">
                 <img
                   src={getAssetUrl(quiz.imageUrl || '/assets/images/healthy_habits_quiz_1793901821855.jpg')}
                   alt={quiz.title}
@@ -152,14 +152,14 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
 
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-xs text-[#526f78] font-medium">
+                  <div className="flex items-center gap-2 text-xs text-[#526f78] dark:text-stone-400 font-medium">
                     <ListOrdered className="w-3.5 h-3.5 text-[#2e9e66]" />
                     <span>{quiz.questions?.length || 0} أسئلة تفاعلية</span>
                   </div>
-                  <h3 className="text-lg font-bold text-[#0e3c48] group-hover:text-[#134e5e] transition-colors">
+                  <h3 className="text-lg font-bold text-[#0e3c48] dark:text-white group-hover:text-[#2e9e66] transition-colors">
                     {quiz.title}
                   </h3>
-                  <p className="text-xs text-[#526f78] leading-relaxed line-clamp-3">
+                  <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed line-clamp-3">
                     {quiz.description}
                   </p>
                 </div>
@@ -202,28 +202,28 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
       <div className="flex items-center justify-between">
         <button
           onClick={() => setSelectedQuiz(null)}
-          className="inline-flex items-center gap-2 text-xs font-bold text-[#134e5e] hover:text-[#0e3c48] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] hover:text-[#0e3c48] dark:hover:text-white transition-colors cursor-pointer"
         >
           <ArrowRight className="w-4 h-4" />
           <span>العودة لقائمة الاختبارات</span>
         </button>
 
-        <span className="text-xs font-bold text-[#134e5e] bg-[#eaf6fa] px-3.5 py-1.5 rounded-full border border-[#cde6ee]">
+        <span className="text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] bg-[#eaf6fa] dark:bg-[#0e2730] px-3.5 py-1.5 rounded-full border border-[#cde6ee] dark:border-[#1e3842]">
           {selectedQuiz.category}
         </span>
       </div>
 
       {!quizFinished ? (
         /* Questionnaire in progress */
-        <div className="bg-white rounded-3xl border border-[#dbe8ed] shadow-md p-6 sm:p-10 space-y-8">
+        <div className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-md p-6 sm:p-10 space-y-8 transition-colors">
           
           {/* Progress Header */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs text-[#526f78] font-bold">
+            <div className="flex items-center justify-between text-xs text-[#526f78] dark:text-stone-400 font-bold">
               <span>السؤال {currentQuestionIdx + 1} من {selectedQuiz.questions.length}</span>
               <span>نسبة الإنجاز: {progressPercent}%</span>
             </div>
-            <div className="w-full h-2.5 bg-[#f1f7f9] rounded-full overflow-hidden">
+            <div className="w-full h-2.5 bg-[#f1f7f9] dark:bg-[#0b1519] rounded-full overflow-hidden">
               <div 
                 className="h-full bg-[#2e9e66] transition-all duration-300"
                 style={{ width: `${((currentQuestionIdx + 1) / selectedQuiz.questions.length) * 100}%` }}
@@ -233,8 +233,8 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
 
           {/* Respondent Name (Optional) */}
           {currentQuestionIdx === 0 && (
-            <div className="p-4 bg-[#f7fbfc] rounded-2xl border border-[#dbe8ed]">
-              <label className="block text-xs font-bold text-[#0c2b33] mb-1">
+            <div className="p-4 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842]">
+              <label className="block text-xs font-bold text-[#0c2b33] dark:text-white mb-1">
                 اسم الطالب / المشارك (اختياري - لحفظ النتيجة في السجل):
               </label>
               <input
@@ -242,7 +242,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
                 value={respondentName}
                 onChange={(e) => setRespondentName(e.target.value)}
                 placeholder="أدخل اسمك أو اتركه فارغاً"
-                className="w-full px-3.5 py-2 bg-white border border-[#d0e0e6] rounded-xl text-xs text-[#0c2b33] focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
+                className="w-full px-3.5 py-2 bg-white dark:bg-[#122127] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
               />
             </div>
           )}
@@ -254,7 +254,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
                 <span className="text-[11px] font-extrabold text-[#2e9e66] uppercase tracking-wider">
                   {currentQ.type === 'true_false' ? 'سؤال: صح أو خطأ' : 'سؤال: اختيار من متعدد'}
                 </span>
-                <h2 className="text-xl sm:text-2xl font-black text-[#0e3c48] leading-snug">
+                <h2 className="text-xl sm:text-2xl font-black text-[#0e3c48] dark:text-white leading-snug">
                   {currentQ.questionText}
                 </h2>
               </div>
@@ -269,13 +269,13 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
                       onClick={() => handleSelectOption(optIdx)}
                       className={`w-full text-right p-4 sm:p-5 rounded-2xl border text-sm font-bold transition-all flex items-center justify-between cursor-pointer ${
                         isSelected
-                          ? 'border-[#2e9e66] bg-[#e8f7ee] text-[#134e5e] shadow-xs ring-2 ring-[#2e9e66]/20'
-                          : 'border-[#dbe8ed] bg-[#f7fbfc] hover:bg-[#eaf6fa] text-[#0c2b33]'
+                          ? 'border-[#2e9e66] bg-[#e8f7ee] dark:bg-[#0e2c22] text-[#134e5e] dark:text-[#42df98] shadow-xs ring-2 ring-[#2e9e66]/20'
+                          : 'border-[#dbe8ed] dark:border-[#1e3842] bg-[#f7fbfc] dark:bg-[#0b1519] hover:bg-[#eaf6fa] dark:hover:bg-[#162a32] text-[#0c2b33] dark:text-white'
                       }`}
                     >
                       <span>{opt}</span>
                       <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 mr-3 ${
-                        isSelected ? 'border-[#2e9e66] bg-[#2e9e66] text-white' : 'border-[#b8d5de] bg-white'
+                        isSelected ? 'border-[#2e9e66] bg-[#2e9e66] text-white' : 'border-[#b8d5de] dark:border-[#1e3842] bg-white dark:bg-[#0b1519]'
                       }`}>
                         {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
                       </div>
@@ -309,10 +309,10 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
         </div>
       ) : (
         /* Results View */
-        <div className="bg-white rounded-3xl border border-[#dbe8ed] shadow-xl p-8 sm:p-12 space-y-10 text-center animate-fade-in">
+        <div className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xl p-8 sm:p-12 space-y-10 text-center animate-fade-in transition-colors">
           
           <div className="space-y-4">
-            <div className="w-24 h-24 mx-auto rounded-full bg-white p-2 border-2 border-[#dbe8ed] shadow-md flex items-center justify-center overflow-hidden">
+            <div className="w-24 h-24 mx-auto rounded-full bg-white dark:bg-[#0b1519] p-2 border-2 border-[#dbe8ed] dark:border-[#1e3842] shadow-md flex items-center justify-center overflow-hidden">
               <img
                 src={getAssetUrl('/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
                 alt="شعار عافية تُزهر"
@@ -321,10 +321,10 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
               />
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-[#0e3c48]">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#0e3c48] dark:text-white">
               {respondentName ? `أحسنت يا ${respondentName}! لقد أتممت مقياس التوازن` : 'لقد أتممت الاختبار بنجاح!'}
             </h2>
-            <p className="text-xs sm:text-sm text-[#526f78]">
+            <p className="text-xs sm:text-sm text-[#526f78] dark:text-stone-300">
               تم تسجيل إجاباتك بنجاح في قاعدة بيانات مبادرة "عافية تُزهر".
             </p>
           </div>
@@ -359,8 +359,8 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           </div>
 
           {/* Detailed Question Review */}
-          <div className="text-right space-y-4 pt-6 border-t border-[#edf3f5]">
-            <h3 className="text-base font-bold text-[#0e3c48]">
+          <div className="text-right space-y-4 pt-6 border-t border-[#edf3f5] dark:border-[#1e3842]">
+            <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">
               مراجعة الإجابات والتوصيات الصحية:
             </h3>
 
@@ -372,10 +372,12 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
                   <div
                     key={qIdx}
                     className={`p-5 rounded-2xl border text-xs space-y-2 ${
-                      isCorrect ? 'bg-[#e8f7ee]/60 border-[#c4e9d2]' : 'bg-rose-50/50 border-rose-200'
+                      isCorrect 
+                        ? 'bg-[#e8f7ee]/60 dark:bg-[#0e2c22]/50 border-[#c4e9d2] dark:border-[#154636]' 
+                        : 'bg-rose-50/50 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900/50'
                     }`}
                   >
-                    <div className="flex items-start gap-2 font-bold text-[#0c2b33]">
+                    <div className="flex items-start gap-2 font-bold text-[#0c2b33] dark:text-white">
                       {isCorrect ? (
                         <CheckCircle2 className="w-4 h-4 text-[#2e9e66] shrink-0 mt-0.5" />
                       ) : (
@@ -384,17 +386,17 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
                       <span>{q.questionText}</span>
                     </div>
 
-                    <div className="mr-6 space-y-1 text-[#526f78]">
+                    <div className="mr-6 space-y-1 text-[#526f78] dark:text-stone-300">
                       <p>
-                        إجابتك: <span className="font-semibold text-[#0c2b33]">{q.options[userChoice] || 'لم تجب'}</span>
+                        إجابتك: <span className="font-semibold text-[#0c2b33] dark:text-white">{q.options[userChoice] || 'لم تجب'}</span>
                       </p>
                       {!isCorrect && (
-                        <p className="text-[#134e5e] font-bold">
+                        <p className="text-[#134e5e] dark:text-[#84d2ea] font-bold">
                           الإجابة الصحية الموصى بها: {q.options[q.correctAnswerIndex]}
                         </p>
                       )}
                       {q.explanation && (
-                        <p className="text-[#526f78] bg-white/90 p-2.5 rounded-xl mt-1 border border-[#dbe8ed] flex items-start gap-1.5">
+                        <p className="text-[#526f78] dark:text-stone-300 bg-white/90 dark:bg-[#0b1519] p-2.5 rounded-xl mt-1 border border-[#dbe8ed] dark:border-[#1e3842] flex items-start gap-1.5">
                           <Info className="w-3.5 h-3.5 text-[#389eb3] shrink-0 mt-0.5" />
                           <span>{q.explanation}</span>
                         </p>
@@ -410,7 +412,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           <div className="flex flex-wrap justify-center gap-4 pt-4">
             <button
               onClick={resetQuiz}
-              className="px-6 py-3 bg-[#eaf6fa] hover:bg-[#dbeef5] text-[#134e5e] font-bold text-xs rounded-2xl transition-colors flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3 bg-[#eaf6fa] dark:bg-[#0e2730] hover:bg-[#dbeef5] dark:hover:bg-[#163845] text-[#134e5e] dark:text-[#84d2ea] font-bold text-xs rounded-2xl transition-colors flex items-center gap-2 cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
               <span>إعادة الاختبار مرة أخرى</span>

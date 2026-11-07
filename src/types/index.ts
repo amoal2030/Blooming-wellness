@@ -13,6 +13,7 @@ export interface InitiativeSettings {
   missionText: string;
   goals: string[];
   logoUrl: string;
+  moeLogoUrl?: string;
   partnerLogos: PartnerLogo[];
   contactEmail: string;
   contactPhone: string;

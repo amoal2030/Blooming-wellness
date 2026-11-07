@@ -48,12 +48,12 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
             return (
               <div
                 key={item.id}
-                className={`bg-white rounded-3xl border overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group ${
-                  isOpen ? 'border-[#dbe8ed]' : 'border-[#dbe8ed]/60 opacity-80'
+                className={`bg-white dark:bg-[#122127] rounded-3xl border overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col justify-between group ${
+                  isOpen ? 'border-[#dbe8ed] dark:border-[#1e3842]' : 'border-[#dbe8ed]/60 dark:border-[#1e3842]/60 opacity-80'
                 }`}
               >
                 {/* Thumbnail */}
-                <div className="h-48 relative bg-[#f1f7f9] overflow-hidden">
+                <div className="h-48 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden">
                   <img
                     src={getAssetUrl(item.imageUrl || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80')}
                     alt={item.title}
@@ -62,12 +62,12 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
                   />
                   <div className="absolute top-3 right-3">
                     {isOpen ? (
-                      <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#e8f7ee] text-[#1e784a] border border-[#c4e9d2] flex items-center gap-1.5 shadow-xs">
+                      <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#e8f7ee] dark:bg-[#0e2c22] text-[#1e784a] dark:text-[#42df98] border border-[#c4e9d2] dark:border-[#154636] flex items-center gap-1.5 shadow-xs">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#2e9e66] animate-pulse" />
                         <span>التسجيل متاح</span>
                       </span>
                     ) : (
-                      <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#f1f7f9] text-[#526f78] border border-[#d0e0e6]">
+                      <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#f1f7f9] dark:bg-[#0b1519] text-[#526f78] dark:text-stone-400 border border-[#d0e0e6] dark:border-[#1e3842]">
                         التسجيل مغلق
                       </span>
                     )}
@@ -77,22 +77,22 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
                 {/* Details */}
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-3">
-                    <h3 className="text-base font-bold text-[#0e3c48] group-hover:text-[#134e5e] transition-colors leading-snug">
+                    <h3 className="text-base font-bold text-[#0e3c48] dark:text-white group-hover:text-[#2e9e66] transition-colors leading-snug">
                       {item.title}
                     </h3>
 
-                    <p className="text-xs text-[#526f78] leading-relaxed line-clamp-3">
+                    <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed line-clamp-3">
                       {item.description}
                     </p>
 
-                    <div className="p-3 bg-[#f7fbfc] rounded-2xl border border-[#dbe8ed] text-xs flex items-center gap-2 text-[#526f78]">
+                    <div className="p-3 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] text-xs flex items-center gap-2 text-[#526f78] dark:text-stone-300">
                       <Calendar className="w-4 h-4 text-[#2e9e66] shrink-0" />
-                      <span>آخر موعد للتسجيل: <strong className="text-[#0c2b33]">{item.deadline}</strong></span>
+                      <span>آخر موعد للتسجيل: <strong className="text-[#0c2b33] dark:text-white">{item.deadline}</strong></span>
                     </div>
                   </div>
 
                   {/* External Link Action */}
-                  <div className="pt-4 border-t border-[#edf3f5] flex items-center gap-2">
+                  <div className="pt-4 border-t border-[#edf3f5] dark:border-[#1e3842] flex items-center gap-2">
                     {isOpen ? (
                       <a
                         href={item.externalUrl}
@@ -106,7 +106,7 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
                     ) : (
                       <button
                         disabled
-                        className="flex-1 py-3 px-4 bg-[#f1f7f9] text-[#71919a] text-xs font-bold rounded-2xl cursor-not-allowed text-center"
+                        className="flex-1 py-3 px-4 bg-[#f1f7f9] dark:bg-[#0b1519] text-[#71919a] dark:text-stone-500 text-xs font-bold rounded-2xl cursor-not-allowed text-center"
                       >
                         انتهت فترة التسجيل
                       </button>
@@ -114,7 +114,7 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
 
                     <button
                       onClick={() => handleCopyLink(item.id, item.externalUrl)}
-                      className="p-3 bg-[#eaf6fa] hover:bg-[#d8eff7] text-[#134e5e] rounded-2xl transition-colors cursor-pointer"
+                      className="p-3 bg-[#eaf6fa] dark:bg-[#0e2730] hover:bg-[#d8eff7] dark:hover:bg-[#163845] text-[#134e5e] dark:text-[#84d2ea] rounded-2xl transition-colors cursor-pointer"
                       title="نسخ رابط التسجيل"
                     >
                       {copiedId === item.id ? (

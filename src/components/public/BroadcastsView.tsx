@@ -52,16 +52,16 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
         {/* Search Input */}
         <div className="relative w-full md:w-96">
-          <Search className="w-4 h-4 text-[#526f78] absolute right-3.5 top-3.5" />
+          <Search className="w-4 h-4 text-[#526f78] dark:text-stone-400 absolute right-3.5 top-3.5" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="ابحث في عنوان الإذاعة أو الوصف..."
-            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] border border-[#d0e0e6] rounded-xl text-xs text-[#0c2b33] focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
+            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
           />
         </div>
 
@@ -74,7 +74,7 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
               className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
                 selectedTopic === t
                   ? 'bg-[#134e5e] text-white shadow-xs'
-                  : 'bg-[#eaf6fa] text-[#134e5e] hover:bg-[#dbeef5]'
+                  : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'
               }`}
             >
               {t === 'all' ? 'جميع الموضوعات' : t}
@@ -85,20 +85,20 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
 
       {/* Broadcasts Grid */}
       {filteredBroadcasts.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-3xl border border-[#dbe8ed] p-8">
-          <Radio className="w-12 h-12 text-[#b0ced8] mx-auto mb-3" />
-          <h3 className="text-base font-bold text-[#0e3c48]">لا توجد إذاعات مطابقة للبحث</h3>
-          <p className="text-xs text-[#526f78] mt-1">جرب تغيير كلمات البحث أو اختيار موضوع آخر.</p>
+        <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
+          <Radio className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">لا توجد إذاعات مطابقة للبحث</h3>
+          <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">جرب تغيير كلمات البحث أو اختيار موضوع آخر.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredBroadcasts.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl border border-[#dbe8ed] overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col group"
+              className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col group"
             >
               {/* Card Image */}
-              <div className="h-48 relative bg-[#f1f7f9] overflow-hidden">
+              <div className="h-48 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden">
                 <img
                   src={getAssetUrl(item.imageUrl || '/assets/images/morning_broadcast_mic_1793901821444.jpg')}
                   alt={item.title}
@@ -113,25 +113,25 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
               {/* Card Content */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-[11px] text-[#526f78] font-medium">
+                  <div className="flex items-center gap-2 text-[11px] text-[#526f78] dark:text-stone-400 font-medium">
                     <Calendar className="w-3.5 h-3.5 text-[#2e9e66]" />
                     <span>تاريخ البث: {item.date}</span>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#0e3c48] group-hover:text-[#134e5e] transition-colors leading-snug">
+                  <h3 className="text-base font-bold text-[#0e3c48] dark:text-white group-hover:text-[#2e9e66] transition-colors leading-snug">
                     {item.title}
                   </h3>
 
-                  <p className="text-xs text-[#526f78] leading-relaxed line-clamp-3">
+                  <p className="text-xs text-[#526f78] dark:text-stone-300 leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
                 </div>
 
                 {/* Actions & Links */}
-                <div className="pt-4 border-t border-[#edf3f5] flex items-center justify-between gap-2">
+                <div className="pt-4 border-t border-[#edf3f5] dark:border-[#1e3842] flex items-center justify-between gap-2">
                   <button
                     onClick={() => onOpenVideoModal(item.title, item.videoUrl, item.audioUrl)}
-                    className="flex-1 py-2.5 px-4 bg-[#e8f7ee] hover:bg-[#d5f0e0] text-[#1e784a] text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                    className="flex-1 py-2.5 px-4 bg-[#e8f7ee] dark:bg-[#0e2c22] hover:bg-[#d5f0e0] dark:hover:bg-[#153f31] text-[#1e784a] dark:text-[#42df98] text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
                     {item.videoUrl ? <Play className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
                     <span>تشغيل المحتوى التوعوي</span>
@@ -142,7 +142,7 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
                       href={item.audioUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-2.5 bg-[#eaf6fa] hover:bg-[#d8eff7] text-[#134e5e] rounded-xl transition-colors"
+                      className="p-2.5 bg-[#eaf6fa] dark:bg-[#0e2730] hover:bg-[#d8eff7] text-[#134e5e] dark:text-[#84d2ea] rounded-xl transition-colors"
                       title="فتح الرابط الصوتي المباشر"
                     >
                       <ExternalLink className="w-4 h-4" />

@@ -65,27 +65,9 @@ export async function getInitiativeSettings(): Promise<InitiativeSettings> {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data() as InitiativeSettings;
-      // Guarantee transition to the official identity and the two designated partners
-      if (
-        data.initiativeName === 'مبادرة صحتنا أمانة المجتمعية' ||
-        !data.partnerLogos ||
-        data.partnerLogos.length !== 2 ||
-        data.partnerLogos.some(p => p.name.includes('الصحة'))
-      ) {
-        const synced = {
-          ...data,
-          initiativeName: 'مبادرة عافية تُزهر',
-          tagline: 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر',
-          logoUrl: '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png',
-          partnerLogos: DEFAULT_SETTINGS.partnerLogos,
-        };
-        // Persist the synced official identity back to firestore
-        setDoc(docRef, synced, { merge: true }).catch(() => {});
-        return { id: docSnap.id, ...synced };
-      }
       return { id: docSnap.id, ...data };
     }
-    // Return default settings if none stored yet
+    // Return default settings only if none stored in Firestore yet
     return DEFAULT_SETTINGS;
   } catch (error) {
     handleFirestoreError(error, OperationType.GET, path);
@@ -456,13 +438,18 @@ export async function updateInquiryStatus(id: string, status: 'new' | 'replied')
 // ======================= Seeding Initial Data =======================
 export async function seedInitialContentIfEmpty(): Promise<boolean> {
   try {
-    // Check if broadcasts exist
+    // Check if settings or broadcasts already exist. If so, system is initialized; do not overwrite!
+    const settingsSnap = await getDoc(doc(db, 'settings', 'general'));
+    if (settingsSnap.exists()) {
+      return false; // Already initialized, never overwrite!
+    }
+
     const broadcastsSnap = await getDocs(collection(db, 'broadcasts'));
     if (!broadcastsSnap.empty) {
       return false; // already has data
     }
 
-    // 1. Seed default settings
+    // 1. Seed default settings only if empty
     await setDoc(doc(db, 'settings', 'general'), DEFAULT_SETTINGS);
 
     // 2. Seed broadcasts
