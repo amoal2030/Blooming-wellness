@@ -9,7 +9,7 @@ service cloud.firestore {
 
     // Common security primitives
     function isValidId(id) {
-      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-@.]+$');
     }
     
     function incoming() {
@@ -27,24 +27,39 @@ service cloud.firestore {
     function isSuperAdmin() {
       return isSignedIn() && (
         request.auth.token.email.lower() == "onlak2030@gmail.com" ||
+        request.auth.token.email.lower() == "amoal2030@gmail.com" ||
         request.auth.uid == "AzxlMQTMEQRZsJf3LCUbTjuwFus2"
       );
     }
 
-    function isAdmin() {
-      return isSuperAdmin() || (
-        isSignedIn() && 
-        exists(/databases/$(database)/documents/supervisors/$(request.auth.uid)) && 
-        get(/databases/$(database)/documents/supervisors/$(request.auth.uid)).data.role == "admin"
+    function isSupervisorDoc(key) {
+      return exists(/databases/$(database)/documents/supervisors/$(key));
+    }
+
+    function getSupervisorDoc(key) {
+      return get(/databases/$(database)/documents/supervisors/$(key)).data;
+    }
+
+    function isSupervisorAdmin() {
+      return isSignedIn() && (
+        (isSupervisorDoc(request.auth.uid) && getSupervisorDoc(request.auth.uid).role == "admin") ||
+        (request.auth.token.email != null && isSupervisorDoc(request.auth.token.email.lower()) && getSupervisorDoc(request.auth.token.email.lower()).role == "admin")
       );
     }
 
-    function hasPermission(perm) {
-      return isAdmin() || (
-        isSignedIn() && 
-        exists(/databases/$(database)/documents/supervisors/$(request.auth.uid)) && 
-        get(/databases/$(database)/documents/supervisors/$(request.auth.uid)).data.permissions[perm] == true
+    function isSupervisorWithPermission(perm) {
+      return isSignedIn() && (
+        (isSupervisorDoc(request.auth.uid) && getSupervisorDoc(request.auth.uid).permissions[perm] == true) ||
+        (request.auth.token.email != null && isSupervisorDoc(request.auth.token.email.lower()) && getSupervisorDoc(request.auth.token.email.lower()).permissions[perm] == true)
       );
+    }
+
+    function isAdmin() {
+      return isSuperAdmin() || isSupervisorAdmin();
+    }
+
+    function hasPermission(perm) {
+      return isAdmin() || isSupervisorWithPermission(perm);
     }
 
     // Probe connection collection
@@ -118,7 +133,11 @@ service cloud.firestore {
 
     // 9. Supervisors and Permissions (إدارة المشرفين والصلاحيات)
     match /supervisors/{supervisorId} {
-      allow get: if isSignedIn() && isValidId(supervisorId);
+      allow get: if isSignedIn() && isValidId(supervisorId) && (
+        isAdmin() || 
+        supervisorId == request.auth.uid || 
+        (request.auth.token.email != null && supervisorId == request.auth.token.email.lower())
+      );
       allow list: if isAdmin();
       allow create, update, delete: if isValidId(supervisorId) && isAdmin();
     }

@@ -784,17 +784,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       showNotification('عذراً، فقط المدير الرئيسي يمتلك صلاحية إنشاء المشرفين.', true);
       return;
     }
-    if (!newSupEmail.trim()) {
+    const cleanEmail = newSupEmail.trim().toLowerCase();
+    if (!cleanEmail) {
       showNotification('يرجى إدخال البريد الإلكتروني للمشرف.', true);
       return;
     }
 
     try {
-      // Use clean sanitized email as supervisor ID or hash
-      const supId = newSupEmail.replace(/[@.]/g, '_').toLowerCase();
+      // Primary document key is the canonical lowercase email
+      const supId = cleanEmail;
       const supervisorData: Supervisor = {
         id: supId,
-        email: newSupEmail.trim().toLowerCase(),
+        email: cleanEmail,
         name: newSupName.trim() || 'مشرف معتمد',
         role: newSupRole,
         permissions: newSupPermissions,
@@ -804,15 +805,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       await saveSupervisor(supervisorData);
       setSupervisors(prev => {
-        const filtered = prev.filter(s => s.id !== supId);
+        const filtered = prev.filter(s => s.id !== supId && s.email.toLowerCase() !== cleanEmail);
         return [supervisorData, ...filtered];
       });
-      showNotification(`تم تسجيل المشرف (${newSupEmail}) وتعيين الصلاحيات بنجاح!`);
+      showNotification(`تم تسجيل المشرف (${cleanEmail}) وتعيين الصلاحيات بنجاح!`);
       setIsSupervisorModalOpen(false);
       setNewSupEmail('');
       setNewSupName('');
-    } catch (e) {
-      showNotification('تعذر حفظ المشرف.', true);
+    } catch (err: unknown) {
+      console.error('Failed to save supervisor:', err);
+      const msg = err instanceof Error ? err.message : 'تعذر حفظ المشرف، تحقق من الصلاحيات والاتصال.';
+      showNotification(`تعذر حفظ المشرف: ${msg}`, true);
     }
   };
 
@@ -827,8 +830,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           await deleteSupervisor(id);
           setSupervisors(prev => prev.filter(s => s.id !== id));
           showNotification('تم سحب صلاحيات المشرف بنجاح.');
-        } catch (e) {
-          showNotification('تعذر حذف المشرف.', true);
+        } catch (err: unknown) {
+          console.error('Failed to delete supervisor:', err);
+          const msg = err instanceof Error ? err.message : 'تعذر حذف المشرف.';
+          showNotification(`تعذر حذف المشرف: ${msg}`, true);
         }
       }
     });

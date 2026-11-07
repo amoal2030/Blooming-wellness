@@ -43,7 +43,7 @@ import { AccessDeniedView } from './components/admin/AccessDeniedView';
 import { Sparkles, Loader2, ShieldAlert } from 'lucide-react';
 
 function MainApp() {
-  const { currentUser, isSuperAdmin, isAdmin, isAuthorizedStaff } = useAuth();
+  const { currentUser, isSuperAdmin, isAdmin, isAuthorizedStaff, loading: authLoading } = useAuth();
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [loading, setLoading] = useState(true);
 
@@ -155,6 +155,21 @@ function MainApp() {
 
   // Admin Dashboard Mode
   if (activeTab === 'admin') {
+    // If auth state is still resolving, show smooth loading state instead of premature access denial
+    if (authLoading) {
+      return (
+        <div className="min-h-screen bg-[#f7fbfc] flex flex-col items-center justify-center p-4">
+          <div className="w-16 h-16 rounded-3xl bg-emerald-600 flex items-center justify-center text-white shadow-xl mb-4 animate-pulse">
+            <Sparkles className="w-8 h-8" />
+          </div>
+          <div className="flex items-center gap-2 text-stone-800 font-bold text-sm">
+            <Loader2 className="w-5 h-5 text-emerald-600 animate-spin" />
+            <span>جارٍ التحقق من الصلاحيات الإدارية...</span>
+          </div>
+        </div>
+      );
+    }
+
     if (!currentUser || !isAuthorizedStaff) {
       return (
         <div className="min-h-screen bg-[#f7fbfc] flex flex-col justify-between">
