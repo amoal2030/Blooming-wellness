@@ -5,8 +5,7 @@ import { auth, db, loginWithGoogle, logoutUser, handleFirestoreError, OperationT
 import { Supervisor, SupervisorPermissions } from '../types';
 
 export const SUPER_ADMIN_EMAILS = [
-  "onlak2030@gmail.com",
-  "amoal2030@gmail.com"
+  "onlak2030@gmail.com"
 ];
 export const SUPER_ADMIN_EMAIL = "onlak2030@gmail.com";
 export const SUPER_ADMIN_UID = "AzxlMQTMEQRZsJf3LCUbTjuwFus2";

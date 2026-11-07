@@ -12,13 +12,12 @@ import firebaseConfig from '../firebase-applet-config.json';
 // Initialize Firebase App
 export const app = initializeApp(firebaseConfig);
 
-// Set log level to avoid noisy offline/stream retry warnings
-setLogLevel('error');
+// Set log level to silent to prevent noisy internal 10s watchdog logs in iframe and proxy environments
+setLogLevel('silent');
 
-// CRITICAL: Initialize Firestore with long polling for iframe and restricted proxy environments
-// This avoids the 10-second WebChannel stream connection timeout
+// Initialize Firestore with auto-detect long polling for optimal connection negotiation in iframe & Cloud Run environments
 export const db = initializeFirestore(app, {
-  experimentalForceLongPolling: true,
+  experimentalAutoDetectLongPolling: true,
 }, firebaseConfig.firestoreDatabaseId);
 
 export const auth = getAuth(app);
@@ -74,10 +73,10 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
 export async function testConnection(): Promise<boolean> {
   try {
     const timeoutPromise = new Promise<never>((_, reject) => 
-      setTimeout(() => reject(new Error('the client is offline')), 2500)
+      setTimeout(() => reject(new Error('the client is offline')), 3000)
     );
     await Promise.race([
-      getDocFromServer(doc(db, 'test', 'connection')),
+      getDocFromServer(doc(db, 'settings', 'general')),
       timeoutPromise
     ]);
     return true;
@@ -86,7 +85,6 @@ export async function testConnection(): Promise<boolean> {
       console.warn('Firebase client is offline or starting up.');
       return false;
     }
-    // Expected permission error or exists is fine for test probe
     return true;
   }
 }
