@@ -163,6 +163,20 @@ export const Footer: React.FC<FooterProps> = ({
                   {t('nav_registrations', 'التسجيل في البرامج')}
                 </button>
               </li>
+              <li>
+                <button 
+                  onClick={() => {
+                    setActiveTab('home');
+                    setTimeout(() => {
+                      const el = document.getElementById('contact');
+                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 150);
+                  }}
+                  className="hover:text-white transition-all cursor-pointer"
+                >
+                  {t('nav_contact', 'تواصل معنا')}
+                </button>
+              </li>
               <li className="pt-1.5">
                 <a
                   href="https://amoal2030.github.io/Wellness-Guide-Blossoms/"

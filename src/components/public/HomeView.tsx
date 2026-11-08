@@ -606,7 +606,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* 7. Contact and Inquiries Section */}
-      <section id="contact-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24 sm:scroll-mt-28">
         <div className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 sm:p-12 shadow-sm transition-colors">
           <div className="max-w-3xl mx-auto text-center space-y-3 mb-10">
             <span className="text-xs font-extrabold text-[#134e5e] dark:text-[#84d2ea] uppercase tracking-wider">

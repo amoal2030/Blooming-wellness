@@ -44,8 +44,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   const handleNavClick = (tab: ActiveTab) => {
-    setActiveTab(tab);
     setMobileMenuOpen(false);
+    if (tab === 'contact') {
+      if (activeTab !== 'home') {
+        setActiveTab('home');
+      }
+      setTimeout(() => {
+        const contactEl = document.getElementById('contact');
+        if (contactEl) {
+          contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+      return;
+    }
+    setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

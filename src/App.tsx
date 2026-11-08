@@ -136,6 +136,19 @@ function MainApp() {
     setVideoModal(prev => ({ ...prev, isOpen: false }));
   };
 
+  // Smooth scroll to contact section if activeTab is 'contact'
+  useEffect(() => {
+    if (activeTab === 'contact') {
+      setActiveTab('home');
+      setTimeout(() => {
+        const contactEl = document.getElementById('contact');
+        if (contactEl) {
+          contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+    }
+  }, [activeTab]);
+
   // If loading initially
   if (loading) {
     return <LoadingScreen settings={settings} />;
