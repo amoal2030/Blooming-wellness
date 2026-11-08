@@ -2,7 +2,7 @@ import React from 'react';
 import { ActiveTab, InitiativeSettings } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { getAssetUrl } from '../utils/assets';
-import { Mail, Phone, MapPin, Heart, ArrowUp } from 'lucide-react';
+import { Mail, Phone, MapPin, Heart, ArrowUp, BookOpen, ExternalLink } from 'lucide-react';
 
 interface FooterProps {
   settings: InitiativeSettings;
@@ -163,6 +163,18 @@ export const Footer: React.FC<FooterProps> = ({
                   {t('nav_registrations', 'التسجيل في البرامج')}
                 </button>
               </li>
+              <li className="pt-1.5">
+                <a
+                  href="https://amoal2030.github.io/Wellness-Guide-Blossoms/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2e9e66]/20 border border-[#2e9e66]/40 text-[#84d2ea] hover:text-white hover:bg-[#2e9e66]/30 transition-all font-bold cursor-pointer group"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-[#2e9e66] group-hover:scale-110 transition-transform" />
+                  <span>{t('nav_user_guide', 'دليل المستخدم')}</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -187,30 +199,55 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* Col 4: Administrative Portal Access */}
-          <div className="bg-[#134e5e]/50 dark:bg-[#0e2730] p-5 rounded-2xl border border-[#23687a] dark:border-[#17414f]">
-            <h4 className="text-sm font-bold text-white mb-1.5">{t('admin_portal_title', 'لوحة التحكم الإدارية')}</h4>
-            <p className="text-xs text-[#b8dce0] mb-4 leading-relaxed">
-              {isRtl 
-                ? 'منطقة إدارية مخصصة لفريق عمل مبادرة عافية تُزهر لإدارة الإذاعات، الفعاليات، الاستبانات وتحديث المحتوى.'
-                : 'Dedicated administrative area for the Blooming Wellness team to manage broadcasts, events, quizzes and settings.'}
-            </p>
-            <button
-              onClick={() => {
-                setActiveTab('admin');
-                scrollToTop();
-              }}
-              className="w-full py-2.5 px-4 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-xl transition-colors shadow-xs text-center cursor-pointer"
-            >
-              {t('nav_admin', 'الدخول للوحة التحكم')}
-            </button>
+          {/* Col 4: Administrative Portal Access & User Guide */}
+          <div className="bg-[#134e5e]/50 dark:bg-[#0e2730] p-5 rounded-2xl border border-[#23687a] dark:border-[#17414f] flex flex-col justify-between">
+            <div>
+              <h4 className="text-sm font-bold text-white mb-1.5">{t('admin_portal_title', 'لوحة التحكم الإدارية')}</h4>
+              <p className="text-xs text-[#b8dce0] mb-4 leading-relaxed">
+                {isRtl 
+                  ? 'منطقة إدارية مخصصة لفريق عمل مبادرة عافية تُزهر لإدارة الإذاعات، الفعاليات، الاستبانات وتحديث المحتوى.'
+                  : 'Dedicated administrative area for the Blooming Wellness team to manage broadcasts, events, quizzes and settings.'}
+              </p>
+              <button
+                onClick={() => {
+                  setActiveTab('admin');
+                  scrollToTop();
+                }}
+                className="w-full py-2.5 px-4 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-xl transition-colors shadow-xs text-center cursor-pointer"
+              >
+                {t('nav_admin', 'الدخول للوحة التحكم')}
+              </button>
+            </div>
+
+            <div className="pt-4 border-t border-[#23687a]/60 dark:border-[#17414f]/60 mt-4">
+              <a
+                href="https://amoal2030.github.io/Wellness-Guide-Blossoms/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-3 bg-white/10 hover:bg-white/15 border border-[#84d2ea]/30 text-[#84d2ea] hover:text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 group cursor-pointer"
+              >
+                <BookOpen className="w-4 h-4 text-[#84d2ea] group-hover:scale-110 transition-transform" />
+                <span>{t('user_guide_title', 'تصفح دليل المستخدم')}</span>
+                <ExternalLink className="w-3 h-3 opacity-60" />
+              </a>
+            </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-[#185363] dark:border-[#102931] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8ab6bf]">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 text-center sm:text-start">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-start">
             <span>{t('footer_rights')} {new Date().getFullYear()}</span>
+            <span>·</span>
+            <a
+              href="https://amoal2030.github.io/Wellness-Guide-Blossoms/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[#84d2ea] hover:text-white underline underline-offset-4 transition-colors font-bold cursor-pointer"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-[#2e9e66]" />
+              <span>{t('nav_user_guide', 'دليل المستخدم')}</span>
+            </a>
             <span>·</span>
             <a
               href="https://amoal2030.github.io/a1/"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth, SUPER_ADMIN_EMAIL } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import { getAssetUrl } from '../utils/assets';
 import { X, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
@@ -15,6 +16,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onSuccess,
 }) => {
   const { login, logout, currentUser, isSuperAdmin, isAuthorizedStaff, supervisorProfile } = useAuth();
+  const { t, isRtl, language } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -83,7 +85,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       >
         <button
           onClick={onClose}
-          className="absolute top-4 left-4 p-2 text-[#526f78] dark:text-stone-400 hover:text-[#0e3c48] dark:hover:text-white hover:bg-[#f1f7f9] dark:hover:bg-[#1e3842] rounded-xl transition-colors cursor-pointer"
+          className={`absolute top-4 ${isRtl ? 'left-4' : 'right-4'} p-2 text-[#526f78] dark:text-stone-400 hover:text-[#0e3c48] dark:hover:white hover:bg-[#f1f7f9] dark:hover:bg-[#1e3842] rounded-xl transition-colors cursor-pointer`}
         >
           <X className="w-5 h-5" />
         </button>
@@ -97,14 +99,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               referrerPolicy="no-referrer"
             />
           </div>
-          <h3 className="text-xl font-black text-[#0e3c48] dark:text-white">تسجيل الدخول للمسؤولين</h3>
+          <h3 className="text-xl font-black text-[#0e3c48] dark:text-white">
+            {t('login_modal_title', 'تسجيل الدخول للمسؤولين')}
+          </h3>
           <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">
-            بوابة الإدارة للمدير الرئيسي ومشرفي مبادرة "عافية تُزهر"
+            {t('login_modal_subtitle', 'بوابة الإدارة للمدير الرئيسي ومشرفي مبادرة "عافية تُزهر"')}
           </p>
         </div>
 
         {errorMsg && (
-          <div className="mb-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 text-xs flex items-start gap-2.5 whitespace-pre-line leading-relaxed text-right">
+          <div className={`mb-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 text-xs flex items-start gap-2.5 whitespace-pre-line leading-relaxed ${isRtl ? 'text-right' : 'text-left'}`}>
             <ShieldAlert className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />
             <span className="flex-1 font-medium">{errorMsg}</span>
           </div>
@@ -113,20 +117,20 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         {currentUser ? (
           isAuthorizedStaff ? (
             /* Authorized Super Admin or Supervisor */
-            <div className="p-4 bg-[#e8f7ee] border border-[#c4e9d2] rounded-2xl mb-6 text-right">
+            <div className={`p-4 bg-[#e8f7ee] border border-[#c4e9d2] rounded-2xl mb-6 ${isRtl ? 'text-right' : 'text-left'}`}>
               <div className="flex items-center gap-2 text-[#185644] font-bold text-sm mb-1">
                 <CheckCircle2 className="w-4 h-4 text-[#2e9e66]" />
-                <span>أنت مسجل الدخول بحساب معتمد:</span>
+                <span>{t('login_current_account', 'أنت مسجل الدخول بحساب معتمد:')}</span>
               </div>
               <p className="text-xs text-[#0c2b33] font-mono truncate">{currentUser.email}</p>
               <div className="mt-2 text-xs flex items-center gap-2">
-                <span className="text-[#526f78]">الرتبة:</span>
+                <span className="text-[#526f78]">{t('login_role', 'الرتبة:')}</span>
                 <span className="font-extrabold text-[#134e5e]">
                   {isSuperAdmin
-                    ? 'المدير الرئيسي (صلاحيات كاملة)'
+                    ? t('login_role_super', 'المدير الرئيسي (صلاحيات كاملة)')
                     : supervisorProfile?.role === 'admin'
-                    ? 'مدير إداري'
-                    : 'مشرف محتوى'}
+                    ? t('login_role_admin', 'مدير إداري')
+                    : t('login_role_editor', 'مشرف محتوى')}
                 </span>
               </div>
               <button
@@ -136,32 +140,32 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 }}
                 className="mt-4 w-full py-2.5 bg-[#134e5e] hover:bg-[#0e3c48] text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
               >
-                متابعة إلى لوحة التحكم
+                {t('login_continue_admin', 'متابعة إلى لوحة التحكم')}
               </button>
             </div>
           ) : (
             /* Regular visitor with unauthorized Google account */
-            <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl mb-6 text-right space-y-2.5">
+            <div className={`p-4 bg-rose-50 border border-rose-200 rounded-2xl mb-6 space-y-2.5 ${isRtl ? 'text-right' : 'text-left'}`}>
               <div className="flex items-center gap-2 text-rose-800 font-bold text-sm">
                 <ShieldAlert className="w-4 h-4 text-rose-600" />
-                <span>حساب غير مصرح له بالإدارة:</span>
+                <span>{t('login_unauthorized_title', 'حساب غير مصرح له بالإدارة:')}</span>
               </div>
               <p className="text-xs text-stone-700 font-mono truncate">{currentUser.email}</p>
               <p className="text-[11px] text-rose-700 leading-relaxed">
-                هذا الحساب مسجل كمستخدم عادي وليس لديه صلاحية الدخول للوحة التحكم الإدارية.
+                {t('login_unauthorized_desc', 'هذا الحساب مسجل كمستخدم عادي وليس لديه صلاحية الدخول للوحة التحكم الإدارية.')}
               </p>
               <div className="pt-2 flex items-center gap-2">
                 <button
                   onClick={handleLogoutAndRetry}
                   className="flex-1 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
                 >
-                  تسجيل الخروج / تبديل الحساب
+                  {t('login_switch_account', 'تسجيل الخروج / تبديل الحساب')}
                 </button>
                 <button
                   onClick={onClose}
                   className="py-2 px-4 bg-white border border-stone-300 hover:bg-stone-50 text-stone-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
                 >
-                  إغلاق
+                  {t('action_close', 'إغلاق')}
                 </button>
               </div>
             </div>
@@ -191,14 +195,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                 />
               </svg>
-              <span>{loading ? 'جارٍ تسجيل الدخول...' : 'تسجيل الدخول باستخدام Google'}</span>
+              <span>{loading ? t('login_google_loading', 'جارٍ تسجيل الدخول...') : t('login_google_btn', 'تسجيل الدخول باستخدام Google')}</span>
             </button>
 
-            <div className="p-3.5 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] text-[11px] text-[#526f78] dark:text-stone-300 space-y-1.5">
-              <p className="font-bold text-[#0e3c48] dark:text-white">تنويه الأمان والصلاحيات:</p>
-              <p>• حساب المدير الرئيسي التلقائي: <code className="text-[#134e5e] dark:text-[#84d2ea] font-mono font-bold">{SUPER_ADMIN_EMAIL}</code></p>
-              <p>• المشرفون يتم اعتماد حساباتهم وتعيين صلاحياتهم حصرياً من قِبل المدير الرئيسي عبر لوحة التحكم.</p>
-              <p>• الزائر العادي لا يمتلك صلاحية الدخول أو تعديل المحتوى.</p>
+            <div className={`p-3.5 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] text-[11px] text-[#526f78] dark:text-stone-300 space-y-1.5 ${isRtl ? 'text-right' : 'text-left'}`}>
+              <p className="font-bold text-[#0e3c48] dark:text-white">{t('login_security_notice', 'تنويه الأمان والصلاحيات:')}</p>
+              <p>• {t('login_security_admin_email', 'حساب المدير الرئيسي التلقائي:')} <code className="text-[#134e5e] dark:text-[#84d2ea] font-mono font-bold">{SUPER_ADMIN_EMAIL}</code></p>
+              <p>• {t('login_security_supervisors_notice', 'المشرفون يتم اعتماد حساباتهم وتعيين صلاحياتهم حصرياً من قِبل المدير الرئيسي عبر لوحة التحكم.')}</p>
+              <p>• {t('login_security_visitor_notice', 'الزائر العادي لا يمتلك صلاحية الدخول أو تعديل المحتوى.')}</p>
             </div>
           </div>
         )}

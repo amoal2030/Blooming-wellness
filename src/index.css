@@ -55,11 +55,15 @@
     --brand-text-muted: #8caab4;
   }
 
-  html.font-english {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  html.font-english,
+  html[dir="ltr"],
+  html[dir="ltr"] body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
 
-  html.font-arabic {
+  html.font-arabic,
+  html[dir="rtl"],
+  html[dir="rtl"] body {
     font-family: 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }

@@ -32,11 +32,15 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
   }, []);
 
   // Initiative Logo
-  const initiativeLogo = settings?.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png';
+  const initiativeLogo = 
+    settings?.logoUrl ||
+    (typeof window !== 'undefined' ? localStorage.getItem('aafia_initiative_logo') : null) ||
+    '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png';
 
   // Ministry of Education Logo
   const moeLogo = 
     settings?.moeLogoUrl ||
+    (typeof window !== 'undefined' ? localStorage.getItem('aafia_moe_logo') : null) ||
     settings?.partnerLogos?.find(p => p.id === 'moe' || p.name.includes('التعليم'))?.imageUrl ||
     '/assets/logos/ministry_of_education.svg';
 

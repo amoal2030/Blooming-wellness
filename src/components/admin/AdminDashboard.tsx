@@ -69,6 +69,7 @@ import {
   ShieldCheck,
   RefreshCw,
   Eye,
+  BookOpen,
   X
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -1028,14 +1029,28 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               );
             })}
 
-            <div className="pt-4 border-t border-stone-100 dark:border-[#1e3842] mt-4 px-2">
+            <div className="pt-4 border-t border-stone-100 dark:border-[#1e3842] mt-4 px-2 space-y-2">
+              <a
+                href="https://amoal2030.github.io/Wellness-Guide-Blossoms/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold bg-[#e8f7ee] dark:bg-[#0e2c22] text-[#1e784a] dark:text-[#42df98] border border-[#c4e9d2] dark:border-[#154636] hover:bg-[#d5f0e0] dark:hover:bg-[#133d2f] transition-all shadow-xs cursor-pointer group"
+                title={isRtl ? 'فتح دليل المستخدم الشامل لمنصة عافية تُزهر' : 'Open Wellness Blossoms User Guide'}
+              >
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-[#2e9e66] group-hover:scale-110 transition-transform shrink-0" />
+                  <span className="truncate">{isRtl ? 'دليل المستخدم' : 'User Guide'}</span>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 shrink-0" />
+              </a>
+
               <button
                 onClick={handleSeedData}
                 className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-stone-100 dark:bg-[#0b1519] hover:bg-stone-200 dark:hover:bg-[#162a32] text-stone-700 dark:text-stone-300 rounded-xl text-[11px] font-semibold transition-colors cursor-pointer"
                 title="تهيئة بيانات تجريبية حقيقية للمبادرة إذا كانت فارغة"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>تهيئة بيانات المبادرة</span>
+                <span>{isRtl ? 'تهيئة بيانات المبادرة' : 'Seed Initial Data'}</span>
               </button>
             </div>
           </aside>
@@ -1305,18 +1320,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <button
                         type="button"
                         onClick={() => {
+                          const defaultMoe = '/assets/logos/ministry_of_education.svg';
+                          const defaultSchool = '/assets/logos/alshatee_high_school.svg';
                           setSettingsForm({
                             ...settingsForm,
+                            moeLogoUrl: defaultMoe,
                             partnerLogos: [
                               {
                                 id: 'partner-moe',
                                 name: 'وزارة التعليم',
-                                imageUrl: '/assets/logos/ministry_of_education.svg',
+                                imageUrl: defaultMoe,
                               },
                               {
                                 id: 'partner-school',
                                 name: 'مدرسة ثانوية الشاطئ',
-                                imageUrl: '/assets/logos/alshatee_high_school.svg',
+                                imageUrl: defaultSchool,
                               },
                             ]
                           });
@@ -1333,13 +1351,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <div className="flex items-center gap-3 pb-2 border-b border-stone-100">
                           <div className="w-12 h-12 bg-white rounded-lg border border-stone-100 p-1 flex items-center justify-center shrink-0">
                             <img
-                              src={getAssetUrl(settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg')}
+                              src={getAssetUrl(settingsForm.moeLogoUrl || settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg')}
                               alt="وزارة التعليم"
                               className="w-full h-full object-contain"
                             />
                           </div>
                           <div>
-                            <span className="text-[10px] font-bold text-[#2e9e66] block">الجهة الأولى</span>
+                            <span className="text-[10px] font-bold text-[#2e9e66] block">الجهة الأولى (شاشة التحميل والترويسة)</span>
                             <span className="text-xs font-bold text-stone-800">{settingsForm.partnerLogos?.[0]?.name || 'وزارة التعليم'}</span>
                           </div>
                         </div>
@@ -1352,7 +1370,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             onChange={(e) => {
                               const newPartners = [...(settingsForm.partnerLogos || [])];
                               if (!newPartners[0]) {
-                                newPartners[0] = { id: 'partner-moe', name: '', imageUrl: '/assets/logos/ministry_of_education.svg' };
+                                newPartners[0] = { id: 'partner-moe', name: '', imageUrl: settingsForm.moeLogoUrl || '/assets/logos/ministry_of_education.svg' };
                               }
                               newPartners[0] = { ...newPartners[0], name: e.target.value };
                               setSettingsForm({ ...settingsForm, partnerLogos: newPartners });
@@ -1362,17 +1380,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         </div>
 
                         <div>
-                          <label className="block text-[11px] font-bold text-stone-600 mb-1">مسار أو رابط الشعار</label>
+                          <label className="block text-[11px] font-bold text-stone-600 mb-1">مسار أو رابط الشعار (شاشة التحميل والترويسة)</label>
                           <input
                             type="text"
-                            value={settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg'}
+                            value={settingsForm.moeLogoUrl || settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg'}
                             onChange={(e) => {
+                              const val = e.target.value;
                               const newPartners = [...(settingsForm.partnerLogos || [])];
                               if (!newPartners[0]) {
-                                newPartners[0] = { id: 'partner-moe', name: 'وزارة التعليم', imageUrl: '' };
+                                newPartners[0] = { id: 'partner-moe', name: 'وزارة التعليم', imageUrl: val };
+                              } else {
+                                newPartners[0] = { ...newPartners[0], imageUrl: val };
                               }
-                              newPartners[0] = { ...newPartners[0], imageUrl: e.target.value };
-                              setSettingsForm({ ...settingsForm, partnerLogos: newPartners });
+                              setSettingsForm({ ...settingsForm, moeLogoUrl: val, partnerLogos: newPartners });
                             }}
                             className="w-full px-3 py-1.5 rounded-lg border border-stone-300 text-xs focus:ring-2 focus:ring-[#2e9e66] focus:outline-none dir-ltr text-right"
                           />

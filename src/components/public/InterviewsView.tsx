@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Interview } from '../../types';
 import { getAssetUrl } from '../../utils/assets';
+import { useLanguage } from '../../context/LanguageContext';
 import { Mic, Search, Play, UserCheck, Calendar } from 'lucide-react';
 
 interface InterviewsViewProps {
@@ -12,6 +13,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
   interviews,
   onOpenVideoModal,
 }) => {
+  const { t, isRtl } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'date_desc' | 'date_asc'>('date_desc');
   const [selectedTopic, setSelectedTopic] = useState('all');
@@ -51,14 +53,16 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
       
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-[#0e3c48] via-[#134e5e] to-[#0e3c48] text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-lg">
-        <div className="relative z-10 max-w-2xl space-y-3">
+        <div className={`relative z-10 max-w-2xl space-y-3 ${isRtl ? 'text-right' : 'text-left'}`}>
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/10 rounded-full text-xs font-bold text-[#84d2ea] border border-white/20">
             <Mic className="w-3.5 h-3.5 text-[#ea8c38]" />
-            <span>المقابلات واللقاءات الحوارية</span>
+            <span>{t('interviews_title', 'المقابلات واللقاءات الحوارية')}</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black">حوارات وتجارب ملهمة</h1>
+          <h1 className="text-3xl sm:text-4xl font-black">
+            {isRtl ? 'حوارات وتجارب ملهمة' : 'Inspiring Talks & Journeys'}
+          </h1>
           <p className="text-[#d1e6ec] text-xs sm:text-sm leading-relaxed">
-            لقاءات حوارية مع نخبة المتخصصين ورواد الصحة وأصحاب التجارب الملهمة في تحقيق التوازن الصحي والرياضي.
+            {t('interviews_subtitle', 'حوارات مرئية شيقة مع خبراء الصحة ورياضيين ملهمين حول تغيير نمط الحياة')}
           </p>
         </div>
       </div>
@@ -66,30 +70,30 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
       {/* Filter and Sort Toolbar */}
       <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-[#526f78] dark:text-stone-400 absolute right-3.5 top-3.5" />
+          <Search className={`w-4 h-4 text-[#526f78] dark:text-stone-400 absolute ${isRtl ? 'right-3.5' : 'left-3.5'} top-3.5`} />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="ابحث باسم الضيف أو عنوان المقابلة..."
-            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
+            placeholder={t('interviews_search_placeholder', 'ابحث في المقابلات أو أسماء الضيوف...')}
+            className={`w-full ${isRtl ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2.5 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]`}
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
           {/* Topic Select */}
           <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0">
-            {topics.map((t) => (
+            {topics.map((itemTopic) => (
               <button
-                key={t}
-                onClick={() => setSelectedTopic(t)}
+                key={itemTopic}
+                onClick={() => setSelectedTopic(itemTopic)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
-                  selectedTopic === t
+                  selectedTopic === itemTopic
                     ? 'bg-[#134e5e] text-white shadow-xs'
                     : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'
                 }`}
               >
-                {t === 'all' ? 'جميع الموضوعات' : t}
+                {itemTopic === 'all' ? t('action_filter_all', 'الكل') : itemTopic}
               </button>
             ))}
           </div>
@@ -99,10 +103,10 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
             value={sortBy}
             onChange={(e: any) => setSortBy(e.target.value)}
             aria-label="ترتيب المقابلات حسب التاريخ"
-            className="py-2 px-3 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] focus:outline-none"
+            className="py-2 px-3 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] focus:outline-none cursor-pointer"
           >
-            <option value="date_desc">الأحدث تاريخاً</option>
-            <option value="date_asc">الأقدم تاريخاً</option>
+            <option value="date_desc">{isRtl ? 'الأحدث تاريخاً' : 'Newest First'}</option>
+            <option value="date_asc">{isRtl ? 'الأقدم تاريخاً' : 'Oldest First'}</option>
           </select>
         </div>
       </div>
@@ -111,8 +115,10 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
       {filteredInterviews.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
           <Mic className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">لا توجد مقابلات مطابقة للبحث</h3>
-          <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">يرجى تعديل مصطلحات البحث.</p>
+          <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">{t('interviews_no_items', 'لم يتم العثور على مقابلات حوارية مطابقة.')}</h3>
+          <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">
+            {isRtl ? 'يرجى تعديل مصطلحات البحث.' : 'Please adjust your search terms.'}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -138,18 +144,18 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
                   </div>
                 </div>
 
-                <div className="absolute top-3 right-3 bg-[#0e3c48]/85 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-lg">
+                <div className={`absolute top-3 ${isRtl ? 'right-3' : 'left-3'} bg-[#0e3c48]/85 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-lg`}>
                   {item.topic}
                 </div>
               </div>
 
               {/* Guest & Interview info */}
               <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                <div className="space-y-3">
+                <div className={`space-y-3 ${isRtl ? 'text-right' : 'text-left'}`}>
                   <div className="flex items-center justify-between text-[11px] text-[#526f78] dark:text-stone-400">
                     <div className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5 text-[#2e9e66]" />
-                      <span>تاريخ اللقاء: {item.date}</span>
+                      <span>{t('card_date', 'التاريخ')}: {item.date}</span>
                     </div>
                   </div>
 
@@ -179,7 +185,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
                     className="w-full py-2.5 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
                   >
                     <Play className="w-4 h-4 fill-white" />
-                    <span>مشاهدة المقابلة كاملة</span>
+                    <span>{t('action_watch', 'مشاهدة المقابلة كاملة')}</span>
                   </button>
                 </div>
               </div>

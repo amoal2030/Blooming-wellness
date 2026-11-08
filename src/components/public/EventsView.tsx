@@ -2,12 +2,14 @@ import React, { useState, useMemo } from 'react';
 import { EventItem } from '../../types';
 import { getAssetUrl } from '../../utils/assets';
 import { Calendar, Clock, MapPin, Search, CheckCircle, Sparkles } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface EventsViewProps {
   events: EventItem[];
 }
 
 export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
+  const { t, isRtl } = useLanguage();
   const [activeStatus, setActiveStatus] = useState<'all' | 'upcoming' | 'ongoing' | 'completed'>('upcoming');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -30,23 +32,23 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
     switch (status) {
       case 'upcoming':
         return (
-          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#e8f7ee] text-[#1e784a] border border-[#c4e9d2] flex items-center gap-1.5">
+          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#e8f7ee] dark:bg-[#0e2c22] text-[#1e784a] dark:text-[#42df98] border border-[#c4e9d2] dark:border-[#154636] flex items-center gap-1.5 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2e9e66]" />
-            <span>فعالية قادمة</span>
+            <span>{t('card_status_upcoming', 'فعالية قادمة')}</span>
           </span>
         );
       case 'ongoing':
         return (
-          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#fef4ea] text-[#c06b1e] border border-[#fbd3b0] flex items-center gap-1.5">
+          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#fef4ea] dark:bg-[#2d1e11] text-[#c06b1e] dark:text-[#f8b479] border border-[#fbd3b0] dark:border-[#633a17] flex items-center gap-1.5 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ea8c38] animate-ping" />
-            <span>جارية الآن</span>
+            <span>{t('card_status_ongoing', 'جارية الآن')}</span>
           </span>
         );
       case 'completed':
         return (
-          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#f1f7f9] text-[#526f78] border border-[#d0e0e6] flex items-center gap-1.5">
-            <CheckCircle className="w-3.5 h-3.5 text-[#526f78]" />
-            <span>فعالية سابقة</span>
+          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#f1f7f9] dark:bg-[#0b1519] text-[#526f78] dark:text-stone-400 border border-[#d0e0e6] dark:border-[#1e3842] flex items-center gap-1.5">
+            <CheckCircle className="w-3.5 h-3.5 text-[#526f78] dark:text-stone-400" />
+            <span>{t('card_status_completed', 'فعالية سابقة')}</span>
           </span>
         );
     }
@@ -60,11 +62,13 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
         <div className="relative z-10 max-w-2xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/10 rounded-full text-xs font-bold text-[#84d2ea] border border-white/20">
             <Calendar className="w-3.5 h-3.5 text-[#2e9e66]" />
-            <span>الأنشطة والفعاليات المدرسية والمجتمعية</span>
+            <span>{t('events_title', 'الأنشطة والفعاليات المجتمعية')}</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black">فعاليات عافية: نشاط وازدهار</h1>
+          <h1 className="text-3xl sm:text-4xl font-black">
+            {t('events_title', 'فعاليات عافية: نشاط وازدهار')}
+          </h1>
           <p className="text-[#d1e6ec] text-xs sm:text-sm leading-relaxed">
-            ملتقيات توعوية، برامج مشي حركية، ورش عمل لتعزيز العافية في رحاب مدرسة ثانوية الشاطئ والمجتمع المحيط.
+            {t('events_subtitle', 'ملتقيات توعوية، برامج مشي حركية، ورش عمل لتعزيز العافية في رحاب مدرسة ثانوية الشاطئ والمجتمع المحيط.')}
           </p>
         </div>
       </div>
@@ -78,7 +82,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
                 <div className="flex items-center gap-2">
                   <span className="px-3 py-1 bg-[#fef4ea] dark:bg-[#2d1e11] text-[#c06b1e] dark:text-[#f8b479] border border-[#fbd3b0] dark:border-[#633a17] text-xs font-bold rounded-xl flex items-center gap-1">
                     <Sparkles className="w-3.5 h-3.5 text-[#ea8c38]" />
-                    <span>الفعالية الأبرز</span>
+                    <span>{t('card_featured_badge', 'الفعالية الأبرز')}</span>
                   </span>
                   {getStatusBadge(featuredEvent.status)}
                 </div>
@@ -97,7 +101,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-[#2e9e66] shrink-0" />
                   <div>
-                    <span className="block text-[10px] text-[#526f78] dark:text-stone-400 font-bold">التاريخ</span>
+                    <span className="block text-[10px] text-[#526f78] dark:text-stone-400 font-bold">{t('card_date', 'التاريخ')}</span>
                     <span className="font-extrabold">{featuredEvent.date}</span>
                   </div>
                 </div>
@@ -105,7 +109,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-[#2e9e66] shrink-0" />
                   <div>
-                    <span className="block text-[10px] text-[#526f78] dark:text-stone-400 font-bold">الوقت</span>
+                    <span className="block text-[10px] text-[#526f78] dark:text-stone-400 font-bold">{t('card_time', 'الوقت')}</span>
                     <span className="font-extrabold">{featuredEvent.time}</span>
                   </div>
                 </div>
@@ -113,7 +117,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-[#2e9e66] shrink-0" />
                   <div>
-                    <span className="block text-[10px] text-[#526f78] dark:text-stone-400 font-bold">الموقع</span>
+                    <span className="block text-[10px] text-[#526f78] dark:text-stone-400 font-bold">{t('card_location', 'الموقع')}</span>
                     <span className="font-extrabold truncate">{featuredEvent.location}</span>
                   </div>
                 </div>
@@ -135,23 +139,25 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
       {/* Filter and Search Bar */}
       <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
         <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 text-[#526f78] dark:text-stone-400 absolute right-3.5 top-3.5" />
+          <Search className={`w-4 h-4 text-[#526f78] dark:text-stone-400 absolute top-3.5 ${isRtl ? 'right-3.5' : 'left-3.5'}`} />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="ابحث في الفعاليات أو الموقع..."
-            className="w-full pr-10 pl-4 py-2.5 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
+            placeholder={isRtl ? 'ابحث في الفعاليات أو الموقع...' : 'Search events or location...'}
+            className={`w-full py-2.5 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66] ${
+              isRtl ? 'pr-10 pl-4' : 'pl-10 pr-4'
+            }`}
           />
         </div>
 
         {/* Status Tabs */}
         <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
           {[
-            { id: 'all', label: 'جميع الفعاليات' },
-            { id: 'upcoming', label: 'الفعاليات القادمة' },
-            { id: 'ongoing', label: 'الجارية الآن' },
-            { id: 'completed', label: 'الفعاليات السابقة' },
+            { id: 'all', label: t('events_tab_all', 'جميع الفعاليات') },
+            { id: 'upcoming', label: t('events_tab_upcoming', 'الفعاليات القادمة') },
+            { id: 'ongoing', label: t('events_tab_ongoing', 'الجارية الآن') },
+            { id: 'completed', label: t('events_tab_completed', 'الفعاليات السابقة') },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -172,8 +178,10 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
       {filteredEvents.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
           <Calendar className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">لا توجد فعاليات مطابقة في هذا التصنيف</h3>
-          <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">يرجى اختيار تبويب آخر أو مسح حقل البحث.</p>
+          <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">{t('events_no_items', 'لا توجد فعاليات مطابقة في هذا التصنيف')}</h3>
+          <p className="text-xs text-[#526f78] dark:text-stone-400 mt-1">
+            {isRtl ? 'يرجى اختيار تبويب آخر أو مسح حقل البحث.' : 'Please select another tab or clear the search field.'}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -189,7 +197,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute top-3 right-3">
+                <div className={`absolute top-3 ${isRtl ? 'right-3' : 'left-3'}`}>
                   {getStatusBadge(event.status)}
                 </div>
               </div>
@@ -208,12 +216,12 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
                 <div className="pt-4 border-t border-[#edf3f5] dark:border-[#1e3842] space-y-2 text-xs text-[#526f78] dark:text-stone-400">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-3.5 h-3.5 text-[#2e9e66] shrink-0" />
-                    <span>التاريخ: <strong className="text-[#0c2b33] dark:text-white">{event.date}</strong></span>
+                    <span>{t('card_date', 'التاريخ')}: <strong className="text-[#0c2b33] dark:text-white">{event.date}</strong></span>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-[#2e9e66] shrink-0" />
-                    <span>الوقت: {event.time}</span>
+                    <span>{t('card_time', 'الوقت')}: {event.time}</span>
                   </div>
 
                   <div className="flex items-center gap-2">

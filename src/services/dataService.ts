@@ -39,6 +39,7 @@ export const DEFAULT_SETTINGS: InitiativeSettings = {
     'تفعيل الشراكة الإيجابية والتكامل البناء بين وزارة التعليم ومدرسة ثانوية الشاطئ والمجتمع.'
   ],
   logoUrl: '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png',
+  moeLogoUrl: '/assets/logos/ministry_of_education.svg',
   partnerLogos: [
     { 
       id: 'moe', 
@@ -65,7 +66,18 @@ export async function getInitiativeSettings(): Promise<InitiativeSettings> {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data() as InitiativeSettings;
-      return { id: docSnap.id, ...data };
+      const moeLogo = data.moeLogoUrl || data.partnerLogos?.[0]?.imageUrl || DEFAULT_SETTINGS.moeLogoUrl;
+      const initiativeLogo = data.logoUrl || DEFAULT_SETTINGS.logoUrl;
+      if (typeof window !== 'undefined') {
+        if (moeLogo) localStorage.setItem('aafia_moe_logo', moeLogo);
+        if (initiativeLogo) localStorage.setItem('aafia_initiative_logo', initiativeLogo);
+      }
+      return { 
+        id: docSnap.id, 
+        ...data,
+        moeLogoUrl: moeLogo,
+        logoUrl: initiativeLogo
+      };
     }
     // Return default settings only if none stored in Firestore yet
     return DEFAULT_SETTINGS;
@@ -79,6 +91,14 @@ export async function saveInitiativeSettings(settings: Partial<InitiativeSetting
   try {
     const docRef = doc(db, 'settings', 'general');
     await setDoc(docRef, { ...settings, updatedAt: new Date().toISOString() }, { merge: true });
+    if (typeof window !== 'undefined') {
+      if (settings.moeLogoUrl) {
+        localStorage.setItem('aafia_moe_logo', settings.moeLogoUrl);
+      }
+      if (settings.logoUrl) {
+        localStorage.setItem('aafia_initiative_logo', settings.logoUrl);
+      }
+    }
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
   }

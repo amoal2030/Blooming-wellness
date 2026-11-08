@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { getAssetUrl } from '../../utils/assets';
-import { Lock, ArrowRight, LogOut, ShieldAlert, RefreshCw } from 'lucide-react';
+import { Lock, ArrowRight, ArrowLeft, LogOut, ShieldAlert } from 'lucide-react';
 
 interface AccessDeniedViewProps {
   onReturnHome: () => void;
@@ -13,6 +14,7 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
   onOpenLoginModal
 }) => {
   const { currentUser, logout, login } = useAuth();
+  const { t, isRtl } = useLanguage();
 
   const handleSwitchAccount = async () => {
     try {
@@ -50,33 +52,35 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
           </div>
         </div>
 
-        {/* Required Headings and Copy (Verbatim) */}
+        {/* Required Headings and Copy */}
         <h1 className="text-2xl sm:text-3xl font-black text-[#0e3c48] dark:text-white tracking-tight mb-2">
-          لا يمكنك الدخول
+          {t('access_denied_title', 'لا يمكنك الدخول')}
         </h1>
 
         <h2 className="text-base sm:text-lg font-bold text-[#ea8c38] mb-4">
-          منطقة مخصصة لإدارة المبادرة
+          {t('access_denied_subtitle', 'منطقة مخصصة لإدارة المبادرة')}
         </h2>
 
         <p className="text-xs sm:text-sm text-[#526f78] dark:text-stone-300 leading-relaxed max-w-md mx-auto mb-8">
-          يرجى تسجيل الدخول باستخدام حساب Google المعتمد للمدير الرئيسي أو المشرفين للوصول إلى لوحة التحكم الإدارية.
+          {t('access_denied_msg', 'يرجى تسجيل الدخول باستخدام حساب Google المعتمد للمدير الرئيسي أو المشرفين للوصول إلى لوحة التحكم الإدارية.')}
         </p>
 
         {/* Account Info Pill */}
         {currentUser && (
-          <div className="mb-8 p-4 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] text-right space-y-1.5">
+          <div className={`mb-8 p-4 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] ${isRtl ? 'text-right' : 'text-left'} space-y-1.5`}>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#526f78] dark:text-stone-400 font-medium">الحساب المسجل حالياً:</span>
+              <span className="text-[#526f78] dark:text-stone-400 font-medium">
+                {t('access_denied_current_account', 'الحساب المسجل حالياً:')}
+              </span>
               <span className="px-2 py-0.5 rounded-md bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 text-[11px] font-bold">
-                مستخدم غير مصرح له
+                {t('access_denied_unauthorized', 'مستخدم غير مصرح له')}
               </span>
             </div>
             <p className="font-mono text-xs text-[#0e3c48] dark:text-white font-bold truncate dir-ltr text-left">
               {currentUser.email}
             </p>
             <p className="text-[11px] text-[#718b92] dark:text-stone-400 pt-1">
-              هذا الحساب غير مسجل ضمن قائمة المشرفين المعتمدين في النظام.
+              {t('access_denied_hint', 'هذا الحساب غير مسجل ضمن قائمة المشرفين المعتمدين في النظام.')}
             </p>
           </div>
         )}
@@ -87,17 +91,17 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
             onClick={onReturnHome}
             className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 py-3.5 px-6 bg-[#134e5e] hover:bg-[#0e3c48] text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all cursor-pointer"
           >
-            <ArrowRight className="w-4 h-4" />
-            <span>العودة إلى الصفحة الرئيسية</span>
+            {isRtl ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+            <span>{t('access_denied_return_home', 'العودة إلى الصفحة الرئيسية')}</span>
           </button>
 
           <button
             onClick={handleSwitchAccount}
             className="w-full sm:w-auto flex items-center justify-center gap-2 py-3.5 px-5 bg-white hover:bg-rose-50 border border-stone-300 hover:border-rose-300 text-stone-700 hover:text-rose-700 font-bold text-xs sm:text-sm rounded-xl transition-all cursor-pointer"
-            title="تسجيل الخروج أو استخدام حساب آخر"
+            title={t('action_switch_account', 'تبديل الحساب')}
           >
             <LogOut className="w-4 h-4 text-rose-600" />
-            <span>تبديل الحساب</span>
+            <span>{t('action_switch_account', 'تبديل الحساب')}</span>
           </button>
         </div>
 
