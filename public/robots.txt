@@ -1,0 +1,15 @@
+# robots.txt for Blooming Wellness Initiative
+# Website: https://amoal2030.github.io/Blooming-wellness/
+
+User-agent: *
+Allow: /
+Allow: /Blooming-wellness/
+Allow: /Blooming-wellness/assets/
+
+# Disallow administrative and private views
+Disallow: /admin
+Disallow: /Blooming-wellness/admin
+Disallow: /*?*tab=admin
+
+# XML Sitemap
+Sitemap: https://amoal2030.github.io/Blooming-wellness/sitemap.xml

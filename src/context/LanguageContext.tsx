@@ -23,6 +23,25 @@ const translations: Record<string, { ar: string; en: string }> = {
   'light_mode': { ar: 'الوضع الفاتح', en: 'Light Mode' },
   'dark_mode': { ar: 'الوضع الداكن', en: 'Dark Mode' },
 
+  // SEO Dynamic Titles & Meta Descriptions
+  'seo_home_title': { ar: 'عافية تُزهر | مبادرة التوعية بالصحة والعادات الصحية', en: 'Blooming Wellness | Health Awareness Initiative' },
+  'seo_home_desc': { ar: 'مبادرة عافية تُزهر لتعزيز الوعي الصحي ونشر العادات الصحية السليمة من خلال التغذية المتوازنة والنشاط البدني والنوم الصحي والصحة النفسية والبرامج التوعوية والفعاليات المجتمعية.', en: 'Blooming Wellness is a health awareness initiative promoting healthy habits through balanced nutrition, physical activity, healthy sleep, mental well-being, educational programs, and community events.' },
+  'seo_broadcasts_title': { ar: 'الإذاعات الصباحية المدرسية | مبادرة عافية تُزهر', en: 'Morning School Broadcasts | Blooming Wellness' },
+  'seo_broadcasts_desc': { ar: 'استمع وشاهد حلقات الإذاعة الصباحية المدرسية لمبادرة عافية تُزهر حول التغذية السليمة، والنشاط الحركي، والنوم الصحي، والعادات اليومية الإيجابية.', en: 'Listen to and watch Blooming Wellness morning school broadcasts covering balanced nutrition, active movement, restorative sleep, and positive daily habits.' },
+  'seo_lectures_title': { ar: 'المحاضرات والندوات التوعوية | مبادرة عافية تُزهر', en: 'Awareness Lectures & Webinars | Blooming Wellness' },
+  'seo_lectures_desc': { ar: 'محاضرات طبية وتثقيفية متخصصة يلقيها نخبة من الأطباء واستشاريي الرعاية الصحية لتعزيز نمط الحياة الصحي والوقاية من الأمراض.', en: 'Specialized medical and educational lectures presented by leading physicians and health consultants to promote healthy lifestyles and disease prevention.' },
+  'seo_interviews_title': { ar: 'المقابلات والحوارات الملهمة | مبادرة عافية تُزهر', en: 'Inspiring Dialogue Interviews | Blooming Wellness' },
+  'seo_interviews_desc': { ar: 'لقاءات وحوارات حصرية مع خبراء الصحة والرياضة وأصحاب التجارب الملهمة في تحسين نمط الحياة والعافية البدنية والنفسية.', en: 'Exclusive interviews with health and fitness experts sharing inspiring transformations and sustainable lifestyle practices.' },
+  'seo_quizzes_title': { ar: 'مقياس عادات الحياة واختبار العافية | مبادرة عافية تُزهر', en: 'Lifestyle Habits Quiz & Wellness Assessment | Blooming Wellness' },
+  'seo_quizzes_desc': { ar: 'اختبر نمط حياتك اليومي عبر مقياس عافية التفاعلي لتقييم عادات التغذية وشرب الماء وساعات النوم والنشاط البدني واحصل على نتيجتك فوراً.', en: 'Assess your daily routine with the interactive Blooming Wellness quiz evaluating nutrition, hydration, sleep duration, and physical exercise.' },
+  'seo_events_title': { ar: 'الأنشطة والفعاليات المجتمعية | مبادرة عافية تُزهر', en: 'Community Activities & Health Events | Blooming Wellness' },
+  'seo_events_desc': { ar: 'جدول الفعاليات والأنشطة الصحية وماراثونات المشي والورش التفاعلية المقامة بإشراف وزارة التعليم وتنظيم ثانوية الشاطئ.', en: 'Schedule of upcoming health events, walking marathons, and wellness workshops organized by Al-Shatee High School under the Ministry of Education.' },
+  'seo_registrations_title': { ar: 'التسجيل في البرامج والفرص الصحية | مبادرة عافية تُزهر', en: 'Health Program Registrations | Blooming Wellness' },
+  'seo_registrations_desc': { ar: 'روابط التسجيل في المبادرات والبرامج التدريبية المعتمدة والفحوصات الطبية وفرص التطوع الصحي الخاصة بمبادرة عافية تُزهر.', en: 'Registration links for certified wellness workshops, medical checkups, and volunteer health opportunities with Blooming Wellness.' },
+  'seo_contact_title': { ar: 'تواصل معنا واستفسارات الزوار | مبادرة عافية تُزهر', en: 'Contact Us & Inquiries | Blooming Wellness' },
+  'seo_contact_desc': { ar: 'تواصل مع فريق مبادرة عافية تُزهر لطرح استفساراتكم ومقترحاتكم حول برامج التوعية الصحية والأنشطة المدرسية والمجتمعية.', en: 'Get in touch with the Blooming Wellness initiative team for inquiries and feedback regarding health awareness programs.' },
+  'seo_admin_title': { ar: 'بوابة الإدارة المركزية | مبادرة عافية تُزهر', en: 'Admin Management Portal | Blooming Wellness' },
+
   // Navigation & User Guide
   'nav_home': { ar: 'الرئيسية', en: 'Home' },
   'nav_broadcasts': { ar: 'الإذاعات الصباحية', en: 'Morning Broadcasts' },

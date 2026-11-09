@@ -169,7 +169,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-white p-3.5 shadow-2xl border-4 border-white/40 flex items-center justify-center overflow-hidden">
                   <img
                     src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
-                    alt="شعار مبادرة عافية تُزهر الرسمي"
+                    alt={isRtl ? 'شعار مبادرة عافية تُزهر الرسمي للتوعية بالصحة والعادات الصحية' : 'Official Blooming Wellness Health Awareness Logo'}
                     className="w-full h-full object-contain transform group-hover:scale-103 transition-transform duration-500"
                     referrerPolicy="no-referrer"
                   />
@@ -196,7 +196,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="w-32 h-16 flex items-center justify-center overflow-hidden shrink-0 bg-white dark:bg-white/10 rounded-xl p-1">
                   <img
                     src={getAssetUrl(partner.imageUrl)}
-                    alt={partner.name}
+                    alt={`${partner.name} - ${isRtl ? 'شريك وراعي معتمد لمبادرة عافية تُزهر' : 'Official Supporting Partner of Blooming Wellness'}`}
                     className="max-h-full max-w-full object-contain"
                     referrerPolicy="no-referrer"
                     onError={(e) => {
@@ -380,7 +380,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <div className="w-52 h-52 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/30 bg-white p-2">
                 <img
                   src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
-                  alt="شعار عافية تُزهر"
+                  alt={isRtl ? 'شعار مبادرة عافية تُزهر - مقياس العادات الصحية ونمط الحياة المتوازن' : 'Blooming Wellness Initiative Logo - Healthy Habits Assessment'}
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
                 />
@@ -426,7 +426,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <div className="h-44 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden">
                   <img
                     src={getAssetUrl(item.imageUrl || '/assets/images/morning_broadcast_mic_1793901821444.jpg')}
-                    alt={item.title}
+                    alt={`${item.title} - ${isRtl ? 'إذاعة مدرسية صباحية مبادرة عافية تُزهر' : 'Morning School Broadcast Blooming Wellness'}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
                   />
@@ -488,13 +488,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {recentLectures.map((item) => (
               <div 
-                key={item.id}
+                key={item.id} 
                 className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col sm:flex-row group"
               >
                 <div className="sm:w-2/5 h-48 sm:h-auto relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden shrink-0">
                   <img
                     src={getAssetUrl(item.imageUrl || '/assets/images/awareness_lecture_hall_1793901820498.jpg')}
-                    alt={item.title}
+                    alt={`${item.title} - ${isRtl ? 'محاضرة توعوية تثقيفية مبادرة عافية تُزهر' : 'Awareness Lecture Blooming Wellness'}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
                   />
@@ -595,7 +595,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <div className="lg:col-span-5 h-64 lg:h-full relative overflow-hidden bg-[#134e5e]">
                 <img
                   src={getAssetUrl(featuredEvent.imageUrl || '/assets/images/hero_awareness_banner_1793901820998.jpg')}
-                  alt={featuredEvent.title}
+                  alt={`${featuredEvent.title} - ${isRtl ? 'فعالية صحية مجتمعية مبادرة عافية تُزهر' : 'Community Health Event Blooming Wellness'}`}
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />

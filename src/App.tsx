@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
-import { LanguageProvider } from './context/LanguageContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { testConnection } from './firebase';
 import { 
   InitiativeSettings, 
@@ -45,8 +45,70 @@ import { AccessDeniedView } from './components/admin/AccessDeniedView';
 
 function MainApp() {
   const { currentUser, isSuperAdmin, isAdmin, isAuthorizedStaff, loading: authLoading } = useAuth();
+  const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
   const [loading, setLoading] = useState(true);
+
+  // Dynamic Bilingual SEO Synchronization
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    let pageTitle = t('seo_home_title');
+    let pageDesc = t('seo_home_desc');
+
+    if (activeTab === 'broadcasts') {
+      pageTitle = t('seo_broadcasts_title');
+      pageDesc = t('seo_broadcasts_desc');
+    } else if (activeTab === 'lectures') {
+      pageTitle = t('seo_lectures_title');
+      pageDesc = t('seo_lectures_desc');
+    } else if (activeTab === 'interviews') {
+      pageTitle = t('seo_interviews_title');
+      pageDesc = t('seo_interviews_desc');
+    } else if (activeTab === 'quizzes') {
+      pageTitle = t('seo_quizzes_title');
+      pageDesc = t('seo_quizzes_desc');
+    } else if (activeTab === 'events') {
+      pageTitle = t('seo_events_title');
+      pageDesc = t('seo_events_desc');
+    } else if (activeTab === 'registrations') {
+      pageTitle = t('seo_registrations_title');
+      pageDesc = t('seo_registrations_desc');
+    } else if (activeTab === 'contact') {
+      pageTitle = t('seo_contact_title');
+      pageDesc = t('seo_contact_desc');
+    } else if (activeTab === 'admin') {
+      pageTitle = t('seo_admin_title');
+      pageDesc = 'Private administrative portal for Blooming Wellness initiative.';
+    }
+
+    // Update document title
+    document.title = pageTitle;
+
+    // Helper for meta tags
+    const setMetaTag = (selector: string, attribute: 'name' | 'property', attrValue: string, content: string) => {
+      let element = document.querySelector(selector) as HTMLMetaElement | null;
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, attrValue);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', content);
+    };
+
+    setMetaTag('meta[name="description"]', 'name', 'description', pageDesc);
+    setMetaTag('meta[property="og:title"]', 'property', 'og:title', pageTitle);
+    setMetaTag('meta[property="og:description"]', 'property', 'og:description', pageDesc);
+    setMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', pageTitle);
+    setMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', pageDesc);
+
+    // Keep admin completely private and unindexed; allow public content
+    if (activeTab === 'admin') {
+      setMetaTag('meta[name="robots"]', 'name', 'robots', 'noindex, nofollow');
+    } else {
+      setMetaTag('meta[name="robots"]', 'name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+    }
+  }, [activeTab, language, t]);
 
   // Core Data
   const [settings, setSettings] = useState<InitiativeSettings>(DEFAULT_SETTINGS);
