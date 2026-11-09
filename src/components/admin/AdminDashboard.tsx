@@ -900,9 +900,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     try {
       await updateInquiryStatus(id, newStatus);
       setInquiries(prev => prev.map(inq => inq.id === id ? { ...inq, status: newStatus } : inq));
-      showNotification('تم تحديث حالة الرسالة.');
+      showNotification(isRtl ? 'تم تحديث حالة الرسالة.' : 'Message status updated.');
     } catch (e) {
-      showNotification('تعذر تحديث الحالة.', true);
+      showNotification(isRtl ? 'تعذر تحديث الحالة.' : 'Failed to update status.', true);
     }
   };
 
@@ -1053,7 +1053,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <button
                 onClick={handleSeedData}
                 className="w-full flex items-center justify-center gap-2 py-2 px-3 bg-stone-100 dark:bg-[#0b1519] hover:bg-stone-200 dark:hover:bg-[#162a32] text-stone-700 dark:text-stone-300 rounded-xl text-[11px] font-semibold transition-colors cursor-pointer"
-                title="تهيئة بيانات تجريبية حقيقية للمبادرة إذا كانت فارغة"
+                title={isRtl ? 'تهيئة بيانات حقيقية للمبادرة إذا كانت فارغة' : 'Seed initial data if empty'}
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>{isRtl ? 'تهيئة بيانات المبادرة' : 'Seed Initial Data'}</span>
@@ -1313,7 +1313,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <div className="sm:col-span-3 flex flex-col items-center justify-center p-3 bg-white dark:bg-[#122127] rounded-xl border border-stone-200 dark:border-[#1e3842]">
                         <img 
                           src={getAssetUrl(settingsForm.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')} 
-                          alt="شعار المبادرة" 
+                          alt={t('initiative_logo_alt')} 
                           className="w-20 h-20 object-contain rounded-lg"
                         />
                         <span className="text-[10px] text-stone-400 dark:text-stone-500 mt-1">
@@ -1388,7 +1388,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           <div className="w-12 h-12 bg-white dark:bg-[#0b1519] rounded-lg border border-stone-100 dark:border-[#1e3842] p-1 flex items-center justify-center shrink-0">
                             <img
                               src={getAssetUrl(settingsForm.moeLogoUrl || settingsForm.partnerLogos?.[0]?.imageUrl || '/assets/logos/ministry_of_education.svg')}
-                              alt="وزارة التعليم"
+                              alt={t('partner_moe')}
                               className="w-full h-full object-contain"
                             />
                           </div>
@@ -1449,7 +1449,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           <div className="w-12 h-12 bg-white dark:bg-[#0b1519] rounded-lg border border-stone-100 dark:border-[#1e3842] p-1 flex items-center justify-center shrink-0">
                             <img
                               src={getAssetUrl(settingsForm.partnerLogos?.[1]?.imageUrl || '/assets/logos/alshatee_high_school.svg')}
-                              alt="مدرسة ثانوية الشاطئ"
+                              alt={t('partner_school')}
                               className="w-full h-full object-contain"
                             />
                           </div>

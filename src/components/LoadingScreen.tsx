@@ -59,7 +59,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-2 bg-[#f1f7f9] dark:bg-[#102830] border border-[#dbe8ed] dark:border-[#1e3842] flex items-center justify-center shadow-xs overflow-hidden">
             <img
               src={getAssetUrl(initiativeLogo)}
-              alt="شعار مبادرة عافية تُزهر"
+              alt={t('initiative_logo_alt', 'شعار مبادرة عافية تُزهر')}
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
               onError={(e) => {
@@ -76,7 +76,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-2 bg-[#f1f7f9] dark:bg-[#102830] border border-[#dbe8ed] dark:border-[#1e3842] flex items-center justify-center shadow-xs overflow-hidden">
             <img
               src={getAssetUrl(moeLogo)}
-              alt="شعار وزارة التعليم"
+              alt={t('moe_logo_alt', 'شعار وزارة التعليم')}
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
               onError={(e) => {
@@ -89,10 +89,10 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
         {/* Brand Titles */}
         <div className="space-y-1">
           <h1 className="text-xl sm:text-2xl font-black text-[#0e3c48] dark:text-[#84d2ea] tracking-tight">
-            {t('initiative_name', 'مبادرة عافية تُزهر')}
+            {language === 'ar' ? (settings?.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')) : t('initiative_name', 'Blooming Wellness Initiative')}
           </h1>
           <p className="text-xs sm:text-sm text-[#526f78] dark:text-[#8caab4]">
-            {t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')}
+            {language === 'ar' ? (settings?.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')) : t('tagline')}
           </p>
         </div>
 

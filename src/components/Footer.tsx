@@ -14,7 +14,7 @@ export const Footer: React.FC<FooterProps> = ({
   settings,
   setActiveTab,
 }) => {
-  const { t, isRtl } = useLanguage();
+  const { t, isRtl, language } = useLanguage();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -22,16 +22,23 @@ export const Footer: React.FC<FooterProps> = ({
 
   // Restrict to ONLY the 2 authorized partners: وزارة التعليم ومدرسة ثانوية الشاطئ
   const authorizedPartners = (settings.partnerLogos && settings.partnerLogos.length === 2)
-    ? settings.partnerLogos
+    ? settings.partnerLogos.map(p => ({
+        ...p,
+        name: p.id === 'moe' 
+          ? t('partner_moe', p.name) 
+          : p.id === 'shatee_high_school' 
+          ? t('partner_school', p.name) 
+          : p.name
+      }))
     : [
         {
           id: 'moe',
-          name: isRtl ? 'وزارة التعليم' : 'Ministry of Education',
+          name: t('partner_moe', 'وزارة التعليم'),
           imageUrl: '/assets/logos/ministry_of_education.svg'
         },
         {
           id: 'shatee_high_school',
-          name: isRtl ? 'مدرسة ثانوية الشاطئ' : 'Al-Shatee High School',
+          name: t('partner_school', 'مدرسة ثانوية الشاطئ'),
           imageUrl: '/assets/logos/alshatee_high_school.svg'
         }
       ];
@@ -84,27 +91,29 @@ export const Footer: React.FC<FooterProps> = ({
               <div className="w-12 h-12 rounded-2xl bg-white dark:bg-[#12242b] p-1 border border-white/20 shadow-md shrink-0 flex items-center justify-center overflow-hidden">
                 <img
                   src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
-                  alt="شعار مبادرة عافية تُزهر"
+                  alt={t('initiative_logo_alt', 'شعار مبادرة عافية تُزهر')}
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-black text-white tracking-tight">
-                  {settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')}
+                  {language === 'ar' ? (settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')) : t('initiative_name', 'Blooming Wellness Initiative')}
                 </span>
                 <span className="text-[11px] text-[#84d2ea] font-medium">
-                  {settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')}
+                  {language === 'ar' ? (settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')) : t('tagline')}
                 </span>
               </div>
             </div>
             <p className="text-xs text-[#a2cbcf] leading-relaxed">
-              {settings.aboutText ? settings.aboutText.slice(0, 160) + '...' : t('footer_tagline')}
+              {language === 'ar' ? (settings.aboutText ? settings.aboutText.slice(0, 160) + '...' : t('default_about_text')) : t('default_about_text')}
             </p>
-            {settings.visionText && (
+            {(settings.visionText || language === 'en') && (
               <div className="pt-1 text-xs">
                 <span className="font-bold text-[#ea8c38] block mb-0.5">{t('section_vision', 'الرؤية')}:</span>
-                <p className="line-clamp-2 text-[#b8dce0]">{settings.visionText}</p>
+                <p className="line-clamp-2 text-[#b8dce0]">
+                  {language === 'ar' ? (settings.visionText || t('default_vision_text')) : t('default_vision_text')}
+                </p>
               </div>
             )}
           </div>
@@ -208,7 +217,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#84d2ea] shrink-0 mt-0.5" />
-                <span>{settings.address || 'المملكة العربية السعودية - مدرسة ثانوية الشاطئ'}</span>
+                <span>{language === 'ar' ? (settings.address || t('default_address')) : t('default_address')}</span>
               </li>
             </ul>
           </div>
@@ -277,7 +286,7 @@ export const Footer: React.FC<FooterProps> = ({
             onClick={scrollToTop}
             className="flex items-center gap-1.5 text-[#84d2ea] hover:text-white transition-colors cursor-pointer"
           >
-            <span>{isRtl ? 'العودة للأعلى' : 'Back to Top'}</span>
+            <span>{t('back_to_top', 'العودة للأعلى')}</span>
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
         </div>

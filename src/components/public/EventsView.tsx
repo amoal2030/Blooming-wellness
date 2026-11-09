@@ -65,7 +65,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
             <span>{t('events_title', 'الأنشطة والفعاليات المجتمعية')}</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black">
-            {t('events_title', 'فعاليات عافية: نشاط وازدهار')}
+            {isRtl ? 'فعاليات عافية: نشاط وازدهار' : 'Wellness Events: Vitality & Flourishing'}
           </h1>
           <p className="text-[#d1e6ec] text-xs sm:text-sm leading-relaxed">
             {t('events_subtitle', 'ملتقيات توعوية، برامج مشي حركية، ورش عمل لتعزيز العافية في رحاب مدرسة ثانوية الشاطئ والمجتمع المحيط.')}

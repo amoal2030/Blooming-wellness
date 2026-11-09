@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, ExternalLink } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -16,6 +17,8 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   videoUrl,
   audioUrl,
 }) => {
+  const { t, isRtl } = useLanguage();
+
   if (!isOpen) return null;
 
   // Helper to extract YouTube embed URL if applicable
@@ -46,16 +49,16 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/80 backdrop-blur-sm animate-fade-in">
       <div 
-        className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-stone-200"
+        className="relative w-full max-w-3xl bg-white dark:bg-[#122127] rounded-2xl shadow-2xl overflow-hidden border border-stone-200 dark:border-[#1e3842]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100 bg-stone-50/80">
-          <h3 className="text-base font-bold text-stone-900 truncate pr-2">{title}</h3>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100 dark:border-[#1e3842] bg-stone-50/80 dark:bg-[#0b1519]/80">
+          <h3 className="text-base font-bold text-stone-900 dark:text-white truncate pr-2">{title}</h3>
           <button
             onClick={onClose}
-            className="p-1.5 text-stone-400 hover:text-stone-700 hover:bg-stone-200/60 rounded-lg transition-colors"
-            title="إغلاق"
+            className="p-1.5 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200/60 dark:hover:bg-[#1e3842] rounded-lg transition-colors cursor-pointer"
+            title={t('action_close', 'إغلاق')}
           >
             <X className="w-5 h-5" />
           </button>
@@ -81,16 +84,18 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                 autoPlay
                 className="w-full h-full object-contain"
               >
-                متصفحك لا يدعم تشغيل هذا الفيديو.
+                {t('video_modal_unsupported_video', 'متصفحك لا يدعم تشغيل هذا الفيديو.')}
               </video>
             </div>
           ) : null}
 
           {audioUrl && (
-            <div className="w-full mt-4 p-4 bg-stone-800 rounded-xl flex flex-col gap-2">
-              <span className="text-xs text-stone-300 font-medium">تسجيل البث الصوتي:</span>
+            <div className={`w-full mt-4 p-4 bg-stone-800 rounded-xl flex flex-col gap-2 ${isRtl ? 'text-right' : 'text-left'}`}>
+              <span className="text-xs text-stone-300 font-medium">
+                {t('video_modal_audio_recording', 'تسجيل البث الصوتي:')}
+              </span>
               <audio controls className="w-full" src={audioUrl}>
-                متصفحك لا يدعم تشغيل الملف الصوتي.
+                {t('video_modal_unsupported_audio', 'متصفحك لا يدعم تشغيل الملف الصوتي.')}
               </audio>
             </div>
           )}
@@ -103,7 +108,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
                 rel="noreferrer"
                 className="text-[#84d2ea] hover:text-[#389eb3] underline flex items-center gap-1 font-medium transition-colors"
               >
-                <span>فتح الرابط الخارجي مباشرة</span>
+                <span>{t('video_modal_open_external', 'فتح الرابط الخارجي مباشرة')}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -111,12 +116,12 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end px-6 py-3 bg-stone-50 border-t border-stone-100">
+        <div className={`flex ${isRtl ? 'justify-start' : 'justify-end'} px-6 py-3 bg-stone-50 dark:bg-[#0b1519] border-t border-stone-100 dark:border-[#1e3842]`}>
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs font-bold text-stone-700 bg-white border border-stone-200 rounded-xl hover:bg-stone-100 transition-colors cursor-pointer"
+            className="px-4 py-2 text-xs font-bold text-stone-700 dark:text-stone-300 bg-white dark:bg-[#122127] border border-stone-200 dark:border-[#1e3842] rounded-xl hover:bg-stone-100 dark:hover:bg-[#1a343e] transition-colors cursor-pointer"
           >
-            إغلاق النافذة
+            {t('video_modal_close', 'إغلاق النافذة')}
           </button>
         </div>
       </div>

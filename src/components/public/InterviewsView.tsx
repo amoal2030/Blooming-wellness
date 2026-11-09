@@ -102,7 +102,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
           <select
             value={sortBy}
             onChange={(e: any) => setSortBy(e.target.value)}
-            aria-label="ترتيب المقابلات حسب التاريخ"
+            aria-label={t('sort_by_date', 'ترتيب المقابلات حسب التاريخ')}
             className="py-2 px-3 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] focus:outline-none cursor-pointer"
           >
             <option value="date_desc">{isRtl ? 'الأحدث تاريخاً' : 'Newest First'}</option>

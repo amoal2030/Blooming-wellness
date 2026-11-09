@@ -93,7 +93,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
       await submitQuizResponse({
         quizId: selectedQuiz.id,
         quizTitle: selectedQuiz.title,
-        respondentName: respondentName.trim() || 'طالب / زائر مجهول',
+        respondentName: respondentName.trim() || t('quiz_anonymous_respondent', 'طالب / زائر مجهول'),
         score,
         totalQuestions: selectedQuiz.questions.length,
         percentage,
@@ -101,7 +101,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
       });
     } catch (err) {
       console.error('Error saving quiz response to Firebase:', err);
-      setSubmissionError('تم احتساب النتيجة، ولكن تعذر حفظ السجل في قاعدة البيانات.');
+      setSubmissionError(t('quiz_save_error', 'تم احتساب النتيجة، ولكن تعذر حفظ السجل في قاعدة البيانات.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -164,7 +164,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
                   <div className={`space-y-2 ${isRtl ? 'text-right' : 'text-left'}`}>
                     <div className="flex items-center gap-2 text-xs text-[#526f78] dark:text-stone-400 font-medium">
                       <ListOrdered className="w-3.5 h-3.5 text-[#2e9e66]" />
-                      <span>{quiz.questions?.length || 0} {isRtl ? 'أسئلة تفاعلية' : 'Questions'}</span>
+                      <span>{quiz.questions?.length || 0} {t('quiz_count_questions', 'أسئلة تفاعلية')}</span>
                     </div>
                     <h3 className="text-lg font-bold text-[#0e3c48] dark:text-white group-hover:text-[#2e9e66] transition-colors">
                       {quiz.title}
@@ -179,7 +179,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
                     className="w-full py-3 bg-[#2e9e66] hover:bg-[#248354] text-white font-bold text-xs rounded-2xl shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <CheckSquare className="w-4 h-4 text-white" />
-                    <span>{isRtl ? 'بدء الاختبار التفاعلي الآن' : 'Start Assessment Now'}</span>
+                    <span>{t('quiz_start_now', 'بدء الاختبار التفاعلي الآن')}</span>
                   </button>
                 </div>
               </div>
@@ -216,7 +216,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           className="inline-flex items-center gap-2 text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] hover:text-[#0e3c48] dark:hover:text-white transition-colors cursor-pointer"
         >
           {isRtl ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-          <span>{isRtl ? 'العودة لقائمة الاختبارات' : 'Back to Assessments'}</span>
+          <span>{t('quiz_back_to_list', 'العودة لقائمة الاختبارات')}</span>
         </button>
 
         <span className="text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] bg-[#eaf6fa] dark:bg-[#0e2730] px-3.5 py-1.5 rounded-full border border-[#cde6ee] dark:border-[#1e3842]">
@@ -232,7 +232,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           <div className="space-y-3">
             <div className="flex items-center justify-between text-xs text-[#526f78] dark:text-stone-400 font-bold">
               <span>{t('quiz_question_num', 'السؤال')} {currentQuestionIdx + 1} {t('quiz_out_of', 'من')} {selectedQuiz.questions.length}</span>
-              <span>{isRtl ? `نسبة الإنجاز: ${progressPercent}%` : `Progress: ${progressPercent}%`}</span>
+              <span>{t('quiz_progress', 'نسبة الإنجاز:')} {progressPercent}%</span>
             </div>
             <div className="w-full h-2.5 bg-[#f1f7f9] dark:bg-[#0b1519] rounded-full overflow-hidden">
               <div 
@@ -246,13 +246,13 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           {currentQuestionIdx === 0 && (
             <div className={`p-4 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] ${isRtl ? 'text-right' : 'text-left'}`}>
               <label className="block text-xs font-bold text-[#0c2b33] dark:text-white mb-1">
-                {isRtl ? 'اسم الطالب / المشارك (اختياري - لحفظ النتيجة في السجل):' : 'Participant / Student Name (Optional):'}
+                {t('quiz_name_label', 'اسم الطالب / المشارك (اختياري - لحفظ النتيجة في السجل):')}
               </label>
               <input
                 type="text"
                 value={respondentName}
                 onChange={(e) => setRespondentName(e.target.value)}
-                placeholder={isRtl ? 'أدخل اسمك أو اتركه فارغاً' : 'Enter your name or leave blank'}
+                placeholder={t('quiz_name_placeholder', 'أدخل اسمك أو اتركه فارغاً')}
                 className="w-full px-3.5 py-2 bg-white dark:bg-[#122127] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs text-[#0c2b33] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2e9e66]"
               />
             </div>
@@ -264,8 +264,8 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
               <div className={`space-y-2 ${isRtl ? 'text-right' : 'text-left'}`}>
                 <span className="text-[11px] font-extrabold text-[#2e9e66] uppercase tracking-wider">
                   {currentQ.type === 'true_false' 
-                    ? (isRtl ? 'سؤال: صح أو خطأ' : 'Question: True or False') 
-                    : (isRtl ? 'سؤال: اختيار من متعدد' : 'Question: Multiple Choice')}
+                    ? t('quiz_type_tf', 'سؤال: صح أو خطأ') 
+                    : t('quiz_type_mcq', 'سؤال: اختيار من متعدد')}
                 </span>
                 <h2 className="text-xl sm:text-2xl font-black text-[#0e3c48] dark:text-white leading-snug">
                   {currentQ.questionText}
@@ -307,7 +307,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
               className="px-5 py-2.5 rounded-xl border border-[#dbe8ed] dark:border-[#1e3842] text-xs font-bold text-[#526f78] dark:text-stone-300 hover:bg-[#f7fbfc] dark:hover:bg-[#162a32] transition-colors disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1.5 cursor-pointer"
             >
               {isRtl ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-              <span>{isRtl ? 'السابق' : 'Previous'}</span>
+              <span>{t('quiz_prev_q', 'السابق')}</span>
             </button>
 
             <button
@@ -315,7 +315,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
               disabled={userAnswers[currentQuestionIdx] === -1}
               className="px-6 py-2.5 rounded-2xl bg-[#2e9e66] hover:bg-[#248354] text-xs font-bold text-white shadow-xs transition-colors disabled:opacity-40 disabled:pointer-events-none flex items-center gap-1.5 cursor-pointer"
             >
-              <span>{currentQuestionIdx === selectedQuiz.questions.length - 1 ? t('quiz_submit_btn', 'إنهاء الاختبار وعرض النتيجة') : (isRtl ? 'السؤال التالي' : 'Next Question')}</span>
+              <span>{currentQuestionIdx === selectedQuiz.questions.length - 1 ? t('quiz_submit_btn', 'إنهاء الاختبار وعرض النتيجة') : t('quiz_next_q', 'السؤال التالي')}</span>
               {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
             </button>
           </div>
@@ -328,32 +328,32 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
             <div className="w-24 h-24 mx-auto rounded-full bg-white dark:bg-[#0b1519] p-2 border-2 border-[#dbe8ed] dark:border-[#1e3842] shadow-md flex items-center justify-center overflow-hidden">
               <img
                 src={getAssetUrl('/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
-                alt="شعار عافية تُزهر"
+                alt={t('initiative_logo_alt', 'شعار عافية تُزهر')}
                 className="w-full h-full object-contain"
                 referrerPolicy="no-referrer"
               />
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-black text-[#0e3c48] dark:text-white">
-              {respondentName ? (isRtl ? `أحسنت يا ${respondentName}! لقد أتممت مقياس التوازن` : `Well done, ${respondentName}! You completed the assessment`) : t('quiz_result_congrats', 'لقد أتممت الاختبار بنجاح!')}
+              {respondentName ? `${isRtl ? 'أحسنت يا' : 'Well done,'} ${respondentName}! ${t('quiz_completed_title', 'لقد أتممت مقياس التوازن')}` : t('quiz_result_congrats', 'لقد أتممت الاختبار بنجاح!')}
             </h2>
             <p className="text-xs sm:text-sm text-[#526f78] dark:text-stone-300">
-              {isRtl ? 'تم تسجيل إجاباتك بنجاح في قاعدة بيانات مبادرة "عافية تُزهر".' : 'Your response has been recorded successfully in the Blooming Wellness database.'}
+              {t('quiz_recorded_note', 'تم تسجيل إجاباتك بنجاح في قاعدة بيانات مبادرة "عافية تُزهر".')}
             </p>
           </div>
 
           {/* Score Card */}
           <div className="max-w-md mx-auto p-7 rounded-3xl bg-gradient-to-br from-[#0e3c48] to-[#134e5e] text-white shadow-lg space-y-3">
             <span className="text-xs uppercase tracking-wider text-[#84d2ea] font-extrabold">
-              {isRtl ? 'مؤشر التوازن والعافية' : 'Wellness & Balance Index'}
+              {t('quiz_index_title', 'مؤشر التوازن والعافية')}
             </span>
             <div className="text-5xl font-black text-white">
               {finalPercentage}%
             </div>
             <p className="text-xs text-[#d1e6ec]">
               {isRtl 
-                ? `حققت ${finalScore} من أصل ${selectedQuiz.questions.length} إجابة متوافقة مع الإرشادات الصحية المعتمدة.`
-                : `You scored ${finalScore} out of ${selectedQuiz.questions.length} compliant with recommended guidelines.`}
+                ? `حققت ${finalScore} من أصل ${selectedQuiz.questions.length} ${t('quiz_score_ratio', 'إجابة متوافقة مع الإرشادات الصحية المعتمدة.')}`
+                : `You scored ${finalScore} out of ${selectedQuiz.questions.length} ${t('quiz_score_ratio', 'answers compliant with certified health guidelines.')}`}
             </p>
 
             <div className="pt-2 text-xs font-bold">
@@ -376,7 +376,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           {/* Detailed Question Review */}
           <div className={`${isRtl ? 'text-right' : 'text-left'} space-y-4 pt-6 border-t border-[#edf3f5] dark:border-[#1e3842]`}>
             <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">
-              {isRtl ? 'مراجعة الإجابات والتوصيات الصحية:' : 'Review Answers & Recommendations:'}
+              {t('quiz_review_title', 'مراجعة الإجابات والتوصيات الصحية:')}
             </h3>
 
             <div className="space-y-4">
@@ -403,11 +403,11 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
 
                     <div className={`${isRtl ? 'mr-6' : 'ml-6'} space-y-1 text-[#526f78] dark:text-stone-300`}>
                       <p>
-                        {isRtl ? 'إجابتك:' : 'Your Answer:'} <span className="font-semibold text-[#0c2b33] dark:text-white">{q.options[userChoice] || (isRtl ? 'لم تجب' : 'Unanswered')}</span>
+                        {t('quiz_your_answer', 'إجابتك:')} <span className="font-semibold text-[#0c2b33] dark:text-white">{q.options[userChoice] || t('quiz_unanswered', 'لم تجب')}</span>
                       </p>
                       {!isCorrect && (
                         <p className="text-[#134e5e] dark:text-[#84d2ea] font-bold">
-                          {isRtl ? 'الإجابة الصحية الموصى بها:' : 'Recommended Answer:'} {q.options[q.correctAnswerIndex]}
+                          {t('quiz_recommended_answer', 'الإجابة الصحية الموصى بها:')} {q.options[q.correctAnswerIndex]}
                         </p>
                       )}
                       {q.explanation && (
@@ -437,7 +437,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
               onClick={() => setSelectedQuiz(null)}
               className="px-6 py-3 bg-[#2e9e66] hover:bg-[#248354] text-white font-bold text-xs rounded-2xl transition-colors flex items-center gap-2 cursor-pointer"
             >
-              <span>{isRtl ? 'اختيار استبانة صحية أخرى' : 'Choose Another Assessment'}</span>
+              <span>{t('quiz_choose_another', 'اختيار استبانة صحية أخرى')}</span>
               {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
             </button>
           </div>

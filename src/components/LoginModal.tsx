@@ -35,34 +35,31 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       
       if (code === 'auth/unauthorized-domain') {
         setErrorMsg(
-          `النطاق الحالي (${domain}) غير مصرّح به في مشروع Firebase.\n` +
-          `الحل: توجه إلى Firebase Console > Authentication > Settings > Authorized domains وأضف النطاق: ${domain} (رمز الخطأ: ${code})`
+          `${t('auth_err_domain', 'النطاق الحالي غير مصرّح به في مشروع Firebase.')} (${domain})`
         );
       } else if (code === 'auth/popup-blocked') {
         setErrorMsg(
-          `تم حظر نافذة تسجيل الدخول المنبثقة من قبل المتصفح.\n` +
-          `يرجى النقر على أيقونة النوافذ المنبثقة في شريط العنوان بالأعلى والسماح بها. (رمز الخطأ: ${code})`
+          t('auth_err_popup_blocked', 'تم حظر نافذة تسجيل الدخول المنبثقة من قبل المتصفح. يرجى السماح بالنوافذ المنبثقة.')
         );
       } else if (code === 'auth/operation-not-allowed') {
         setErrorMsg(
-          `تسجيل الدخول باستخدام Google غير مفعّل في مشروع Firebase.\n` +
-          `يرجى تفعيله من Firebase Console > Authentication > Sign-in method > Google. (رمز الخطأ: ${code})`
+          t('auth_err_operation_not_allowed', 'تسجيل الدخول باستخدام Google غير مفعّل في مشروع Firebase.')
         );
       } else if (code === 'auth/popup-closed-by-user') {
         setErrorMsg(
-          `تم إغلاق نافذة تسجيل الدخول قبل إتمام العملية. يرجى إعادة المحاولة. (رمز الخطأ: ${code})`
+          t('auth_err_popup_closed', 'تم إغلاق نافذة تسجيل الدخول قبل إتمام العملية. يرجى إعادة المحاولة.')
         );
       } else if (code === 'auth/cancelled-popup-request') {
         setErrorMsg(
-          `تم إلغاء المحاولة لوجود نافذة تسجيل دخول أخرى قيد التشغيل. (رمز الخطأ: ${code})`
+          t('auth_err_cancelled_popup', 'تم إلغاء المحاولة لوجود نافذة تسجيل دخول أخرى قيد التشغيل.')
         );
       } else if (code === 'auth/network-request-failed') {
         setErrorMsg(
-          `فشل الاتصال بالشبكة أثناء محاولة المصادقة. يرجى التحقق من اتصال الإنترنت. (رمز الخطأ: ${code})`
+          t('auth_err_network', 'فشل الاتصال بالشبكة أثناء محاولة المصادقة. يرجى التحقق من اتصال الإنترنت.')
         );
       } else {
-        const detail = err?.message || 'تعذر استكمال المصادقة';
-        setErrorMsg(`فشل تسجيل الدخول: ${detail}${code ? ` (${code})` : ''}`);
+        const detail = err?.message || (isRtl ? 'تعذر استكمال المصادقة' : 'Authentication failed');
+        setErrorMsg(`${t('auth_err_generic', 'فشل تسجيل الدخول')}: ${detail}${code ? ` (${code})` : ''}`);
       }
     } finally {
       setLoading(false);
@@ -86,6 +83,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         <button
           onClick={onClose}
           className={`absolute top-4 ${isRtl ? 'left-4' : 'right-4'} p-2 text-[#526f78] dark:text-stone-400 hover:text-[#0e3c48] dark:hover:white hover:bg-[#f1f7f9] dark:hover:bg-[#1e3842] rounded-xl transition-colors cursor-pointer`}
+          title={t('action_close', 'إغلاق')}
         >
           <X className="w-5 h-5" />
         </button>
@@ -94,7 +92,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           <div className="w-18 h-18 mx-auto mb-3 rounded-full bg-white dark:bg-[#0b1519] p-1.5 border-2 border-[#dbe8ed] dark:border-[#1e3842] shadow-md flex items-center justify-center overflow-hidden">
             <img
               src={getAssetUrl('/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
-              alt="شعار مبادرة عافية تُزهر"
+              alt={t('initiative_logo_alt', 'شعار مبادرة عافية تُزهر')}
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />

@@ -41,7 +41,7 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
           <div className="w-20 h-20 rounded-full bg-[#f1f7f9] dark:bg-[#0b1519] p-2 border-2 border-[#dbe8ed] dark:border-[#1e3842] shadow-md flex items-center justify-center overflow-hidden mb-3">
             <img
               src={getAssetUrl('/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
-              alt="شعار مبادرة عافية تُزهر"
+              alt={t('initiative_logo_alt', 'شعار مبادرة عافية تُزهر')}
               className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />

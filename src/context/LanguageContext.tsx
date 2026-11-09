@@ -12,9 +12,17 @@ interface LanguageContextType {
 }
 
 const translations: Record<string, { ar: string; en: string }> = {
-  // Brand & General
   'initiative_name': { ar: 'مبادرة عافية تُزهر', en: 'Blooming Wellness Initiative' },
   'tagline': { ar: 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر', en: 'With balance comes wellness.. and with wellness we bloom' },
+  'initiative_logo_alt': { ar: 'شعار مبادرة عافية تُزهر الرسمي', en: 'Official Blooming Wellness Initiative Logo' },
+  'moe_logo_alt': { ar: 'شعار وزارة التعليم', en: 'Ministry of Education Logo' },
+  'school_logo_alt': { ar: 'شعار مدرسة ثانوية الشاطئ', en: 'Al-Shatee High School Logo' },
+  'general_director': { ar: 'المدير العام', en: 'General Director' },
+  'admin_badge': { ar: 'المدير', en: 'Admin' },
+  'main_menu': { ar: 'القائمة الرئيسية', en: 'Main Menu' },
+  'change_language': { ar: 'تغيير اللغة', en: 'Change Language' },
+  'toggle_theme': { ar: 'تبديل المظهر', en: 'Toggle Theme' },
+  'back_to_top': { ar: 'العودة للأعلى', en: 'Back to Top' },
   'please_wait': { ar: 'يرجى الانتظار', en: 'Please wait' },
   'loading': { ar: 'جاري التحميل...', en: 'Loading...' },
   'loading_long': { ar: 'يستغرق الاتصال بقاعدة البيانات وقتاً أطول من المعتاد، يرجى الانتظار...', en: 'Connecting to the database is taking a bit longer than usual, please wait...' },
@@ -22,6 +30,137 @@ const translations: Record<string, { ar: string; en: string }> = {
   'theme': { ar: 'المظهر', en: 'Theme' },
   'light_mode': { ar: 'الوضع الفاتح', en: 'Light Mode' },
   'dark_mode': { ar: 'الوضع الداكن', en: 'Dark Mode' },
+
+  // Default Initiative Content (Bilingual for Home, About, Goals, Partners)
+  'default_about_text': {
+    ar: 'مبادرة مدرسية ومجتمعية توعوية رائدة تحت إشراف وزارة التعليم وتنظيم مدرسة ثانوية الشاطئ، تهدف إلى ترسيخ الركائز الأربع لنمط الحياة المتوازن: التغذية الصحية الطبيعية، والنشاط البدني المستمر، وجودة النوم والراحة، والعافية النفسية، لتمكين الطلاب والمجتمع من بناء حياة صحية ملهمة ومزدهرة.',
+    en: 'A leading school and community educational initiative supervised by the Ministry of Education and organized by Al-Shatee High School, aiming to establish the four pillars of a balanced lifestyle: natural healthy nutrition, continuous physical activity, quality sleep and recovery, and mental wellbeing, empowering students and the community to build an inspiring, flourishing life.'
+  },
+  'default_vision_text': {
+    ar: 'أن نكون النموذج التوعوي المدرسي والمجتمعي الرائد في صناعة أجيال واعية تحقق التوازن الصحي وتزهر بالعافية وجودة الحياة.',
+    en: 'To be the leading school and community educational model nurturing conscious generations that achieve wellness balance and flourish with high life quality.'
+  },
+  'default_mission_text': {
+    ar: 'نشر الوعي الصحي المتكامل من خلال برامج إذاعية تفاعلية، ومحاضرات متخصصة، ومقابلات ملهمة، واستبانات ذكية تدعم التوازن بين العقل والجسد والروح.',
+    en: 'Promoting holistic health awareness through interactive radio broadcasts, specialized lectures, inspiring dialogues, and smart assessments supporting balance across mind, body, and spirit.'
+  },
+  'default_goal_1': {
+    ar: 'ترسيخ ثقافة الغذاء الصحي المتوازن والابتعاد عن الأنماط الغذائية الضارة.',
+    en: 'Fostering a culture of balanced nutritious food and avoiding harmful dietary patterns.'
+  },
+  'default_goal_2': {
+    ar: 'تحفيز النشاط البدني والحركي اليومي لدى الطلاب وأفراد المجتمع.',
+    en: 'Encouraging daily physical movement and sports workouts among students and community members.'
+  },
+  'default_goal_3': {
+    ar: 'التوعية بأهمية النوم الصحي المنتظم وأثره المباشر على التركيز والتحصيل الدراسي.',
+    en: 'Raising awareness of regular restorative sleep and its direct impact on academic focus.'
+  },
+  'default_goal_4': {
+    ar: 'تعزيز الصحة النفسية والتوازن الوجداني وجودة الحياة في البيئة المدرسية والمجتمعية.',
+    en: 'Strengthening mental wellbeing, emotional balance, and quality of life in school and community.'
+  },
+  'default_goal_5': {
+    ar: 'تفعيل الشراكة الإيجابية والتكامل البناء بين وزارة التعليم ومدرسة ثانوية الشاطئ والمجتمع.',
+    en: 'Enabling positive partnership and constructive collaboration between the Ministry of Education, Al-Shatee High School, and the community.'
+  },
+  'default_address': {
+    ar: 'المملكة العربية السعودية - مدرسة ثانوية الشاطئ',
+    en: 'Kingdom of Saudi Arabia - Al-Shatee High School'
+  },
+  'partner_moe': { ar: 'وزارة التعليم', en: 'Ministry of Education' },
+  'partner_school': { ar: 'مدرسة ثانوية الشاطئ', en: 'Al-Shatee High School' },
+  'partner_supporting_role': { ar: 'شريك وراعي معتمد للمبادرة', en: 'Official Supporting Partner' },
+
+  // Home Page Additional Texts
+  'home_balanced_banner_title': { ar: 'بيئة مدرسية ومجتمعية تتوازن صحياً وتزهر بالعافية', en: 'A school & community environment blooming with wellness' },
+  'home_goals_title': { ar: 'أهداف استراتيجية لتعزيز جودة الحياة', en: 'Strategic Goals to Enhance Quality of Life' },
+  'home_quiz_callout_title': { ar: 'هل تسير على نمط حياة متوازن وصحي؟', en: 'Are You Following a Balanced Healthy Lifestyle?' },
+  'home_quiz_callout_desc': { ar: 'أجب عن بضعة أسئلة تفاعلية سريعة لقياس مؤشر عاداتك في شرب الماء، الغذاء، ساعات النوم، والحركة البدنية، واحصل على تقريرك الصحي فوراً.', en: 'Answer a few quick interactive questions to measure your habits index in hydration, diet, sleep, and physical movement.' },
+  'home_quiz_callout_btn': { ar: 'بدء اختبار التوازن الآن', en: 'Start Balance Assessment Now' },
+
+  // Media Player & Video Modal
+  'video_modal_close': { ar: 'إغلاق النافذة', en: 'Close Window' },
+  'video_modal_unsupported_video': { ar: 'متصفحك لا يدعم تشغيل هذا الفيديو.', en: 'Your browser does not support playing this video.' },
+  'video_modal_audio_recording': { ar: 'تسجيل البث الصوتي:', en: 'Audio Broadcast Recording:' },
+  'video_modal_unsupported_audio': { ar: 'متصفحك لا يدعم تشغيل الملف الصوتي.', en: 'Your browser does not support playing audio files.' },
+  'video_modal_open_external': { ar: 'فتح الرابط الخارجي مباشرة', en: 'Open External Link Directly' },
+
+  // Error Boundary
+  'error_boundary_title': { ar: 'مبادرة عافية تُزهر', en: 'Blooming Wellness Initiative' },
+  'error_boundary_desc': { ar: 'حدث خطأ أثناء تحميل بعض عناصر الصفحة. اضغط على الزر أدناه لإعادة تنشيط الصفحة.', en: 'An error occurred while loading some page elements. Click below to reload the page.' },
+  'error_boundary_reload': { ar: 'إعادة تحميل الصفحة', en: 'Reload Page' },
+
+  // Authentication & Errors
+  'auth_err_domain': { ar: 'النطاق الحالي غير مصرّح به في مشروع Firebase. يرجى إضافته إلى النطاقات المعتمدة.', en: 'The current domain is not authorized in Firebase. Please add it to Authorized Domains.' },
+  'auth_err_popup_blocked': { ar: 'تم حظر نافذة تسجيل الدخول المنبثقة من قبل المتصفح. يرجى السماح بالنوافذ المنبثقة.', en: 'The sign-in popup was blocked by your browser. Please allow popups.' },
+  'auth_err_operation_not_allowed': { ar: 'تسجيل الدخول باستخدام Google غير مفعّل في مشروع Firebase.', en: 'Google Sign-In is not enabled in the Firebase project.' },
+  'auth_err_popup_closed': { ar: 'تم إغلاق نافذة تسجيل الدخول قبل إتمام العملية. يرجى إعادة المحاولة.', en: 'Sign-in popup was closed before completing. Please try again.' },
+  'auth_err_cancelled_popup': { ar: 'تم إلغاء المحاولة لوجود نافذة تسجيل دخول أخرى قيد التشغيل.', en: 'Sign-in cancelled because another request is already in progress.' },
+  'auth_err_network': { ar: 'فشل الاتصال بالشبكة أثناء محاولة المصادقة. يرجى التحقق من اتصال الإنترنت.', en: 'Network connection failed during authentication. Please check internet connection.' },
+  'auth_err_generic': { ar: 'فشل تسجيل الدخول. يرجى المحاولة لاحقاً.', en: 'Sign-in failed. Please try again later.' },
+
+  // Habits Quiz Extended
+  'quiz_anonymous_respondent': { ar: 'طالب / زائر مجهول', en: 'Anonymous Student / Visitor' },
+  'quiz_save_error': { ar: 'تم احتساب النتيجة، ولكن تعذر حفظ السجل في قاعدة البيانات.', en: 'Score calculated, but failed to save record in database.' },
+  'quiz_count_questions': { ar: 'أسئلة تفاعلية', en: 'Interactive Questions' },
+  'quiz_start_now': { ar: 'بدء الاختبار التفاعلي الآن', en: 'Start Assessment Now' },
+  'quiz_back_to_list': { ar: 'العودة لقائمة الاختبارات', en: 'Back to Assessments List' },
+  'quiz_progress': { ar: 'نسبة الإنجاز:', en: 'Progress:' },
+  'quiz_name_label': { ar: 'اسم الطالب / المشارك (اختياري - لحفظ النتيجة في السجل):', en: 'Participant / Student Name (Optional - to save record):' },
+  'quiz_name_placeholder': { ar: 'أدخل اسمك أو اتركه فارغاً', en: 'Enter your name or leave blank' },
+  'quiz_type_tf': { ar: 'سؤال: صح أو خطأ', en: 'Question: True or False' },
+  'quiz_type_mcq': { ar: 'سؤال: اختيار من متعدد', en: 'Question: Multiple Choice' },
+  'quiz_next_q': { ar: 'السؤال التالي', en: 'Next Question' },
+  'quiz_prev_q': { ar: 'السابق', en: 'Previous' },
+  'quiz_completed_title': { ar: 'لقد أتممت مقياس التوازن بنجاح!', en: 'You have completed the wellness assessment!' },
+  'quiz_recorded_note': { ar: 'تم تسجيل إجاباتك بنجاح في قاعدة بيانات مبادرة "عافية تُزهر".', en: 'Your responses have been recorded in the Blooming Wellness database.' },
+  'quiz_index_title': { ar: 'مؤشر التوازن والعافية', en: 'Wellness & Balance Index' },
+  'quiz_score_ratio': { ar: 'إجابة متوافقة مع الإرشادات الصحية المعتمدة من أصل', en: 'guideline-compliant answers out of' },
+  'quiz_review_title': { ar: 'مراجعة الإجابات والتوصيات الصحية:', en: 'Review Answers & Recommendations:' },
+  'quiz_your_answer': { ar: 'إجابتك:', en: 'Your Answer:' },
+  'quiz_unanswered': { ar: 'لم تجب', en: 'Unanswered' },
+  'quiz_recommended_answer': { ar: 'الإجابة الصحية الموصى بها:', en: 'Recommended Health Answer:' },
+  'quiz_choose_another': { ar: 'اختيار استبانة صحية أخرى', en: 'Choose Another Assessment' },
+
+  // Public Section Subtitles & Hints
+  'broadcasts_header_subtitle': { ar: 'صوت الصباح: طاقة ووعي يومي', en: 'Morning Voice: Daily Energy & Vitality' },
+  'broadcasts_search_hint': { ar: 'جرب تغيير كلمات البحث أو اختيار موضوع آخر.', en: 'Try adjusting your search terms or selecting another topic.' },
+  'lectures_header_subtitle': { ar: 'محاضرات ولقاءات إثرائية', en: 'Enriching Lectures & Sessions' },
+  'lectures_search_hint': { ar: 'جرب كلمات بحث مختلفة أو حدد موضوعاً آخر.', en: 'Try adjusting search terms or choosing another topic.' },
+  'interviews_header_subtitle': { ar: 'حوارات وتجارب ملهمة', en: 'Inspiring Talks & Journeys' },
+  'interviews_search_hint': { ar: 'يرجى تعديل مصطلحات البحث.', en: 'Please adjust your search terms.' },
+  'sort_by_date': { ar: 'ترتيب حسب التاريخ', en: 'Sort by Date' },
+  'sort_newest': { ar: 'الأحدث تاريخاً', en: 'Newest First' },
+  'sort_oldest': { ar: 'الأقدم تاريخاً', en: 'Oldest First' },
+  'events_header_subtitle': { ar: 'فعاليات عافية: نشاط وازدهار', en: 'Wellness Events: Vitality & Flourishing' },
+  'events_search_placeholder': { ar: 'ابحث في الفعاليات أو الموقع...', en: 'Search events or location...' },
+  'events_search_hint': { ar: 'يرجى اختيار تبويب آخر أو مسح حقل البحث.', en: 'Please select another tab or clear search filter.' },
+  'registrations_search_hint': { ar: 'تابع هذه الصفحة باستمرار لمواكبة البرامج القادمة.', en: 'Check back frequently for upcoming wellness programs.' },
+  'registrations_copy_link': { ar: 'نسخ رابط التسجيل', en: 'Copy Link' },
+  'registrations_copied': { ar: 'تم النسخ!', en: 'Copied!' },
+  'registrations_register_now': { ar: 'التسجيل في النشاط', en: 'Register Now' },
+  'registrations_ended': { ar: 'انتهت فترة التسجيل', en: 'Registration Closed' },
+
+  // Admin Dashboard Extended
+  'admin_overview_desc': { ar: 'يمكنك تعديل اسم المبادرة، النبذة التعريفية، الرؤية، الرسالة، الأهداف والشعارات المشاركة لتظهر فوراً على الواجهة.', en: 'You can update the initiative name, about text, vision, mission, strategic goals, and partner logos to reflect immediately.' },
+  'admin_seed_tooltip': { ar: 'تهيئة بيانات تجريبية حقيقية للمبادرة إذا كانت فارغة', en: 'Initialize approved starter content for the initiative if empty' },
+  'admin_inquiry_status_updated': { ar: 'تم تحديث حالة الرسالة.', en: 'Inquiry status updated successfully.' },
+  'admin_inquiry_status_failed': { ar: 'تعذر تحديث الحالة.', en: 'Failed to update status.' },
+  'admin_th_actions': { ar: 'الإجراءات', en: 'Actions' },
+  'admin_th_details': { ar: 'التفاصيل', en: 'Details' },
+  'admin_th_title': { ar: 'العنوان', en: 'Title' },
+  'admin_th_status': { ar: 'الحالة', en: 'Status' },
+  'admin_th_date': { ar: 'التاريخ', en: 'Date' },
+  'admin_th_topic': { ar: 'الموضوع', en: 'Topic' },
+  'admin_th_speaker': { ar: 'المحاضر', en: 'Speaker' },
+  'admin_th_guest': { ar: 'الضيف', en: 'Guest' },
+  'admin_th_email': { ar: 'البريد الإلكتروني', en: 'Email' },
+  'admin_th_name': { ar: 'الاسم', en: 'Name' },
+  'admin_th_role': { ar: 'الرتبة', en: 'Role' },
+  'admin_th_permissions': { ar: 'الصلاحيات', en: 'Permissions' },
+  'admin_th_message': { ar: 'نص الرسالة', en: 'Message' },
+  'admin_th_phone': { ar: 'الهاتف', en: 'Phone' },
 
   // SEO Dynamic Titles & Meta Descriptions
   'seo_home_title': { ar: 'عافية تُزهر | مبادرة التوعية بالصحة والعادات الصحية', en: 'Blooming Wellness | Health Awareness Initiative' },

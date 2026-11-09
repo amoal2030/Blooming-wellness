@@ -35,7 +35,7 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
             <span>{t('registrations_title', 'بوابة التسجيل والمشاركة الطلابية')}</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black">
-            {t('registrations_title', 'التسجيل في أنشطة عافية تُزهر')}
+            {isRtl ? 'التسجيل في أنشطة عافية تُزهر' : 'Student & Community Registration'}
           </h1>
           <p className="text-[#d1e6ec] text-xs sm:text-sm leading-relaxed">
             {t('registrations_subtitle', 'بادر بالتسجيل في ورش العمل، المجموعات الرياضية، وبرامج التطوع الصحي المعتمدة بمدرسة ثانوية الشاطئ عبر روابط التسجيل الرسمية.')}

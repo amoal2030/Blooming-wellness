@@ -77,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl bg-white dark:bg-[#12242b] p-1 border border-[#cbe0e7] dark:border-[#1e3842] shadow-xs ring-2 ring-[#389eb3]/20 group-hover:scale-105 group-hover:ring-[#389eb3]/40 transition-all shrink-0 flex items-center justify-center overflow-hidden">
                 <img
                   src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
-                  alt="شعار مبادرة عافية تُزهر"
+                  alt={t('initiative_logo_alt', 'شعار مبادرة عافية تُزهر')}
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
                 />
@@ -85,12 +85,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                   <span className="text-base sm:text-lg font-black text-[#134e5e] dark:text-[#84d2ea] tracking-tight leading-tight group-hover:text-[#0e3c48] dark:group-hover:text-white transition-colors whitespace-nowrap">
-                    {settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')}
+                    {language === 'ar' ? (settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')) : t('initiative_name', 'Blooming Wellness Initiative')}
                   </span>
-                  <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-[#ea8c38]" title="بالتوازن تحصل العافية" />
+                  <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-[#ea8c38]" title={t('tagline')} />
                 </div>
                 <span className="text-[11px] sm:text-xs text-[#526f78] dark:text-[#8caab4] font-medium truncate max-w-[180px] sm:max-w-xs">
-                  {settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')}
+                  {language === 'ar' ? (settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')) : t('tagline')}
                 </span>
               </div>
             </button>
@@ -124,7 +124,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={toggleLanguage}
               className="flex items-center gap-1 px-2.5 py-2 text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] bg-[#f1f7f9] dark:bg-[#132c35] hover:bg-[#e4eff2] dark:hover:bg-[#1a3a46] border border-[#cbe0e7] dark:border-[#1e3842] rounded-xl transition-all cursor-pointer shadow-2xs"
               title={language === 'ar' ? 'Switch to English' : 'التحويل إلى العربية'}
-              aria-label="تغيير اللغة"
+              aria-label={t('change_language', 'تغيير اللغة')}
             >
               <Globe className="w-3.5 h-3.5 text-[#2e9e66] dark:text-[#34b374]" />
               <span className="font-sans text-[11px] font-extrabold uppercase">
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={toggleTheme}
               className="p-2 text-[#134e5e] dark:text-[#f29a4b] bg-[#f1f7f9] dark:bg-[#132c35] hover:bg-[#e4eff2] dark:hover:bg-[#1a3a46] border border-[#cbe0e7] dark:border-[#1e3842] rounded-xl transition-all cursor-pointer shadow-2xs"
               title={isDark ? t('light_mode', 'الوضع الفاتح') : t('dark_mode', 'الوضع الداكن')}
-              aria-label="تبديل المظهر"
+              aria-label={t('toggle_theme', 'تبديل المظهر')}
             >
               {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
@@ -156,7 +156,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="hidden sm:inline">{t('nav_admin', 'لوحة التحكم')}</span>
                 {isSuperAdmin && (
                   <span className="text-[10px] bg-[#ea8c38] text-white font-extrabold px-1.5 py-0.5 rounded-md">
-                    {isRtl ? 'المدير' : 'Admin'}
+                    {t('admin_badge', 'المدير')}
                   </span>
                 )}
               </button>
@@ -174,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="xl:hidden p-2 text-[#134e5e] dark:text-white hover:bg-[#eaf6fa] dark:hover:bg-[#1b3d48] rounded-xl transition-colors"
-              aria-label="القائمة الرئيسية"
+              aria-label={t('main_menu', 'القائمة الرئيسية')}
             >
               {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>

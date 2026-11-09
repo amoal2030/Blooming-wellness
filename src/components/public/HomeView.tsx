@@ -95,10 +95,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
   // Exactly two authorized partners
   const authorizedPartners = (settings.partnerLogos && settings.partnerLogos.length === 2)
-    ? settings.partnerLogos
+    ? settings.partnerLogos.map(p => ({
+        ...p,
+        name: p.id === 'moe' 
+          ? t('partner_moe', p.name) 
+          : p.id === 'shatee_high_school' 
+          ? t('partner_school', p.name) 
+          : p.name
+      }))
     : [
-        { id: 'moe', name: 'وزارة التعليم', imageUrl: '/assets/logos/ministry_of_education.svg' },
-        { id: 'shatee_high_school', name: 'مدرسة ثانوية الشاطئ', imageUrl: '/assets/logos/alshatee_high_school.svg' }
+        { id: 'moe', name: t('partner_moe', 'وزارة التعليم'), imageUrl: '/assets/logos/ministry_of_education.svg' },
+        { id: 'shatee_high_school', name: t('partner_school', 'مدرسة ثانوية الشاطئ'), imageUrl: '/assets/logos/alshatee_high_school.svg' }
       ];
 
   return (
@@ -124,10 +131,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
               <div className="space-y-3">
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-sm text-balance">
-                  {settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')}
+                  {language === 'ar' ? (settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')) : t('initiative_name', 'Blooming Wellness Initiative')}
                 </h1>
                 <p className="text-xl sm:text-2xl font-bold text-[#84d2ea] leading-snug">
-                  {settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')}
+                  {language === 'ar' ? (settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')) : t('tagline')}
                 </p>
               </div>
 
@@ -298,10 +305,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <span>{t('section_about_title', 'نبذة تعريفية عن مبادرة عافية تُزهر')}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0e3c48] dark:text-white leading-snug">
-              {isRtl ? 'بيئة مدرسية ومجتمعية تتوازن صحياً وتزهر بالعافية' : 'A balanced school & community environment blooming with wellness'}
+              {t('home_balanced_banner_title', 'بيئة مدرسية ومجتمعية تتوازن صحياً وتزهر بالعافية')}
             </h2>
             <p className="text-[#526f78] dark:text-stone-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">
-              {settings.aboutText}
+              {language === 'ar' ? (settings.aboutText || t('default_about_text')) : t('default_about_text')}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#edf3f5] dark:border-[#1e3842]">
@@ -310,7 +317,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <Eye className="w-4 h-4 text-[#389eb3]" />
                   <span>{t('section_vision', 'الرؤية')}</span>
                 </div>
-                <p className="text-xs text-[#0c2b33] dark:text-stone-200 leading-relaxed">{settings.visionText}</p>
+                <p className="text-xs text-[#0c2b33] dark:text-stone-200 leading-relaxed">
+                  {language === 'ar' ? (settings.visionText || t('default_vision_text')) : t('default_vision_text')}
+                </p>
               </div>
 
               <div className="p-4 bg-[#e8f7ee] dark:bg-[#0e2c22] rounded-2xl border border-[#c4e9d2] dark:border-[#154636]">
@@ -318,7 +327,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <Target className="w-4 h-4 text-[#2e9e66]" />
                   <span>{t('section_mission', 'الرسالة')}</span>
                 </div>
-                <p className="text-xs text-[#0c2b33] dark:text-stone-200 leading-relaxed">{settings.missionText}</p>
+                <p className="text-xs text-[#0c2b33] dark:text-stone-200 leading-relaxed">
+                  {language === 'ar' ? (settings.missionText || t('default_mission_text')) : t('default_mission_text')}
+                </p>
               </div>
             </div>
           </div>
@@ -330,17 +341,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <span>{t('section_goals', 'أهداف المبادرة')}</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-bold leading-tight">
-              {isRtl ? 'أهداف استراتيجية لتعزيز جودة الحياة' : 'Strategic Goals to Enhance Quality of Life'}
+              {t('home_goals_title', 'أهداف استراتيجية لتعزيز جودة الحياة')}
             </h3>
             <ul className="space-y-4">
-              {settings.goals.map((goal, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-lg bg-white/10 text-[#84d2ea] font-mono text-xs flex items-center justify-center shrink-0 mt-0.5 border border-white/20">
-                    0{idx + 1}
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#d1e6ec] leading-relaxed">{goal}</span>
-                </li>
-              ))}
+              {settings.goals.map((goal, idx) => {
+                const goalKey = `default_goal_${idx + 1}`;
+                const displayGoal = language === 'ar' ? goal : t(goalKey, goal);
+                return (
+                  <li key={idx} className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-lg bg-white/10 text-[#84d2ea] font-mono text-xs flex items-center justify-center shrink-0 mt-0.5 border border-white/20">
+                      0{idx + 1}
+                    </span>
+                    <span className="text-xs sm:text-sm text-[#d1e6ec] leading-relaxed">{displayGoal}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
@@ -355,12 +370,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 {t('quiz_badge', 'مقياس عافية التفاعلي')}
               </div>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
-                {isRtl ? 'هل تسير على نمط حياة متوازن وصحي؟' : 'Are You Following a Balanced Healthy Lifestyle?'}
+                {t('home_quiz_callout_title', 'هل تسير على نمط حياة متوازن وصحي؟')}
               </h2>
               <p className="text-[#e2f1f5] text-sm sm:text-base leading-relaxed max-w-2xl">
-                {isRtl 
-                  ? 'أجب عن بضعة أسئلة تفاعلية سريعة لقياس مؤشر عاداتك في شرب الماء، الغذاء، ساعات النوم، والحركة البدنية، واحصل على تقريرك الصحي فوراً.'
-                  : 'Answer a few quick interactive questions to measure your habits index in hydration, diet, sleep, and physical movement.'}
+                {t('home_quiz_callout_desc', 'أجب عن بضعة أسئلة تفاعلية سريعة لقياس مؤشر عاداتك في شرب الماء، الغذاء، ساعات النوم، والحركة البدنية، واحصل على تقريرك الصحي فوراً.')}
               </p>
               <div className="pt-2">
                 <button
@@ -371,7 +384,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   className="px-6 py-3.5 bg-white text-[#134e5e] hover:bg-[#f7fbfc] font-extrabold text-sm rounded-2xl shadow-md transition-all hover:scale-105 inline-flex items-center gap-2 cursor-pointer"
                 >
                   <CheckSquare className="w-5 h-5 text-[#2e9e66]" />
-                  <span>{t('quiz_main_title', 'بدء اختبار التوازن الآن')}</span>
+                  <span>{t('home_quiz_callout_btn', 'بدء اختبار التوازن الآن')}</span>
                 </button>
               </div>
             </div>

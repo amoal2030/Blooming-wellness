@@ -79,7 +79,7 @@ function MainApp() {
       pageDesc = t('seo_contact_desc');
     } else if (activeTab === 'admin') {
       pageTitle = t('seo_admin_title');
-      pageDesc = 'Private administrative portal for Blooming Wellness initiative.';
+      pageDesc = language === 'ar' ? 'بوابة الإدارة والتحكم الخاصة بمبادرة عافية تُزهر.' : 'Private administrative portal for Blooming Wellness initiative.';
     }
 
     // Update document title
