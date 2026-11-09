@@ -118,42 +118,42 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#389eb3]/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#2e9e66]/15 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 lg:pt-24 lg:pb-32">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20 sm:pt-16 sm:pb-24 lg:pt-24 lg:pb-32">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Text & CTAs (7 cols) */}
-            <div className={`lg:col-span-7 space-y-6 ${isRtl ? 'text-right' : 'text-left'}`}>
+            <div className={`lg:col-span-7 space-y-5 sm:space-y-6 ${isRtl ? 'text-right' : 'text-left'}`}>
               
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-[#84d2ea]/30 text-[#84d2ea] text-xs font-bold backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-[#ea8c38] animate-pulse" />
-                <span>{t('hero_sponsor_badge', 'برعاية وزارة التعليم وتنظيم ثانوية الشاطئ')}</span>
+              <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/10 border border-[#84d2ea]/30 text-[#84d2ea] text-[11px] sm:text-xs font-bold backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-[#ea8c38] animate-pulse shrink-0" />
+                <span className="truncate">{t('hero_sponsor_badge', 'برعاية وزارة التعليم وتنظيم ثانوية الشاطئ')}</span>
               </div>
 
-              <div className="space-y-3">
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-sm text-balance">
+              <div className="space-y-2 sm:space-y-3">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-sm text-balance">
                   {language === 'ar' ? (settings.initiativeName || t('initiative_name', 'مبادرة عافية تُزهر')) : t('initiative_name', 'Blooming Wellness Initiative')}
                 </h1>
-                <p className="text-xl sm:text-2xl font-bold text-[#84d2ea] leading-snug">
+                <p className="text-base sm:text-xl md:text-2xl font-bold text-[#84d2ea] leading-snug">
                   {language === 'ar' ? (settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')) : t('tagline')}
                 </p>
               </div>
 
-              <p className="text-sm sm:text-base text-[#d1e6ec] leading-relaxed font-normal max-w-2xl">
+              <p className="text-xs sm:text-sm md:text-base text-[#d1e6ec] leading-relaxed font-normal max-w-2xl">
                 {t('hero_desc', 'منصة توعوية رائدة لترسيخ عادات الحياة المتوازنة: الغذاء الصحي، النشاط البدني، جودة النوم، والعافية النفسية لطلاب ثانوية الشاطئ والمجتمع.')}
               </p>
 
               {/* Quick Action Buttons */}
-              <div className="flex flex-wrap gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4">
                 <button
                   onClick={() => {
                     setActiveTab('quizzes');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="flex items-center gap-2.5 px-6 py-3.5 bg-[#2e9e66] hover:bg-[#248354] text-white text-sm font-extrabold rounded-2xl shadow-lg shadow-[#2e9e66]/30 hover:shadow-[#2e9e66]/50 transition-all hover:-translate-y-0.5 cursor-pointer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs sm:text-sm font-extrabold rounded-2xl shadow-lg shadow-[#2e9e66]/30 hover:shadow-[#2e9e66]/50 transition-all hover:-translate-y-0.5 cursor-pointer min-h-[44px]"
                 >
-                  <CheckSquare className="w-5 h-5 text-white" />
+                  <CheckSquare className="w-5 h-5 text-white shrink-0" />
                   <span>{t('hero_btn_quiz', 'اختبر مدى صحة عاداتك الآن')}</span>
-                  {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                  {isRtl ? <ArrowLeft className="w-4 h-4 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />}
                 </button>
 
                 <button
@@ -161,19 +161,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     setActiveTab('events');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="flex items-center gap-2.5 px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white text-sm font-bold rounded-2xl border border-white/25 backdrop-blur-md transition-all hover:-translate-y-0.5 cursor-pointer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold rounded-2xl border border-white/25 backdrop-blur-md transition-all hover:-translate-y-0.5 cursor-pointer min-h-[44px]"
                 >
-                  <Calendar className="w-5 h-5 text-[#84d2ea]" />
+                  <Calendar className="w-5 h-5 text-[#84d2ea] shrink-0" />
                   <span>{t('hero_btn_events', 'استكشف الفعاليات والأنشطة')}</span>
                 </button>
               </div>
             </div>
 
             {/* Emblem Display (5 cols) */}
-            <div className="lg:col-span-5 flex justify-center">
+            <div className="lg:col-span-5 flex justify-center pt-4 lg:pt-0">
               <div className="relative group">
                 <div className="absolute -inset-2 bg-gradient-to-r from-[#2e9e66] via-[#389eb3] to-[#ea8c38] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
-                <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-white p-3.5 shadow-2xl border-4 border-white/40 flex items-center justify-center overflow-hidden">
+                <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-full bg-white p-3 sm:p-4 shadow-2xl border-4 border-white/40 flex items-center justify-center overflow-hidden">
                   <img
                     src={getAssetUrl(settings.logoUrl || '/assets/aistudio/50c0c8c4-5c4f-4db5-8ada-405779c14cc1_db926d78.png')}
                     alt={isRtl ? 'شعار مبادرة عافية تُزهر الرسمي للتوعية بالصحة والعادات الصحية' : 'Official Blooming Wellness Health Awareness Logo'}
@@ -189,7 +189,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* 2. Partner & Supporting Logos - Exactly 2 Entities */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-12 relative z-20">
         <div className="bg-white dark:bg-[#122127] rounded-3xl shadow-xl border border-[#dbe8ed] dark:border-[#1e3842] p-6 sm:p-8 transition-colors">
           <p className="text-xs font-extrabold text-[#134e5e] dark:text-[#84d2ea] uppercase tracking-wider text-center mb-6">
             {t('section_partners', 'الجهات المشاركة والداعمة للمبادرة')}
@@ -430,7 +430,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {recentBroadcasts.map((item) => (
               <div 
                 key={item.id} 
@@ -555,15 +555,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
         {featuredEvent && (
           <div className="bg-[#0e3c48] text-white rounded-3xl overflow-hidden shadow-xl border border-[#1a5565]">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
-              <div className={`lg:col-span-7 p-8 sm:p-12 space-y-4 ${isRtl ? 'text-right' : 'text-left'}`}>
+              <div className={`lg:col-span-7 p-6 sm:p-8 lg:p-12 space-y-4 ${isRtl ? 'text-right' : 'text-left'}`}>
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#ea8c38]/20 text-[#ea8c38] border border-[#ea8c38]/30 rounded-full text-xs font-bold">
                   <Calendar className="w-3.5 h-3.5" />
                   <span>{t('card_featured_badge', 'الفعالية القادمة الأبرز')}</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-black leading-tight text-white">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black leading-tight text-white">
                   {featuredEvent.title}
                 </h3>
-                <p className="text-[#d1e6ec] text-sm leading-relaxed">
+                <p className="text-[#d1e6ec] text-xs sm:text-sm leading-relaxed">
                   {featuredEvent.description}
                 </p>
 
@@ -578,17 +578,17 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   </div>
                   <div className="flex items-center gap-2 sm:col-span-2">
                     <MapPin className="w-4 h-4 text-[#84d2ea] shrink-0" />
-                    <span>{t('card_location', 'الموقع')}: {featuredEvent.location}</span>
+                    <span className="truncate">{t('card_location', 'الموقع')}: {featuredEvent.location}</span>
                   </div>
                 </div>
 
-                <div className="pt-4 flex flex-wrap gap-4">
+                <div className="pt-4 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                   <button
                     onClick={() => {
                       setActiveTab('events');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="px-5 py-3 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-2xl transition-colors cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-3 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-2xl transition-colors cursor-pointer text-center min-h-[44px] flex items-center justify-center"
                   >
                     {t('hero_btn_events', 'تفاصيل كافة الفعاليات')}
                   </button>
@@ -598,14 +598,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
                       setActiveTab('registrations');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="px-5 py-3 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-2xl border border-white/20 transition-colors cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-3 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-2xl border border-white/20 transition-colors cursor-pointer text-center min-h-[44px] flex items-center justify-center"
                   >
                     {t('nav_registrations', 'التسجيل في الأنشطة')}
                   </button>
                 </div>
               </div>
 
-              <div className="lg:col-span-5 h-64 lg:h-full relative overflow-hidden bg-[#134e5e]">
+              <div className="lg:col-span-5 h-56 sm:h-72 lg:h-full min-h-[220px] relative overflow-hidden bg-[#134e5e]">
                 <img
                   src={getAssetUrl(featuredEvent.imageUrl || '/assets/images/hero_awareness_banner_1793901820998.jpg')}
                   alt={`${featuredEvent.title} - ${isRtl ? 'فعالية صحية مجتمعية مبادرة عافية تُزهر' : 'Community Health Event Blooming Wellness'}`}

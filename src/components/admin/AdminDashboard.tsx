@@ -911,31 +911,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       
       {/* Top Admin Navigation Header */}
       <header className="sticky top-0 z-30 bg-[#0e3c48] text-white border-b border-[#134e5e] shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-auto min-h-[4rem] py-2 sm:py-0 flex items-center justify-between gap-2">
           
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#2e9e66] flex items-center justify-center text-white shadow-xs">
-              <ShieldCheck className="w-5 h-5" />
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#2e9e66] flex items-center justify-center text-white shadow-xs shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <h1 className="text-sm font-extrabold tracking-tight">
+            <div className="min-w-0">
+              <h1 className="text-xs sm:text-sm font-extrabold tracking-tight truncate max-w-[150px] xs:max-w-[200px] sm:max-w-none">
                 {t('admin_header_title', 'لوحة التحكم المركزية - عافية تُزهر')}
               </h1>
-              <span className="text-[11px] text-[#84d2ea] font-medium">
+              <span className="text-[10px] sm:text-[11px] text-[#84d2ea] font-medium block truncate max-w-[140px] sm:max-w-none">
                 {isSuperAdmin ? t('admin_super_badge', 'المدير الرئيسي (كامل الصلاحيات)') : supervisorProfile?.role === 'admin' ? t('login_role_admin', 'مدير إداري') : t('login_role_editor', 'مشرف محتوى')}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Language Switcher */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors cursor-pointer border border-[#20697d]"
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors cursor-pointer border border-[#20697d] min-h-[38px]"
               title={language === 'ar' ? 'Switch to English' : 'التحويل إلى العربية'}
             >
               <Globe className="w-3.5 h-3.5 text-[#84d2ea]" />
-              <span className="font-sans text-[11px] font-black uppercase">
+              <span className="font-sans text-[10px] sm:text-[11px] font-black uppercase">
                 {language === 'ar' ? 'English' : 'العربية'}
               </span>
             </button>
@@ -943,7 +943,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             {/* Theme Switcher */}
             <button
               onClick={toggleTheme}
-              className="p-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white rounded-xl transition-colors cursor-pointer border border-[#20697d]"
+              className="p-2 bg-[#134e5e] hover:bg-[#19657b] text-white rounded-xl transition-colors cursor-pointer border border-[#20697d] min-h-[38px] min-w-[38px] flex items-center justify-center"
               title={isDark ? t('light_mode', 'الوضع الفاتح') : t('dark_mode', 'الوضع الداكن')}
             >
               {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-200" />}
@@ -951,18 +951,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
             <button
               onClick={onExitToPublic}
-              className="px-3 sm:px-3.5 py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="p-2 sm:px-3 sm:py-1.5 bg-[#134e5e] hover:bg-[#19657b] text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer min-h-[38px]"
+              title={t('admin_exit', 'معاينة موقع الزوار')}
             >
               <Eye className="w-3.5 h-3.5 text-[#84d2ea]" />
-              <span className="hidden sm:inline">{t('admin_exit', 'معاينة موقع الزوار')}</span>
+              <span className="hidden md:inline">{t('admin_exit', 'معاينة موقع الزوار')}</span>
             </button>
 
             <button
               onClick={logout}
-              className="px-3 sm:px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900 text-rose-200 text-xs font-bold rounded-xl border border-rose-800/50 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="p-2 sm:px-3 sm:py-1.5 bg-rose-950/70 hover:bg-rose-900 text-rose-200 text-xs font-bold rounded-xl border border-rose-800/50 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[38px]"
+              title={t('nav_logout', 'تسجيل الخروج')}
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{t('nav_logout', 'تسجيل الخروج')}</span>
+              <span className="hidden md:inline">{t('nav_logout', 'تسجيل الخروج')}</span>
             </button>
           </div>
         </div>

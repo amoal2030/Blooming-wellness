@@ -300,11 +300,11 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
           )}
 
           {/* Navigation Buttons */}
-          <div className="pt-6 border-t border-[#edf3f5] dark:border-[#1e3842] flex items-center justify-between">
+          <div className="pt-6 border-t border-[#edf3f5] dark:border-[#1e3842] flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3">
             <button
               onClick={handlePrev}
               disabled={currentQuestionIdx === 0}
-              className="px-5 py-2.5 rounded-xl border border-[#dbe8ed] dark:border-[#1e3842] text-xs font-bold text-[#526f78] dark:text-stone-300 hover:bg-[#f7fbfc] dark:hover:bg-[#162a32] transition-colors disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1.5 cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-[#dbe8ed] dark:border-[#1e3842] text-xs font-bold text-[#526f78] dark:text-stone-300 hover:bg-[#f7fbfc] dark:hover:bg-[#162a32] transition-colors disabled:opacity-30 disabled:pointer-events-none flex items-center justify-center gap-1.5 cursor-pointer min-h-[44px]"
             >
               {isRtl ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
               <span>{t('quiz_prev_q', 'السابق')}</span>
@@ -313,7 +313,7 @@ export const HabitsQuizView: React.FC<HabitsQuizViewProps> = ({ quizzes }) => {
             <button
               onClick={handleNext}
               disabled={userAnswers[currentQuestionIdx] === -1}
-              className="px-6 py-2.5 rounded-2xl bg-[#2e9e66] hover:bg-[#248354] text-xs font-bold text-white shadow-xs transition-colors disabled:opacity-40 disabled:pointer-events-none flex items-center gap-1.5 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-2xl bg-[#2e9e66] hover:bg-[#248354] text-xs font-bold text-white shadow-xs transition-colors disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center gap-1.5 cursor-pointer min-h-[44px]"
             >
               <span>{currentQuestionIdx === selectedQuiz.questions.length - 1 ? t('quiz_submit_btn', 'إنهاء الاختبار وعرض النتيجة') : t('quiz_next_q', 'السؤال التالي')}</span>
               {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}

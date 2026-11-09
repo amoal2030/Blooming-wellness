@@ -152,7 +152,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
         </div>
 
         {/* Status Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
           {[
             { id: 'all', label: t('events_tab_all', 'جميع الفعاليات') },
             { id: 'upcoming', label: t('events_tab_upcoming', 'الفعاليات القادمة') },
@@ -162,7 +162,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
             <button
               key={tab.id}
               onClick={() => setActiveStatus(tab.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[38px] ${
                 activeStatus === tab.id
                   ? 'bg-[#134e5e] text-white shadow-xs'
                   : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'
@@ -184,7 +184,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {filteredEvents.map((event) => (
             <div
               key={event.id}

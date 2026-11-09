@@ -83,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           
           {/* Col 1: Initiative Identity with Official Logo */}
           <div className="space-y-4">
