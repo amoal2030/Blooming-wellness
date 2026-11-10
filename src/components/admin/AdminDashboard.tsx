@@ -994,7 +994,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Sidebar Menu (3 cols desktop, responsive horizontal bar mobile/tablet) */}
-          <aside className="lg:col-span-3 bg-white dark:bg-[#122127] rounded-3xl border border-stone-200 dark:border-[#1e3842] p-3 sm:p-4 shadow-xs space-y-2 transition-colors">
+          <aside className="lg:col-span-3 min-w-0 bg-white dark:bg-[#122127] rounded-3xl border border-stone-200 dark:border-[#1e3842] p-3 sm:p-4 shadow-xs space-y-2 transition-colors">
             <div className="px-2 py-1 text-[11px] font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">
               {t('admin_sections_nav', 'أقسام الإدارة')}
             </div>
@@ -1064,14 +1064,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </aside>
 
           {/* Section Main Canvas (9 cols) */}
-          <main className="lg:col-span-9 space-y-6">
+          <main className="lg:col-span-9 min-w-0 space-y-6">
             
             {/* 1. OVERVIEW SECTION */}
             {currentSection === 'overview' && (
               <div className="space-y-6">
                 
                 {/* Stats Metric Cards */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   <div className="bg-white dark:bg-[#122127] p-4 sm:p-5 rounded-2xl border border-stone-200 dark:border-[#1e3842] shadow-xs transition-colors">
                     <span className="text-stone-500 dark:text-stone-400 text-xs font-medium block">{t('admin_metric_broadcasts', 'الإذاعات الصباحية')}</span>
                     <span className="text-2xl font-black text-stone-900 dark:text-white mt-1 block">{broadcasts.length}</span>
@@ -1191,23 +1191,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </h3>
                   <div className="divide-y divide-stone-100 dark:divide-[#1e3842] text-xs">
                     {broadcasts.slice(0, 3).map((b) => (
-                      <div key={b.id} className="py-3 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
+                      <div key={b.id} className="py-3 flex items-center justify-between gap-2 min-w-0">
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
                           <Radio className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                          <span className="font-bold text-stone-800 dark:text-stone-200">{b.title}</span>
-                          <span className="text-stone-400 dark:text-stone-500">({b.topic})</span>
+                          <span className="font-bold text-stone-800 dark:text-stone-200 truncate">{b.title}</span>
+                          <span className="text-stone-400 dark:text-stone-500 shrink-0">({b.topic})</span>
                         </div>
-                        <span className="text-stone-400 dark:text-stone-500 font-mono">{b.date}</span>
+                        <span className="text-stone-400 dark:text-stone-500 font-mono shrink-0">{b.date}</span>
                       </div>
                     ))}
                     {lectures.slice(0, 2).map((l) => (
-                      <div key={l.id} className="py-3 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
+                      <div key={l.id} className="py-3 flex items-center justify-between gap-2 min-w-0">
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
                           <Video className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
-                          <span className="font-bold text-stone-800 dark:text-stone-200">{l.title}</span>
-                          <span className="text-stone-500 dark:text-stone-400">{l.speaker}</span>
+                          <span className="font-bold text-stone-800 dark:text-stone-200 truncate">{l.title}</span>
+                          <span className="text-stone-500 dark:text-stone-400 shrink-0">{l.speaker}</span>
                         </div>
-                        <span className="text-stone-400 dark:text-stone-500 font-mono">{l.date}</span>
+                        <span className="text-stone-400 dark:text-stone-500 font-mono shrink-0">{l.date}</span>
                       </div>
                     ))}
                   </div>
@@ -1814,17 +1814,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                   <div className="divide-y divide-stone-100 dark:divide-[#1e3842]">
                     {quizzes.map((quiz) => (
-                      <div key={quiz.id} className="py-4 flex items-center justify-between">
-                        <div>
+                      <div key={quiz.id} className="py-4 flex items-center justify-between gap-3 min-w-0">
+                        <div className="min-w-0 flex-1">
                           <span className="text-[11px] text-[#2e9e66] font-bold block">{quiz.category}</span>
-                          <h4 className="text-sm font-bold text-stone-900 dark:text-white">{quiz.title}</h4>
+                          <h4 className="text-sm font-bold text-stone-900 dark:text-white truncate">{quiz.title}</h4>
                           <span className="text-xs text-stone-400">
                             {quiz.questions.length} {t('admin_questions_count', 'أسئلة')}
                           </span>
                         </div>
                         <button
                           onClick={() => handleDeleteQuiz(quiz.id)}
-                          className="p-2 text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
+                          className="p-2 text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer shrink-0"
                           title={t('admin_btn_delete', 'حذف الاستبانة')}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -1835,7 +1835,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
 
                 {/* Visitor Responses Analytics (Supervisors & Admins only) */}
-                <div className="bg-white dark:bg-[#122127] p-6 sm:p-8 rounded-3xl border border-stone-200 dark:border-[#1e3842] shadow-xs space-y-4">
+                <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 md:p-8 rounded-3xl border border-stone-200 dark:border-[#1e3842] shadow-xs space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-base font-bold text-stone-900 dark:text-white flex items-center gap-2">
@@ -1853,8 +1853,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       {t('admin_quiz_responses_empty', 'لم تُسجل إجابات زوار حتى الآن.')}
                     </p>
                   ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs text-start">
+                    <div className="w-full max-w-full overflow-x-auto block">
+                      <table className="w-full min-w-[500px] text-xs text-start">
                         <thead>
                           <tr className="border-b border-stone-200 dark:border-[#1e3842] text-stone-500 dark:text-stone-400 font-bold">
                             <th className="py-2.5 px-3 text-start">{t('admin_th_quiz', 'الاستبانة')}</th>
@@ -2087,7 +2087,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 {/* Notice for Admin */}
                 <div className="p-4 bg-[#eaf6fa] dark:bg-[#0b1519]/70 border border-[#84d2ea]/60 dark:border-[#1e3842] rounded-2xl text-xs text-[#0e3c48] dark:text-[#84d2ea] space-y-1">
                   <p className="font-bold">{t('sup_super_banner', 'حساب المدير الرئيسي المعتمد بالنظام:')}</p>
-                  <p className="font-mono text-[#134e5e] dark:text-emerald-400 font-semibold">{SUPER_ADMIN_EMAIL}</p>
+                  <p className="font-mono text-[#134e5e] dark:text-emerald-400 font-semibold break-all">{SUPER_ADMIN_EMAIL}</p>
                   <p className="text-[11px] text-stone-600 dark:text-stone-400 mt-1">
                     {t('sup_super_banner_note', 'المشرفون يمتلكون فقط الصلاحيات المحددة لهم أدناه ولا يمكنهم تعديل صلاحيات المدير الرئيسي.')}
                   </p>
@@ -2109,7 +2109,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       };
                       return (
                         <div key={sup.id} className="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                          <div>
+                          <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2">
                               <h4 className="text-sm font-bold text-stone-900 dark:text-white">{sup.name}</h4>
                               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -2120,7 +2120,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                                 {sup.role === 'admin' ? t('sup_role_admin', 'مدير') : t('sup_role_editor', 'مشرف')}
                               </span>
                             </div>
-                            <span className="text-xs text-stone-500 dark:text-stone-400 font-mono block mt-0.5">{sup.email}</span>
+                            <span className="text-xs text-stone-500 dark:text-stone-400 font-mono block mt-0.5 break-all">{sup.email}</span>
                             
                             {/* Permissions pills */}
                             <div className="flex flex-wrap gap-1.5 mt-2">
@@ -2196,23 +2196,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                             : 'bg-stone-50 dark:bg-[#0b1519]/40 border-stone-200 dark:border-[#1e3842]'
                         }`}
                       >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-stone-900 dark:text-white">{inq.name}</span>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                          <div className="flex flex-wrap items-center gap-2 min-w-0">
+                            <span className="font-bold text-sm text-stone-900 dark:text-white truncate">{inq.name}</span>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
                               inq.status === 'new' ? 'bg-[#2e9e66] text-white' : 'bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-300'
                             }`}>
                               {inq.status === 'new' ? t('admin_status_new', 'رسالة جديدة') : t('admin_status_replied', 'تم الرد')}
                             </span>
                           </div>
-                          <span className="text-[11px] text-stone-400 font-mono">
+                          <span className="text-[11px] text-stone-400 font-mono shrink-0">
                             {new Date(inq.submittedAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US')}
                           </span>
                         </div>
 
-                        <div className="text-xs text-stone-600 dark:text-stone-400 flex flex-wrap gap-4">
-                          <span>{t('admin_inquiry_email_label', 'البريد:')} <strong className="font-mono text-stone-800 dark:text-stone-200">{inq.email}</strong></span>
-                          {inq.phone && <span>{t('admin_inquiry_phone_label', 'الهاتف:')} <strong className="font-mono text-stone-800 dark:text-stone-200">{inq.phone}</strong></span>}
+                        <div className="text-xs text-stone-600 dark:text-stone-400 flex flex-wrap gap-x-4 gap-y-1">
+                          <span className="break-all">{t('admin_inquiry_email_label', 'البريد:')} <strong className="font-mono text-stone-800 dark:text-stone-200">{inq.email}</strong></span>
+                          {inq.phone && <span className="break-all">{t('admin_inquiry_phone_label', 'الهاتف:')} <strong className="font-mono text-stone-800 dark:text-stone-200">{inq.phone}</strong></span>}
                         </div>
 
                         <p className="text-xs text-stone-800 dark:text-stone-200 bg-white dark:bg-[#122127] p-3 rounded-xl border border-stone-200 dark:border-[#1e3842] leading-relaxed whitespace-pre-line">

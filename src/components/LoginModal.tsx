@@ -198,7 +198,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
             <div className={`p-3.5 bg-[#f7fbfc] dark:bg-[#0b1519] rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] text-[11px] text-[#526f78] dark:text-stone-300 space-y-1.5 ${isRtl ? 'text-right' : 'text-left'}`}>
               <p className="font-bold text-[#0e3c48] dark:text-white">{t('login_security_notice', 'تنويه الأمان والصلاحيات:')}</p>
-              <p>• {t('login_security_admin_email', 'حساب المدير الرئيسي التلقائي:')} <code className="text-[#134e5e] dark:text-[#84d2ea] font-mono font-bold">{SUPER_ADMIN_EMAIL}</code></p>
+              <p>• {t('login_security_admin_email', 'حساب المدير الرئيسي التلقائي:')} <code className="text-[#134e5e] dark:text-[#84d2ea] font-mono font-bold break-all">{SUPER_ADMIN_EMAIL}</code></p>
               <p>• {t('login_security_supervisors_notice', 'المشرفون يتم اعتماد حساباتهم وتعيين صلاحياتهم حصرياً من قِبل المدير الرئيسي عبر لوحة التحكم.')}</p>
               <p>• {t('login_security_visitor_notice', 'الزائر العادي لا يمتلك صلاحية الدخول أو تعديل المحتوى.')}</p>
             </div>

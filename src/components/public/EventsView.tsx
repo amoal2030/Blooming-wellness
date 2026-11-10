@@ -137,8 +137,8 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
-        <div className="relative w-full md:w-80">
+      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center transition-colors">
+        <div className="relative w-full lg:w-72 xl:w-80 shrink-0">
           <Search className={`w-4 h-4 text-[#526f78] dark:text-stone-400 absolute top-3.5 ${isRtl ? 'right-3.5' : 'left-3.5'}`} />
           <input
             type="text"
@@ -152,7 +152,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
         </div>
 
         {/* Status Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
+        <div className="flex-1 min-w-0 overflow-x-auto pb-1.5 lg:pb-0 scrollbar-none flex items-center gap-1.5">
           {[
             { id: 'all', label: t('events_tab_all', 'جميع الفعاليات') },
             { id: 'upcoming', label: t('events_tab_upcoming', 'الفعاليات القادمة') },
@@ -162,7 +162,7 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
             <button
               key={tab.id}
               onClick={() => setActiveStatus(tab.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[38px] ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer min-h-[38px] ${
                 activeStatus === tab.id
                   ? 'bg-[#134e5e] text-white shadow-xs'
                   : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'

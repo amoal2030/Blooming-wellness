@@ -44,10 +44,10 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 bg-white dark:bg-[#122127] p-2.5 sm:p-3 rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] w-fit shadow-xs transition-colors">
+      <div className="flex items-center gap-2 bg-white dark:bg-[#122127] p-2 sm:p-2.5 rounded-2xl border border-[#dbe8ed] dark:border-[#1e3842] max-w-full overflow-x-auto scrollbar-none shadow-xs transition-colors">
         <button
           onClick={() => setActiveFilter('all')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer min-h-[38px] ${
             activeFilter === 'all'
               ? 'bg-[#134e5e] text-white shadow-xs'
               : 'text-[#526f78] dark:text-stone-300 hover:bg-[#eaf6fa] dark:hover:bg-[#0e2730]'
@@ -57,7 +57,7 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
         </button>
         <button
           onClick={() => setActiveFilter('open')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer min-h-[38px] ${
             activeFilter === 'open'
               ? 'bg-[#134e5e] text-white shadow-xs'
               : 'text-[#526f78] dark:text-stone-300 hover:bg-[#eaf6fa] dark:hover:bg-[#0e2730]'
@@ -67,7 +67,7 @@ export const RegistrationsView: React.FC<RegistrationsViewProps> = ({ registrati
         </button>
         <button
           onClick={() => setActiveFilter('closed')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-colors cursor-pointer ${
+          className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer min-h-[38px] ${
             activeFilter === 'closed'
               ? 'bg-[#134e5e] text-white shadow-xs'
               : 'text-[#526f78] dark:text-stone-300 hover:bg-[#eaf6fa] dark:hover:bg-[#0e2730]'

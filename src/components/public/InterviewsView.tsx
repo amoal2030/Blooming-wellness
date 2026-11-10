@@ -68,8 +68,8 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
       </div>
 
       {/* Filter and Sort Toolbar */}
-      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
-        <div className="relative w-full md:w-80">
+      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center transition-colors">
+        <div className="relative w-full lg:w-72 xl:w-80 shrink-0">
           <Search className={`w-4 h-4 text-[#526f78] dark:text-stone-400 absolute ${isRtl ? 'right-3.5' : 'left-3.5'} top-3.5`} />
           <input
             type="text"
@@ -80,14 +80,14 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+        <div className="flex-1 min-w-0 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
           {/* Topic Select */}
-          <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0">
+          <div className="min-w-0 flex-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none flex items-center gap-1.5">
             {topics.map((itemTopic) => (
               <button
                 key={itemTopic}
                 onClick={() => setSelectedTopic(itemTopic)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer min-h-[38px] ${
                   selectedTopic === itemTopic
                     ? 'bg-[#134e5e] text-white shadow-xs'
                     : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'
@@ -103,7 +103,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
             value={sortBy}
             onChange={(e: any) => setSortBy(e.target.value)}
             aria-label={t('sort_by_date', 'ترتيب المقابلات حسب التاريخ')}
-            className="py-2 px-3 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] focus:outline-none cursor-pointer"
+            className="py-2 px-3 bg-[#f7fbfc] dark:bg-[#0b1519] border border-[#d0e0e6] dark:border-[#1e3842] rounded-xl text-xs font-bold text-[#134e5e] dark:text-[#84d2ea] focus:outline-none cursor-pointer shrink-0 min-h-[38px]"
           >
             <option value="date_desc">{isRtl ? 'الأحدث تاريخاً' : 'Newest First'}</option>
             <option value="date_asc">{isRtl ? 'الأقدم تاريخاً' : 'Oldest First'}</option>
@@ -121,7 +121,7 @@ export const InterviewsView: React.FC<InterviewsViewProps> = ({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {filteredInterviews.map((item) => (
             <div
               key={item.id}

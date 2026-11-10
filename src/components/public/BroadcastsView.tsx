@@ -56,9 +56,9 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col md:flex-row gap-4 justify-between items-center transition-colors">
+      <div className="bg-white dark:bg-[#122127] p-4 sm:p-6 rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] shadow-xs flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center transition-colors">
         {/* Search Input */}
-        <div className="relative w-full md:w-96">
+        <div className="relative w-full lg:w-72 xl:w-80 shrink-0">
           <Search className={`w-4 h-4 text-[#526f78] dark:text-stone-400 absolute ${isRtl ? 'right-3.5' : 'left-3.5'} top-3.5`} />
           <input
             type="text"
@@ -70,12 +70,12 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
         </div>
 
         {/* Topic Filter Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
+        <div className="flex-1 min-w-0 overflow-x-auto pb-1.5 lg:pb-0 scrollbar-none flex items-center gap-1.5">
           {topics.map((itemTopic) => (
             <button
               key={itemTopic}
               onClick={() => setSelectedTopic(itemTopic)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[38px] ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer min-h-[38px] ${
                 selectedTopic === itemTopic
                   ? 'bg-[#134e5e] text-white shadow-xs'
                   : 'bg-[#eaf6fa] dark:bg-[#0e2730] text-[#134e5e] dark:text-[#84d2ea] hover:bg-[#dbeef5] dark:hover:bg-[#163845]'

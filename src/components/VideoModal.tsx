@@ -53,8 +53,8 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100 dark:border-[#1e3842] bg-stone-50/80 dark:bg-[#0b1519]/80">
-          <h3 className="text-base font-bold text-stone-900 dark:text-white truncate pr-2">{title}</h3>
+        <div className="flex items-center justify-between gap-3 px-6 py-4 border-b border-stone-100 dark:border-[#1e3842] bg-stone-50/80 dark:bg-[#0b1519]/80 min-w-0">
+          <h3 className="text-base font-bold text-stone-900 dark:text-white min-w-0 flex-1 truncate">{title}</h3>
           <button
             onClick={onClose}
             className="p-1.5 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200/60 dark:hover:bg-[#1e3842] rounded-lg transition-colors cursor-pointer"

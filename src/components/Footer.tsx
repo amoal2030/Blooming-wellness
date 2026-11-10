@@ -56,7 +56,7 @@ export const Footer: React.FC<FooterProps> = ({
             {authorizedPartners.map((partner) => (
               <div 
                 key={partner.id} 
-                className="flex items-center gap-3.5 bg-white/95 dark:bg-[#12242b]/95 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl shadow-sm border border-white/20 dark:border-white/10 hover:scale-102 transition-transform"
+                className="flex items-center gap-3 sm:gap-3.5 bg-white/95 dark:bg-[#12242b]/95 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-2xl shadow-sm border border-white/20 dark:border-white/10 hover:scale-102 transition-transform max-w-full min-w-0"
               >
                 <div className="w-20 sm:w-24 h-10 sm:h-12 flex items-center justify-center overflow-hidden">
                   <img
@@ -209,7 +209,7 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-3.5 text-xs text-[#b8dce0]">
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-[#84d2ea] shrink-0 mt-0.5" />
-                <span className="truncate dir-ltr text-start">{settings.contactEmail || 'contact@alshatee-aafia.edu.sa'}</span>
+                <span className="break-all dir-ltr text-start">{settings.contactEmail || 'contact@alshatee-aafia.edu.sa'}</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#84d2ea] shrink-0" />
