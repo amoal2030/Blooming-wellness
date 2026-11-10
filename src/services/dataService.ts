@@ -58,6 +58,18 @@ export const DEFAULT_SETTINGS: InitiativeSettings = {
   heroImageUrl: '/assets/images/hero_awareness_banner_1793901820998.jpg'
 };
 
+function isOfflineOrNetworkError(error: unknown): boolean {
+  if (!error) return false;
+  const msg = (error instanceof Error ? error.message : String(error)).toLowerCase();
+  const code = (error as any)?.code;
+  return (
+    code === 'unavailable' ||
+    msg.includes('offline') ||
+    msg.includes('network') ||
+    msg.includes('failed to get document because the client is offline')
+  );
+}
+
 // ======================= Settings =======================
 export async function getInitiativeSettings(): Promise<InitiativeSettings> {
   const path = 'settings/general';
@@ -82,6 +94,10 @@ export async function getInitiativeSettings(): Promise<InitiativeSettings> {
     // Return default settings only if none stored in Firestore yet
     return DEFAULT_SETTINGS;
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing default initiative settings fallback.');
+      return DEFAULT_SETTINGS;
+    }
     handleFirestoreError(error, OperationType.GET, path);
   }
 }
@@ -112,6 +128,10 @@ export async function getBroadcasts(): Promise<Broadcast[]> {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Broadcast));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty broadcasts fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -155,6 +175,10 @@ export async function getLectures(): Promise<Lecture[]> {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Lecture));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty lectures fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -198,6 +222,10 @@ export async function getInterviews(): Promise<Interview[]> {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Interview));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty interviews fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -241,6 +269,10 @@ export async function getQuizzes(): Promise<Quiz[]> {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Quiz));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty quizzes fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -301,6 +333,10 @@ export async function getQuizResponses(quizId?: string): Promise<QuizResponse[]>
     }
     return all;
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty quiz responses fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -313,6 +349,10 @@ export async function getEvents(): Promise<EventItem[]> {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as EventItem));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty events fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -356,6 +396,10 @@ export async function getRegistrations(): Promise<RegistrationItem[]> {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as RegistrationItem));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty registrations fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -398,6 +442,10 @@ export async function getSupervisors(): Promise<Supervisor[]> {
     const snapshot = await getDocs(collection(db, path));
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Supervisor));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty supervisors fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }
@@ -442,6 +490,10 @@ export async function getInquiries(): Promise<Inquiry[]> {
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Inquiry));
   } catch (error) {
+    if (isOfflineOrNetworkError(error)) {
+      console.warn('[Firestore] Client is offline; providing empty inquiries fallback.');
+      return [];
+    }
     handleFirestoreError(error, OperationType.LIST, path);
   }
 }

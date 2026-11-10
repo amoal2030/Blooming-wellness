@@ -15,10 +15,8 @@ export const app = initializeApp(firebaseConfig);
 // Set log level to silent to prevent noisy internal 10s watchdog logs in iframe and proxy environments
 setLogLevel('silent');
 
-// Initialize Firestore with auto-detect long polling for optimal connection negotiation in iframe & Cloud Run environments
-export const db = initializeFirestore(app, {
-  experimentalAutoDetectLongPolling: true,
-}, firebaseConfig.firestoreDatabaseId);
+// Initialize Firestore with the provisioned database ID as mandated by SKILL.md
+export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 
 export const auth = getAuth(app);
 
@@ -49,8 +47,14 @@ export interface FirestoreErrorInfo {
 }
 
 export function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null): never {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+  const isOffline = 
+    errorMessage.toLowerCase().includes('offline') || 
+    (error as any)?.code === 'unavailable' ||
+    errorMessage.toLowerCase().includes('client is offline');
+
   const errInfo: FirestoreErrorInfo = {
-    error: error instanceof Error ? error.message : String(error),
+    error: errorMessage,
     authInfo: {
       userId: auth.currentUser?.uid,
       email: auth.currentUser?.email,
@@ -65,7 +69,13 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
     operationType,
     path
   };
-  console.error('Firestore Error Details:', JSON.stringify(errInfo));
+
+  // Only emit diagnostic Firestore Error Details for rule/permission or unexpected failures, not offline disconnects
+  if (!isOffline) {
+    console.error('Firestore Error Details:', JSON.stringify(errInfo));
+  } else {
+    console.warn('[Firestore Offline / Network Notice]:', errorMessage);
+  }
   throw new Error(JSON.stringify(errInfo));
 }
 
@@ -76,7 +86,7 @@ export async function testConnection(): Promise<boolean> {
       setTimeout(() => reject(new Error('the client is offline')), 3000)
     );
     await Promise.race([
-      getDocFromServer(doc(db, 'settings', 'general')),
+      getDocFromServer(doc(db, 'test', 'connection')),
       timeoutPromise
     ]);
     return true;
