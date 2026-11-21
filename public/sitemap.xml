@@ -2,7 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://amoal2030.github.io/Blooming-wellness/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://amoal2030.github.io/Blooming-wellness/?section=broadcasts</loc>
+  </url>
+  <url>
+    <loc>https://amoal2030.github.io/Blooming-wellness/?section=lectures</loc>
+  </url>
+  <url>
+    <loc>https://amoal2030.github.io/Blooming-wellness/?section=interviews</loc>
+  </url>
+  <url>
+    <loc>https://amoal2030.github.io/Blooming-wellness/?section=quizzes</loc>
+  </url>
+  <url>
+    <loc>https://amoal2030.github.io/Blooming-wellness/?section=events</loc>
+  </url>
+  <url>
+    <loc>https://amoal2030.github.io/Blooming-wellness/?section=registrations</loc>
+  </url>
+  <url>
+    <loc>https://amoal2030.github.io/Blooming-wellness/?section=contact</loc>
   </url>
 </urlset>
