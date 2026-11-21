@@ -8,6 +8,7 @@ import {
 } from '../../types';
 import { submitInquiry } from '../../services/dataService';
 import { getAssetUrl } from '../../utils/assets';
+import { getTabHref } from '../../utils/routing';
 import { useLanguage } from '../../context/LanguageContext';
 import { 
   Radio, 
@@ -36,6 +37,7 @@ interface HomeViewProps {
   broadcasts: Broadcast[];
   lectures: Lecture[];
   events: EventItem[];
+  isLoading?: boolean;
   setActiveTab: (tab: ActiveTab) => void;
   onOpenVideoModal: (title: string, videoUrl?: string, audioUrl?: string) => void;
 }
@@ -45,10 +47,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
   broadcasts,
   lectures,
   events,
+  isLoading = false,
   setActiveTab,
   onOpenVideoModal,
 }) => {
   const { t, isRtl, language } = useLanguage();
+
+  const handleSectionLink = (e: React.MouseEvent<HTMLAnchorElement>, tab: ActiveTab) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+      return;
+    }
+    e.preventDefault();
+    setActiveTab(tab);
+  };
 
   // Contact Form State
   const [inquiryName, setInquiryName] = useState('');
@@ -142,30 +153,26 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 {t('hero_desc', 'منصة توعوية رائدة لترسيخ عادات الحياة المتوازنة: الغذاء الصحي، النشاط البدني، جودة النوم، والعافية النفسية لطلاب ثانوية الشاطئ والمجتمع.')}
               </p>
 
-              {/* Quick Action Buttons */}
+              {/* Quick Action Links */}
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4">
-                <button
-                  onClick={() => {
-                    setActiveTab('quizzes');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
+                <a
+                  href={getTabHref('quizzes')}
+                  onClick={(e) => handleSectionLink(e, 'quizzes')}
                   className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs sm:text-sm font-extrabold rounded-2xl shadow-lg shadow-[#2e9e66]/30 hover:shadow-[#2e9e66]/50 transition-all hover:-translate-y-0.5 cursor-pointer min-h-[44px]"
                 >
                   <CheckSquare className="w-5 h-5 text-white shrink-0" />
                   <span>{t('hero_btn_quiz', 'اختبر مدى صحة عاداتك الآن')}</span>
                   {isRtl ? <ArrowLeft className="w-4 h-4 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />}
-                </button>
+                </a>
 
-                <button
-                  onClick={() => {
-                    setActiveTab('events');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
+                <a
+                  href={getTabHref('events')}
+                  onClick={(e) => handleSectionLink(e, 'events')}
                   className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold rounded-2xl border border-white/25 backdrop-blur-md transition-all hover:-translate-y-0.5 cursor-pointer min-h-[44px]"
                 >
                   <Calendar className="w-5 h-5 text-[#84d2ea] shrink-0" />
                   <span>{t('hero_btn_events', 'استكشف الفعاليات والأنشطة')}</span>
-                </button>
+                </a>
               </div>
             </div>
 
@@ -376,16 +383,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 {t('home_quiz_callout_desc', 'أجب عن بضعة أسئلة تفاعلية سريعة لقياس مؤشر عاداتك في شرب الماء، الغذاء، ساعات النوم، والحركة البدنية، واحصل على تقريرك الصحي فوراً.')}
               </p>
               <div className="pt-2">
-                <button
-                  onClick={() => {
-                    setActiveTab('quizzes');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
+                <a
+                  href={getTabHref('quizzes')}
+                  onClick={(e) => handleSectionLink(e, 'quizzes')}
                   className="px-6 py-3.5 bg-white text-[#134e5e] hover:bg-[#f7fbfc] font-extrabold text-sm rounded-2xl shadow-md transition-all hover:scale-105 inline-flex items-center gap-2 cursor-pointer"
                 >
                   <CheckSquare className="w-5 h-5 text-[#2e9e66]" />
                   <span>{t('home_quiz_callout_btn', 'بدء اختبار التوازن الآن')}</span>
-                </button>
+                </a>
               </div>
             </div>
 
@@ -418,60 +423,70 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 {t('section_latest_broadcasts', 'أحدث الإذاعات الصباحية')}
               </h2>
             </div>
-            <button
-              onClick={() => {
-                setActiveTab('broadcasts');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+            <a
+              href={getTabHref('broadcasts')}
+              onClick={(e) => handleSectionLink(e, 'broadcasts')}
               className="text-xs sm:text-sm font-bold text-[#134e5e] dark:text-[#84d2ea] hover:text-[#2e9e66] dark:hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <span>{t('section_view_all', 'عرض الكل')}</span>
               {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-            </button>
+            </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentBroadcasts.map((item) => (
-              <div 
-                key={item.id} 
-                className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col group"
-              >
-                <div className="h-44 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden">
-                  <img
-                    src={getAssetUrl(item.imageUrl || '/assets/images/morning_broadcast_mic_1793901821444.jpg')}
-                    alt={`${item.title} - ${isRtl ? 'إذاعة مدرسية صباحية مبادرة عافية تُزهر' : 'Morning School Broadcast Blooming Wellness'}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className={`absolute top-3 ${isRtl ? 'right-3' : 'left-3'} bg-[#0e3c48]/85 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-lg`}>
-                    {item.topic}
+          {isLoading && recentBroadcasts.length === 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-busy="true" aria-label={t('loading', 'جاري التحميل...')}>
+              {[0, 1, 2].map((skeletonIdx) => (
+                <div key={skeletonIdx} className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden p-5 space-y-4 animate-pulse">
+                  <div className="h-36 rounded-2xl bg-[#eaf6fa] dark:bg-[#0e2730]" />
+                  <div className="h-4 w-3/4 rounded bg-[#eaf6fa] dark:bg-[#0e2730]" />
+                  <div className="h-3 w-full rounded bg-[#f1f7f9] dark:bg-[#132c35]" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recentBroadcasts.map((item) => (
+                <div 
+                  key={item.id} 
+                  className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col group"
+                >
+                  <div className="h-44 relative bg-[#f1f7f9] dark:bg-[#0b1519] overflow-hidden">
+                    <img
+                      src={getAssetUrl(item.imageUrl || '/assets/images/morning_broadcast_mic_1793901821444.jpg')}
+                      alt={`${item.title} - ${isRtl ? 'إذاعة مدرسية صباحية مبادرة عافية تُزهر' : 'Morning School Broadcast Blooming Wellness'}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className={`absolute top-3 ${isRtl ? 'right-3' : 'left-3'} bg-[#0e3c48]/85 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-lg`}>
+                      {item.topic}
+                    </div>
+                  </div>
+
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div className={isRtl ? 'text-right' : 'text-left'}>
+                      <span className="text-[11px] text-[#526f78] dark:text-stone-400 font-medium block mb-1">{item.date}</span>
+                      <h3 className="text-base font-bold text-[#0e3c48] dark:text-white group-hover:text-[#134e5e] dark:group-hover:text-[#84d2ea] transition-colors line-clamp-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-[#526f78] dark:text-stone-300 mt-2 line-clamp-2 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 mt-4 border-t border-[#edf3f5] dark:border-[#1e3842] flex items-center justify-between">
+                      <button
+                        onClick={() => onOpenVideoModal(item.title, item.videoUrl, item.audioUrl)}
+                        className="text-xs font-bold text-[#2e9e66] hover:text-[#248354] flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <Play className="w-3.5 h-3.5 fill-[#2e9e66]" />
+                        <span>{t('action_listen', 'استماع / مشاهدة')}</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                <div className="p-5 flex-1 flex flex-col justify-between">
-                  <div className={isRtl ? 'text-right' : 'text-left'}>
-                    <span className="text-[11px] text-[#526f78] dark:text-stone-400 font-medium block mb-1">{item.date}</span>
-                    <h3 className="text-base font-bold text-[#0e3c48] dark:text-white group-hover:text-[#134e5e] dark:group-hover:text-[#84d2ea] transition-colors line-clamp-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-[#526f78] dark:text-stone-300 mt-2 line-clamp-2 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 mt-4 border-t border-[#edf3f5] dark:border-[#1e3842] flex items-center justify-between">
-                    <button
-                      onClick={() => onOpenVideoModal(item.title, item.videoUrl, item.audioUrl)}
-                      className="text-xs font-bold text-[#2e9e66] hover:text-[#248354] flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <Play className="w-3.5 h-3.5 fill-[#2e9e66]" />
-                      <span>{t('action_listen', 'استماع / مشاهدة')}</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Lectures Highlights */}
@@ -486,20 +501,29 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 {t('section_latest_lectures', 'المحاضرات التوعوية المميزة')}
               </h2>
             </div>
-            <button
-              onClick={() => {
-                setActiveTab('lectures');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+            <a
+              href={getTabHref('lectures')}
+              onClick={(e) => handleSectionLink(e, 'lectures')}
               className="text-xs sm:text-sm font-bold text-[#134e5e] dark:text-[#84d2ea] hover:text-[#2e9e66] dark:hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <span>{t('section_view_all', 'عرض الكل')}</span>
               {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-            </button>
+            </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {recentLectures.map((item) => (
+          {isLoading && recentLectures.length === 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" aria-busy="true" aria-label={t('loading', 'جاري التحميل...')}>
+              {[0, 1].map((skeletonIdx) => (
+                <div key={skeletonIdx} className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden p-6 space-y-4 animate-pulse">
+                  <div className="h-36 rounded-2xl bg-[#eaf6fa] dark:bg-[#0e2730]" />
+                  <div className="h-4 w-2/3 rounded bg-[#eaf6fa] dark:bg-[#0e2730]" />
+                  <div className="h-3 w-full rounded bg-[#f1f7f9] dark:bg-[#132c35]" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {recentLectures.map((item) => (
               <div 
                 key={item.id} 
                 className="bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col sm:flex-row group"
@@ -548,11 +572,18 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Featured Upcoming Event */}
-        {featuredEvent && (
+        {isLoading && !featuredEvent ? (
+          <div className="bg-[#0e3c48]/90 rounded-3xl p-8 sm:p-12 border border-[#1a5565] animate-pulse space-y-4" aria-busy="true" aria-label={t('loading', 'جاري التحميل...')}>
+            <div className="h-5 w-40 rounded-full bg-white/15" />
+            <div className="h-7 w-2/3 rounded bg-white/15" />
+            <div className="h-4 w-full max-w-xl rounded bg-white/10" />
+          </div>
+        ) : featuredEvent ? (
           <div className="bg-[#0e3c48] text-white rounded-3xl overflow-hidden shadow-xl border border-[#1a5565]">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
               <div className={`lg:col-span-7 p-6 sm:p-8 lg:p-12 space-y-4 ${isRtl ? 'text-right' : 'text-left'}`}>
@@ -583,25 +614,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </div>
 
                 <div className="pt-4 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-                  <button
-                    onClick={() => {
-                      setActiveTab('events');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
+                  <a
+                    href={getTabHref('events')}
+                    onClick={(e) => handleSectionLink(e, 'events')}
                     className="w-full sm:w-auto px-5 py-3 bg-[#2e9e66] hover:bg-[#248354] text-white text-xs font-bold rounded-2xl transition-colors cursor-pointer text-center min-h-[44px] flex items-center justify-center"
                   >
                     {t('hero_btn_events', 'تفاصيل كافة الفعاليات')}
-                  </button>
+                  </a>
 
-                  <button
-                    onClick={() => {
-                      setActiveTab('registrations');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
+                  <a
+                    href={getTabHref('registrations')}
+                    onClick={(e) => handleSectionLink(e, 'registrations')}
                     className="w-full sm:w-auto px-5 py-3 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-2xl border border-white/20 transition-colors cursor-pointer text-center min-h-[44px] flex items-center justify-center"
                   >
                     {t('nav_registrations', 'التسجيل في الأنشطة')}
-                  </button>
+                  </a>
                 </div>
               </div>
 
@@ -615,7 +642,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </section>
 
       {/* 7. Contact and Inquiries Section */}

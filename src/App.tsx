@@ -3,11 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { testConnection } from './firebase';
+import {
+  getTabFromSearch,
+  buildRelativeUrlForTab,
+  getCanonicalUrlForTab,
+} from './utils/routing';
 import { 
   InitiativeSettings, 
   Broadcast, 
@@ -46,8 +51,62 @@ import { AccessDeniedView } from './components/admin/AccessDeniedView';
 function MainApp() {
   const { currentUser, isSuperAdmin, isAdmin, isAuthorizedStaff, loading: authLoading } = useAuth();
   const { t, language } = useLanguage();
-  const [activeTab, setActiveTab] = useState<ActiveTab>('home');
-  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTabState] = useState<ActiveTab>(() =>
+    typeof window !== 'undefined' ? getTabFromSearch(window.location.search) : 'home'
+  );
+  const [dataLoading, setDataLoading] = useState(true);
+
+  const setActiveTab = useCallback((tab: ActiveTab) => {
+    if (typeof window !== 'undefined' && tab !== 'admin') {
+      const nextUrl = buildRelativeUrlForTab(tab, window.location.pathname, window.location.search);
+      const currentUrl = window.location.pathname + window.location.search;
+      if (nextUrl !== currentUrl) {
+        window.history.pushState({ tab }, '', nextUrl);
+      }
+    }
+    setActiveTabState(tab);
+    if (tab === 'contact') {
+      setTimeout(() => {
+        const contactEl = document.getElementById('contact');
+        if (contactEl) {
+          contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+    } else if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
+  // Sync URL normalization on mount and handle browser Back/Forward (popstate)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const rawParams = new URLSearchParams(window.location.search);
+    const sectionValues = rawParams.getAll('section');
+    const resolvedTab = getTabFromSearch(window.location.search);
+
+    if (sectionValues.length > 1 || (sectionValues.length === 1 && resolvedTab === 'home')) {
+      const normalizedUrl = buildRelativeUrlForTab(resolvedTab, window.location.pathname, window.location.search);
+      window.history.replaceState({ tab: resolvedTab }, '', normalizedUrl);
+    } else if (!window.history.state?.tab) {
+      window.history.replaceState({ tab: resolvedTab }, '', window.location.pathname + window.location.search);
+    }
+
+    const handlePopState = () => {
+      const nextTab = getTabFromSearch(window.location.search);
+      setActiveTabState(nextTab);
+      if (nextTab === 'contact') {
+        setTimeout(() => {
+          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Dynamic Bilingual SEO Synchronization
   useEffect(() => {
@@ -82,6 +141,8 @@ function MainApp() {
       pageDesc = language === 'ar' ? 'بوابة الإدارة والتحكم الخاصة بمبادرة عافية تُزهر.' : 'Private administrative portal for Blooming Wellness initiative.';
     }
 
+    const canonicalUrl = getCanonicalUrlForTab(activeTab);
+
     // Update document title
     document.title = pageTitle;
 
@@ -96,11 +157,22 @@ function MainApp() {
       element.setAttribute('content', content);
     };
 
+    // Update canonical link tag
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', canonicalUrl);
+
     setMetaTag('meta[name="description"]', 'name', 'description', pageDesc);
     setMetaTag('meta[property="og:title"]', 'property', 'og:title', pageTitle);
     setMetaTag('meta[property="og:description"]', 'property', 'og:description', pageDesc);
+    setMetaTag('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
     setMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', pageTitle);
     setMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', pageDesc);
+    setMetaTag('meta[name="twitter:url"]', 'name', 'twitter:url', canonicalUrl);
 
     // Keep admin completely private and unindexed; allow public content
     if (activeTab === 'admin') {
@@ -131,17 +203,17 @@ function MainApp() {
     title: '',
   });
 
-  // Initial load
+  // Initial load (non-blocking for static shell; populates dynamic Firestore data concurrently)
   useEffect(() => {
     let mounted = true;
 
     async function initializePortal() {
       try {
-        setLoading(true);
-        // 1. Test connection as mandated by skill
-        await testConnection();
+        setDataLoading(true);
+        // Run connection check concurrently so it never blocks initial query dispatch or UI render
+        void testConnection();
 
-        // 2. Load all collections concurrently with individual resilience (Firestore as single source of truth)
+        // Load all collections concurrently with individual resilience (Firestore as single source of truth)
         const [
           settingsData,
           broadcastsData,
@@ -173,7 +245,7 @@ function MainApp() {
         console.error('Initialization error:', err);
       } finally {
         if (mounted) {
-          setLoading(false);
+          setDataLoading(false);
         }
       }
     }
@@ -198,23 +270,18 @@ function MainApp() {
     setVideoModal(prev => ({ ...prev, isOpen: false }));
   };
 
-  // Smooth scroll to contact section if activeTab is 'contact'
+  // Smooth scroll to contact section when entering/loading ?section=contact (keeps URL & contact metadata)
   useEffect(() => {
     if (activeTab === 'contact') {
-      setActiveTab('home');
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         const contactEl = document.getElementById('contact');
         if (contactEl) {
           contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }, 150);
+      return () => clearTimeout(timer);
     }
   }, [activeTab]);
-
-  // If loading initially
-  if (loading) {
-    return <LoadingScreen settings={settings} />;
-  }
 
   // Admin Dashboard Mode
   if (activeTab === 'admin') {
@@ -299,6 +366,7 @@ function MainApp() {
             broadcasts={broadcasts}
             lectures={lectures}
             events={events}
+            isLoading={dataLoading}
             setActiveTab={setActiveTab}
             onOpenVideoModal={openVideoModal}
           />
@@ -307,6 +375,7 @@ function MainApp() {
         {activeTab === 'broadcasts' && (
           <BroadcastsView
             broadcasts={broadcasts}
+            isLoading={dataLoading}
             onOpenVideoModal={openVideoModal}
           />
         )}
@@ -314,6 +383,7 @@ function MainApp() {
         {activeTab === 'lectures' && (
           <LecturesView
             lectures={lectures}
+            isLoading={dataLoading}
             onOpenVideoModal={openVideoModal}
           />
         )}
@@ -321,33 +391,33 @@ function MainApp() {
         {activeTab === 'interviews' && (
           <InterviewsView
             interviews={interviews}
+            isLoading={dataLoading}
             onOpenVideoModal={openVideoModal}
           />
         )}
 
         {activeTab === 'quizzes' && (
-          <HabitsQuizView quizzes={quizzes} />
+          <HabitsQuizView quizzes={quizzes} isLoading={dataLoading} />
         )}
 
         {activeTab === 'events' && (
-          <EventsView events={events} />
+          <EventsView events={events} isLoading={dataLoading} />
         )}
 
         {activeTab === 'registrations' && (
-          <RegistrationsView registrations={registrations} />
+          <RegistrationsView registrations={registrations} isLoading={dataLoading} />
         )}
 
         {activeTab === 'contact' && (
-          <div className="py-8">
-            <HomeView
-              settings={settings}
-              broadcasts={broadcasts}
-              lectures={lectures}
-              events={events}
-              setActiveTab={setActiveTab}
-              onOpenVideoModal={openVideoModal}
-            />
-          </div>
+          <HomeView
+            settings={settings}
+            broadcasts={broadcasts}
+            lectures={lectures}
+            events={events}
+            isLoading={dataLoading}
+            setActiveTab={setActiveTab}
+            onOpenVideoModal={openVideoModal}
+          />
         )}
       </main>
 

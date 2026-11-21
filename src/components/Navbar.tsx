@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { getAssetUrl } from '../utils/assets';
+import { getTabHref } from '../utils/routing';
 import { 
   LogIn, 
   Menu, 
@@ -73,20 +74,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleNavClick = (tab: ActiveTab) => {
     setMobileMenuOpen(false);
     setMoreDropdownOpen(false);
-    if (tab === 'contact') {
-      if (activeTab !== 'home') {
-        setActiveTab('home');
-      }
-      setTimeout(() => {
-        const contactEl = document.getElementById('contact');
-        if (contactEl) {
-          contactEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 150);
+    setActiveTab(tab);
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, tab: ActiveTab) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
       return;
     }
-    setActiveTab(tab);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    e.preventDefault();
+    handleNavClick(tab);
   };
 
   return (
@@ -96,8 +92,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Zone 1: Initiative Brand with Official Logo */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-            <button
-              onClick={() => handleNavClick('home')}
+            <a
+              href={getTabHref('home')}
+              onClick={(e) => handleLinkClick(e, 'home')}
               className={`flex items-center gap-2 sm:gap-3 text-start focus:outline-none group cursor-pointer min-w-0 ${
                 isRtl ? 'text-right' : 'text-left'
               }`}
@@ -121,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {language === 'ar' ? (settings.tagline || t('tagline', 'بالتوازن تحصل العافية.. وبالعافية نَزْهَر')) : t('tagline')}
                 </span>
               </div>
-            </button>
+            </a>
           </div>
 
           {/* Zone 2: Navigation Links (Priority+ pattern: 1024px+ displays links without collision) */}
@@ -130,9 +127,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             {primaryLinks.map((link) => {
               const isActive = activeTab === link.id;
               return (
-                <button
+                <a
                   key={link.id}
-                  onClick={() => handleNavClick(link.id)}
+                  href={getTabHref(link.id)}
+                  onClick={(e) => handleLinkClick(e, link.id)}
+                  aria-current={isActive ? 'page' : undefined}
                   className={`px-2 xl:px-2.5 py-1.5 xl:py-2 rounded-xl transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                     isActive
                       ? 'text-[#134e5e] dark:text-white bg-[#eaf6fa] dark:bg-[#1b3d48] font-black border border-[#cde6ee] dark:border-[#2a5b6b]'
@@ -140,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }`}
                 >
                   {t(link.labelKey, link.defaultLabel)}
-                </button>
+                </a>
               );
             })}
 
@@ -149,9 +148,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               {secondaryLinks.map((link) => {
                 const isActive = activeTab === link.id;
                 return (
-                  <button
+                  <a
                     key={link.id}
-                    onClick={() => handleNavClick(link.id)}
+                    href={getTabHref(link.id)}
+                    onClick={(e) => handleLinkClick(e, link.id)}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`px-2 2xl:px-2.5 py-1.5 2xl:py-2 rounded-xl transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                       isActive
                         ? 'text-[#134e5e] dark:text-white bg-[#eaf6fa] dark:bg-[#1b3d48] font-black border border-[#cde6ee] dark:border-[#2a5b6b]'
@@ -159,7 +160,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     }`}
                   >
                     {t(link.labelKey, link.defaultLabel)}
-                  </button>
+                  </a>
                 );
               })}
             </div>
@@ -189,9 +190,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {secondaryLinks.map((link) => {
                     const isActive = activeTab === link.id;
                     return (
-                      <button
+                      <a
                         key={link.id}
-                        onClick={() => handleNavClick(link.id)}
+                        href={getTabHref(link.id)}
+                        onClick={(e) => handleLinkClick(e, link.id)}
+                        aria-current={isActive ? 'page' : undefined}
                         className={`w-full flex items-center justify-between px-4 py-2.5 text-xs font-bold transition-colors cursor-pointer ${
                           isActive
                             ? 'text-[#134e5e] dark:text-white bg-[#eaf6fa] dark:bg-[#1b3d48]'
@@ -200,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       >
                         <span>{t(link.labelKey, link.defaultLabel)}</span>
                         {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#2e9e66]" />}
-                      </button>
+                      </a>
                     );
                   })}
                 </div>
@@ -310,9 +313,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {allNavLinks.map((link) => {
             const isActive = activeTab === link.id;
             return (
-              <button
+              <a
                 key={link.id}
-                onClick={() => handleNavClick(link.id)}
+                href={getTabHref(link.id)}
+                onClick={(e) => handleLinkClick(e, link.id)}
+                aria-current={isActive ? 'page' : undefined}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
                   isActive
                     ? 'bg-[#eaf6fa] dark:bg-[#1b3d48] text-[#134e5e] dark:text-white border border-[#cde6ee] dark:border-[#2a5b6b]'
@@ -321,7 +326,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <span>{t(link.labelKey, link.defaultLabel)}</span>
                 {isActive && <div className="w-2 h-2 rounded-full bg-[#2e9e66]" />}
-              </button>
+              </a>
             );
           })}
           

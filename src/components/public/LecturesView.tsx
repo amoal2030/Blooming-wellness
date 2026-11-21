@@ -6,11 +6,13 @@ import { Video, Search, Play, User, Calendar, Clock } from 'lucide-react';
 
 interface LecturesViewProps {
   lectures: Lecture[];
+  isLoading?: boolean;
   onOpenVideoModal: (title: string, videoUrl?: string) => void;
 }
 
 export const LecturesView: React.FC<LecturesViewProps> = ({
   lectures,
+  isLoading = false,
   onOpenVideoModal,
 }) => {
   const { t, isRtl } = useLanguage();
@@ -86,7 +88,12 @@ export const LecturesView: React.FC<LecturesViewProps> = ({
       </div>
 
       {/* Lectures Grid */}
-      {filteredLectures.length === 0 ? (
+      {isLoading && lectures.length === 0 ? (
+        <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors" aria-busy="true">
+          <div className="w-10 h-10 rounded-full border-3 border-[#2e9e66]/20 border-t-[#2e9e66] animate-spin mx-auto mb-3" />
+          <p className="text-sm font-bold text-[#0e3c48] dark:text-white">{t('loading', 'جاري التحميل...')}</p>
+        </div>
+      ) : filteredLectures.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
           <Video className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
           <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">{t('lectures_no_items', 'لم يتم العثور على محاضرات مطابقة.')}</h3>

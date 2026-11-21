@@ -6,9 +6,10 @@ import { useLanguage } from '../../context/LanguageContext';
 
 interface EventsViewProps {
   events: EventItem[];
+  isLoading?: boolean;
 }
 
-export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
+export const EventsView: React.FC<EventsViewProps> = ({ events, isLoading = false }) => {
   const { t, isRtl } = useLanguage();
   const [activeStatus, setActiveStatus] = useState<'all' | 'upcoming' | 'ongoing' | 'completed'>('upcoming');
   const [searchQuery, setSearchQuery] = useState('');
@@ -175,7 +176,12 @@ export const EventsView: React.FC<EventsViewProps> = ({ events }) => {
       </div>
 
       {/* Events List Grid */}
-      {filteredEvents.length === 0 ? (
+      {isLoading && events.length === 0 ? (
+        <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors" aria-busy="true">
+          <div className="w-10 h-10 rounded-full border-3 border-[#2e9e66]/20 border-t-[#2e9e66] animate-spin mx-auto mb-3" />
+          <p className="text-sm font-bold text-[#0e3c48] dark:text-white">{t('loading', 'جاري التحميل...')}</p>
+        </div>
+      ) : filteredEvents.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
           <Calendar className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
           <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">{t('events_no_items', 'لا توجد فعاليات مطابقة في هذا التصنيف')}</h3>

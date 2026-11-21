@@ -6,11 +6,13 @@ import { Radio, Search, Play, Volume2, Calendar, ExternalLink } from 'lucide-rea
 
 interface BroadcastsViewProps {
   broadcasts: Broadcast[];
+  isLoading?: boolean;
   onOpenVideoModal: (title: string, videoUrl?: string, audioUrl?: string) => void;
 }
 
 export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
   broadcasts,
+  isLoading = false,
   onOpenVideoModal,
 }) => {
   const { t, isRtl } = useLanguage();
@@ -88,7 +90,12 @@ export const BroadcastsView: React.FC<BroadcastsViewProps> = ({
       </div>
 
       {/* Broadcasts Grid */}
-      {filteredBroadcasts.length === 0 ? (
+      {isLoading && broadcasts.length === 0 ? (
+        <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors" aria-busy="true">
+          <div className="w-10 h-10 rounded-full border-3 border-[#2e9e66]/20 border-t-[#2e9e66] animate-spin mx-auto mb-3" />
+          <p className="text-sm font-bold text-[#0e3c48] dark:text-white">{t('loading', 'جاري التحميل...')}</p>
+        </div>
+      ) : filteredBroadcasts.length === 0 ? (
         <div className="text-center py-20 bg-white dark:bg-[#122127] rounded-3xl border border-[#dbe8ed] dark:border-[#1e3842] p-8 transition-colors">
           <Radio className="w-12 h-12 text-[#b0ced8] dark:text-stone-600 mx-auto mb-3" />
           <h3 className="text-base font-bold text-[#0e3c48] dark:text-white">{t('broadcasts_no_items', 'لم يتم العثور على إذاعات مطابقة لبحثك.')}</h3>

@@ -2,6 +2,7 @@ import React from 'react';
 import { ActiveTab, InitiativeSettings } from '../types';
 import { useLanguage } from '../context/LanguageContext';
 import { getAssetUrl } from '../utils/assets';
+import { getTabHref } from '../utils/routing';
 import { Mail, Phone, MapPin, Heart, ArrowUp, BookOpen, ExternalLink } from 'lucide-react';
 
 interface FooterProps {
@@ -18,6 +19,14 @@ export const Footer: React.FC<FooterProps> = ({
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, tab: ActiveTab) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+      return;
+    }
+    e.preventDefault();
+    setActiveTab(tab);
   };
 
   // Restrict to ONLY the 2 authorized partners: وزارة التعليم ومدرسة ثانوية الشاطئ
@@ -125,66 +134,67 @@ export const Footer: React.FC<FooterProps> = ({
             </h4>
             <ul className="space-y-2 text-xs text-[#b8dce0]">
               <li>
-                <button 
-                  onClick={() => { setActiveTab('broadcasts'); scrollToTop(); }}
-                  className="hover:text-white transition-all cursor-pointer"
+                <a 
+                  href={getTabHref('broadcasts')}
+                  onClick={(e) => handleSectionClick(e, 'broadcasts')}
+                  className="hover:text-white transition-all cursor-pointer inline-block"
                 >
                   {t('nav_broadcasts', 'الإذاعات الصباحية')}
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => { setActiveTab('lectures'); scrollToTop(); }}
-                  className="hover:text-white transition-all cursor-pointer"
+                <a 
+                  href={getTabHref('lectures')}
+                  onClick={(e) => handleSectionClick(e, 'lectures')}
+                  className="hover:text-white transition-all cursor-pointer inline-block"
                 >
                   {t('nav_lectures', 'المحاضرات التوعوية')}
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => { setActiveTab('interviews'); scrollToTop(); }}
-                  className="hover:text-white transition-all cursor-pointer"
+                <a 
+                  href={getTabHref('interviews')}
+                  onClick={(e) => handleSectionClick(e, 'interviews')}
+                  className="hover:text-white transition-all cursor-pointer inline-block"
                 >
                   {t('nav_interviews', 'المقابلات الحوارية')}
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => { setActiveTab('quizzes'); scrollToTop(); }}
-                  className="hover:text-white transition-all cursor-pointer"
+                <a 
+                  href={getTabHref('quizzes')}
+                  onClick={(e) => handleSectionClick(e, 'quizzes')}
+                  className="hover:text-white transition-all cursor-pointer inline-block"
                 >
                   {t('nav_quizzes', 'اختبر مدى صحة عاداتك')}
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => { setActiveTab('events'); scrollToTop(); }}
-                  className="hover:text-white transition-all cursor-pointer"
+                <a 
+                  href={getTabHref('events')}
+                  onClick={(e) => handleSectionClick(e, 'events')}
+                  className="hover:text-white transition-all cursor-pointer inline-block"
                 >
                   {t('nav_events', 'الأنشطة والفعاليات')}
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => { setActiveTab('registrations'); scrollToTop(); }}
-                  className="hover:text-white transition-all cursor-pointer"
+                <a 
+                  href={getTabHref('registrations')}
+                  onClick={(e) => handleSectionClick(e, 'registrations')}
+                  className="hover:text-white transition-all cursor-pointer inline-block"
                 >
                   {t('nav_registrations', 'التسجيل في البرامج')}
-                </button>
+                </a>
               </li>
               <li>
-                <button 
-                  onClick={() => {
-                    setActiveTab('home');
-                    setTimeout(() => {
-                      const el = document.getElementById('contact');
-                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 150);
-                  }}
-                  className="hover:text-white transition-all cursor-pointer"
+                <a 
+                  href={getTabHref('contact')}
+                  onClick={(e) => handleSectionClick(e, 'contact')}
+                  className="hover:text-white transition-all cursor-pointer inline-block"
                 >
                   {t('nav_contact', 'تواصل معنا')}
-                </button>
+                </a>
               </li>
               <li className="pt-1.5">
                 <a
